@@ -9,5 +9,4 @@ group :jekyll_plugins do
     gem 'jemoji'
     gem 'unicode_utils'
     gem 'jekyll-seo-tag'
-    gem "bibtex-ruby", ">= 5.1.0"
 end
