@@ -1,0 +1,18 @@
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/3.0.0/gems/racc-1.6.2/ext/racc/cparse
+/opt/homebrew/opt/ruby@3.0/bin/ruby -I /opt/homebrew/Cellar/ruby@3.0/3.0.5/lib/ruby/3.0.0 extconf.rb
+checking for rb_block_call()... yes
+checking for rb_ary_subseq()... yes
+creating Makefile
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/3.0.0/gems/racc-1.6.2/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230218-78274-o1xqxq sitelibdir\=./.gem.20230218-78274-o1xqxq clean
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/3.0.0/gems/racc-1.6.2/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230218-78274-o1xqxq sitelibdir\=./.gem.20230218-78274-o1xqxq
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/3.0.0/gems/racc-1.6.2/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230218-78274-o1xqxq sitelibdir\=./.gem.20230218-78274-o1xqxq install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20230218-78274-o1xqxq/racc

@@ -15,15 +15,21 @@ social: true  # includes social icons at the bottom of the page
 
 Hi! I'm currently an IAIFI Fellow at the [NSF AI Institute for Artificial Intelligence and Fundamental Interactions (IAIFI)](https://iaifi.org/), affiliated with the [Center for Theoretical Physics](https://physics.mit.edu/research/labs-centers/center-for-theoretical-physics/) at MIT and the [Department of Physics](https://www.physics.harvard.edu/) at Harvard University.
 
-**Research Interests:**
-I work at the intersection of particle physics, astrophysics, cosmology, and statistics. I'm interested in developing and applying novel statistical techniques---often using machine learning and probabilistic modeling---in order to accelerate searches for new physics. 
- 
- **CV:**
-A copy of my CV may be found [here](https://docs.google.com/viewer?url=https://github.com/smsharma/CV/raw/master-pdf/cv.pdf).
+My pronouns are _he/they_.
 
+**Research Interests:**
+My work uses _probabilistic machine learning_ -- combining deep learning, generative modeling, and statistics -- to accelerate searches for new physics using astrophysical and cosmological data at all observable scales. 
+
+Most recently, I have been developing techniques to better understand dark matter using images of strong gravitational lensing systems ([1](https://arxiv.org/abs/1909.02005), [2](https://arxiv.org/abs/2206.14820), [3](https://arxiv.org/abs/2208.13796)), observations of dwarf galaxies ([1](https://arxiv.org/abs/2208.12825), [2](https://arxiv.org/abs/2206.14820)), astrometric measurements ([1](https://arxiv.org/abs/2003.02264), [2](https://arxiv.org/abs/2110.01620)), and gamma-ray data ([1](https://arxiv.org/abs/2010.10450), [2](https://arxiv.org/abs/2110.06931)).
+ 
 **Publications and Code:** 
 My publications can be found on [INSPIRE](https://inspirehep.net/authors/1394493), [ADS](https://ui.adsabs.harvard.edu/public-libraries/y66hOF7ySaKvYhjCkixRiA), or [Google Scholar](https://scholar.google.com/citations?hl=en&user=hJVjhlwAAAAJ&view_op=list_works&sortby=pubdate).
 I'm passionate about open and reproducible research, and code associated with most of my projects may be found on [GitHub](https://github.com/smsharma).
+
+I maintain a list of resources and papers in the fast-growing field of _neural simulation-based inference_ [here](https://github.com/smsharma/awesome-neural-sbi).
+
+**CV:**
+A copy of my CV may be found [here](https://docs.google.com/viewer?url=https://github.com/smsharma/CV/raw/master-pdf/cv.pdf).
 
 **Contact:** 
 I can be reached via [email](mailto:smsharma@mit.edu).

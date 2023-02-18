@@ -1,0 +1,18 @@
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/racc-1.6.2/ext/racc/cparse
+/opt/homebrew/opt/ruby@2.7/bin/ruby -I /opt/homebrew/Cellar/ruby@2.7/2.7.7/lib/ruby/2.7.0 extconf.rb
+checking for rb_block_call()... yes
+checking for rb_ary_subseq()... yes
+creating Makefile
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/racc-1.6.2/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230218-84118-ewd3ok sitelibdir\=./.gem.20230218-84118-ewd3ok clean
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/racc-1.6.2/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230218-84118-ewd3ok sitelibdir\=./.gem.20230218-84118-ewd3ok
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/racc-1.6.2/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20230218-84118-ewd3ok sitelibdir\=./.gem.20230218-84118-ewd3ok install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20230218-84118-ewd3ok/racc

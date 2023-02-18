@@ -1,0 +1,17 @@
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+/opt/homebrew/opt/ruby@2.7/bin/ruby -I /opt/homebrew/Cellar/ruby@2.7/2.7.7/lib/ruby/2.7.0 extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+make DESTDIR\= sitearchdir\=./.gem.20230218-84118-1e86gh5 sitelibdir\=./.gem.20230218-84118-1e86gh5 clean
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+make DESTDIR\= sitearchdir\=./.gem.20230218-84118-1e86gh5 sitelibdir\=./.gem.20230218-84118-1e86gh5
+compiling unf.cc
+linking shared-object unf_ext.bundle
+ld: warning: -undefined dynamic_lookup may not work with chained fixups
+
+current directory: /Users/smsharma/Projects/smsharma.github.io/vendor/bundle/ruby/2.7.0/gems/unf_ext-0.0.8.2/ext/unf_ext
+make DESTDIR\= sitearchdir\=./.gem.20230218-84118-1e86gh5 sitelibdir\=./.gem.20230218-84118-1e86gh5 install
+/usr/bin/install -c -m 0755 unf_ext.bundle ./.gem.20230218-84118-1e86gh5
