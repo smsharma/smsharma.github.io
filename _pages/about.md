@@ -18,7 +18,7 @@ Hi! I'm currently an IAIFI Fellow at the [NSF AI Institute for Artificial Intell
 My pronouns are he/him.
 
 **Contact:** 
-I can be reached via [email](mailto:smsharma@mit.edu).
+I can be reached via [email](mailto:smsharma@mit.edu). I am happy to chat with students at IAIFI and the Boston area about potential projects.
 
 **Research Interests:**
 - My work uses _probabilistic machine learning_ -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for new physics using astrophysical and cosmological data at all observable scales. 
