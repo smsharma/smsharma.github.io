@@ -39,3 +39,6 @@ Prior to MIT/IAIFI I was a postdoc at New York University's [Center for Cosmolog
 
 **Misc.:** 
 I enjoy [road cycling]({{ site.baseurl }}{% link assets/img/bike_weston.jpg %}) and [hanging out with my cat,]({{ site.baseurl }}{% link assets/img/toph2.jpg %})  [Toph]({{ site.baseurl }}{% link assets/img/toph3.jpg %}). 
+
+<iframe src="/html/index.html" width="100%" height="500px">
+</iframe>
