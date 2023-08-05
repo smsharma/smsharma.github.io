@@ -29,6 +29,7 @@ I can be reached via [email](mailto:smsharma@mit.edu). I am happy to chat with s
 - Papers can be found on [INSPIRE](https://inspirehep.net/authors/1394493), [ADS](https://ui.adsabs.harvard.edu/public-libraries/y66hOF7ySaKvYhjCkixRiA), or [Google Scholar](https://scholar.google.com/citations?hl=en&user=hJVjhlwAAAAJ&view_op=list_works&sortby=pubdate).
 - Code associated with all of my projects may be found on [GitHub](https://github.com/smsharma).
 - Tutorials on [simulation-based inference](https://github.com/smsharma/sbi-lecture-mit) and [deep probabilistic programming](https://github.com/smsharma/deep-prob-prog-tutorials).
+- [Slides for lectures on generative modeling](/iaifi-summer-school-2023/) at IAIFI Summer School 2023.
 - A curated list of [resources and papers](https://github.com/smsharma/awesome-neural-sbi) on neural simulation-based inference.
 
 **CV:**
