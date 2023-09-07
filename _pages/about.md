@@ -6,7 +6,7 @@ permalink: /
 description: Physics and artificial intelligence researcher working at the intersection of particle physics, astrophysics, cosmology, and statistics. 
 profile:
   align: right
-  image: siddharth.jpg
+  image: siddharth_headshot.png
 # address: <a href="https://goo.gl/maps/CiVJAxWHZHXu1AmX6" class="page-description" target="_blank">726 Broadway, New York, NY 10003</a>
 news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
@@ -21,7 +21,7 @@ My pronouns are he/him.
 I can be reached via [email](mailto:smsharma@mit.edu). I am happy to chat with students at IAIFI and the Boston area about potential projects.
 
 **Research Interests:**
-- My work uses _probabilistic machine learning_ -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for new physics using astrophysical and cosmological data at all observable scales. 
+- My work uses probabilistic machine learning -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for new physics using astrophysical and cosmological data at all observable scales. 
 - On the applied side, I have been developing techniques to better understand dark matter using images of strong gravitational lensing systems ([1](https://arxiv.org/abs/1909.02005), [2](https://arxiv.org/abs/2206.14820), [3](https://arxiv.org/abs/2208.13796)), observations of dwarf galaxies ([1](https://arxiv.org/abs/2208.12825)), astrometric measurements ([1](https://arxiv.org/abs/2003.02264), [2](https://arxiv.org/abs/2110.01620)), and gamma-ray data ([1](https://arxiv.org/abs/2010.10450), [2](https://arxiv.org/abs/2110.06931)).
 - I work on use-inspired methods development, in particular using differentiable programming and simulation-based inference ([1](https://arxiv.org/abs/2306.12584)).
 
@@ -29,14 +29,14 @@ I can be reached via [email](mailto:smsharma@mit.edu). I am happy to chat with s
 - Papers can be found on [INSPIRE](https://inspirehep.net/authors/1394493), [ADS](https://ui.adsabs.harvard.edu/public-libraries/y66hOF7ySaKvYhjCkixRiA), or [Google Scholar](https://scholar.google.com/citations?hl=en&user=hJVjhlwAAAAJ&view_op=list_works&sortby=pubdate).
 - Code associated with all of my projects may be found on [GitHub](https://github.com/smsharma).
 - Tutorials on [simulation-based inference](https://github.com/smsharma/sbi-lecture-mit) and [deep probabilistic programming](https://github.com/smsharma/deep-prob-prog-tutorials).
-- [Slides for lectures on generative modeling](/iaifi-summer-school-2023/) at IAIFI Summer School 2023.
-- A curated list of [resources and papers](https://github.com/smsharma/awesome-neural-sbi) on neural simulation-based inference.
+- Slides for [lectures on generative modeling](/iaifi-summer-school-2023/) at IAIFI Summer School 2023.
+- A curated list of resources and papers on [neural simulation-based inference](https://github.com/smsharma/awesome-neural-sbi).
 
 **CV:**
 A copy of my CV may be found [here](https://docs.google.com/viewer?url=https://github.com/smsharma/CV/raw/master-pdf/cv.pdf).
 
 **Previously:** 
-Prior to MIT/IAIFI I was a postdoc at New York University's [Center for Cosmology and Particle Physics](https://cosmo.nyu.edu/) from 2018-2021. I obtained my Ph.D. in Physics from Princeton University in 2018, working under the supervision of [Mariangela Lisanti](https://phy.princeton.edu/people/mariangela-lisanti) with my [dissertation](http://arks.princeton.edu/ark:/88435/dsp012v23vx15d) focusing on astrophysical searches for dark matter. Along the way, I've been fortunate to have worked on experimental particle physics [early on in graduate school]({{ site.baseurl }}{% link assets/pdf/experimental_project.pdf %}) and as a Summer Student at CERN. I completed my undergraduate studies at Peterhouse, University of Cambridge in the UK where I read the Natural Sciences (Parts I and II) and Mathematics (Part III) Triposes. I grew up in Moscow, Russia.
+Prior to MIT/IAIFI I was a postdoc at NYU's [Center for Cosmology and Particle Physics](https://cosmo.nyu.edu/) from 2018-2021. I obtained my Ph.D. in Physics from Princeton University in 2018, working under the supervision of [Mariangela Lisanti](https://phy.princeton.edu/people/mariangela-lisanti) with my [dissertation](http://arks.princeton.edu/ark:/88435/dsp012v23vx15d) focusing on astrophysical searches for dark matter. Along the way, I've been fortunate to have worked on experimental particle physics [early on in graduate school]({{ site.baseurl }}{% link assets/pdf/experimental_project.pdf %}) and as a Summer Student at CERN. I completed my undergraduate studies at Peterhouse, University of Cambridge in the UK where I read the Natural Sciences (Parts I and II) and Mathematics (Part III) Triposes. I grew up in Moscow, Russia.
 
 **Misc.:** 
-I enjoy [road cycling]({{ site.baseurl }}{% link assets/img/bike_weston.jpg %}) and [hanging out with my cat,]({{ site.baseurl }}{% link assets/img/toph2.jpg %})  [Toph]({{ site.baseurl }}{% link assets/img/toph3.jpg %}). 
+I enjoy [road cycling]({{ site.baseurl }}{% link assets/img/bike_cold_spring.jpg %}) and [hanging out with my cat,]({{ site.baseurl }}{% link assets/img/toph2.jpg %})  [Toph]({{ site.baseurl }}{% link assets/img/toph3.jpg %}). 
