@@ -25,7 +25,7 @@ A copy of my CV may be found [here](https://docs.google.com/viewer?url=https://g
 
 **Research Interests:**
 - My work uses probabilistic machine learning -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for new physics using astrophysical and cosmological data at all observable scales. 
-- On the applied side, I have been developing techniques to better understand dark matter using images of strong gravitational lensing systems ([1](https://arxiv.org/abs/1909.02005), [2](https://arxiv.org/abs/2206.14820), [3](https://arxiv.org/abs/2208.13796)), observations of dwarf galaxies ([1](https://arxiv.org/abs/2208.12825)), astrometric measurements ([1](https://arxiv.org/abs/2003.02264), [2](https://arxiv.org/abs/2110.01620)), and gamma-ray data ([1](https://arxiv.org/abs/2010.10450), [2](https://arxiv.org/abs/2110.06931)).
+- On the applied side, I have been developing techniques to analyze images of strong gravitational lensing systems ([1](https://arxiv.org/abs/1909.02005), [2](https://arxiv.org/abs/2206.14820), [3](https://arxiv.org/abs/2208.13796)), observations of dwarf galaxies ([1](https://arxiv.org/abs/2208.12825)), astrometric measurements ([1](https://arxiv.org/abs/2003.02264), [2](https://arxiv.org/abs/2110.01620)), gamma-ray data ([1](https://arxiv.org/abs/2010.10450), [2](https://arxiv.org/abs/2110.06931)), and galaxy clustering observations ([1](https://arxiv.org/abs/2311.17141)).
 - I work on use-inspired methods development, in particular using differentiable programming and simulation-based inference ([1](https://arxiv.org/abs/2306.12584)).
 
 **Papers, Code, and Tutorials:** 
