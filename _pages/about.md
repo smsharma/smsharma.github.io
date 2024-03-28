@@ -26,7 +26,7 @@ A copy of my CV may be found [here](https://docs.google.com/viewer?url=https://g
 **Research Interests:** My work uses probabilistic machine learning -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for fundamental physics using astrophysical and cosmological data at all observable scales. I am broadly interested in the application and development of AI techniques to a wide range of problems in the physical sciences.
 
 **Papers, Code, and Tutorials:** 
-- Papers can be found on [INSPIRE](https://inspirehep.net/authors/1394493), [ADS](https://ui.adsabs.harvard.edu/public-libraries/y66hOF7ySaKvYhjCkixRiA), or [Google Scholar](https://scholar.google.com/citations?hl=en&user=hJVjhlwAAAAJ&view_op=list_works&sortby=pubdate).
+- Papers can be found on [Google Scholar](https://scholar.google.com/citations?hl=en&user=hJVjhlwAAAAJ&view_op=list_works&sortby=pubdate) or [ADS](https://ui.adsabs.harvard.edu/search/q=author%3A%22Mishra-Sharma%2C%20Siddharth%22&sort=date%20desc%2C%20bibcode%20desc&p_=0).
 - Code associated with all of my projects may be found on [GitHub](https://github.com/smsharma).
 - Tutorials on [simulation-based inference](https://github.com/smsharma/sbi-lecture-mit), [deep probabilistic programming](https://github.com/smsharma/deep-prob-prog-tutorials), and [self-supervised & multimodal machine learning](https://github.com/smsharma/iaifi-hackathon-2024/tree/main/multimodal_ssl).
 - Slides for [lectures on generative modeling](/iaifi-summer-school-2023/) at the IAIFI Summer School 2023.
