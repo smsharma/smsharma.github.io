@@ -13,9 +13,9 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Hi! I'm currently an IAIFI Fellow at the [NSF AI Institute for Artificial Intelligence and Fundamental Interactions (IAIFI)](https://iaifi.org/), affiliated with MIT and Harvard.
+I'm currently an IAIFI Fellow at the [NSF AI Institute for Artificial Intelligence and Fundamental Interactions (IAIFI)](https://iaifi.org/), affiliated with MIT and Harvard.
 
-**In 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/).**
+**In July 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/).**
 
 My pronouns are he/him.
 
