@@ -23,7 +23,7 @@ My pronouns are he/him.
 I can be reached via [email](mailto:smsharma@mit.edu). I am happy to chat with students at IAIFI and the Boston area about potential projects.
 
 **CV:**
-A copy of my CV may be found [here](https://docs.google.com/viewer?url=https://github.com/smsharma/CV/raw/master-pdf/cv.pdf).
+A copy of my CV may be found [here](https://github.com/smsharma/CV/blob/master-pdf/cv.pdf).
 
 **Research Interests:** My work uses probabilistic machine learning -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for fundamental physics using astrophysical and cosmological data at all observable scales. I am broadly interested in the application and development of AI techniques to a wide range of problems in the physical sciences.
 
