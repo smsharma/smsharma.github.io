@@ -13,19 +13,24 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-I'm currently an IAIFI Fellow at the [NSF AI Institute for Artificial Intelligence and Fundamental Interactions (IAIFI)](https://iaifi.org/), affiliated with MIT and Harvard.
 
-**In July 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/).**
+I'm currently a Researcher at [Anthropic](https://www.anthropic.com/). In July 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/profile/siddharth-mishra-sharma/).
 
 My pronouns are he/him.
 
 **Contact:** 
-I can be reached via [email](mailto:smsharma@mit.edu). I am happy to chat with students at IAIFI and the Boston area about potential projects.
+I can be reached via [email](mailto:siddharthmishra19@gmail.com).
 
 **CV:**
 A copy of my CV may be found [here](https://github.com/smsharma/CV/blob/master-pdf/cv.pdf).
 
-**Research Interests:** My work uses probabilistic machine learning -- combining deep learning, generative modeling, differentiable programming, and statistics -- to accelerate searches for fundamental physics using astrophysical and cosmological data at all observable scales. I am broadly interested in the application and development of AI techniques to a wide range of problems in the physical sciences.
+**Research Interests:** I work bidirectionally at the intersection of AI and physics, with a focus on applications towards fundamental physics discovery. 
+
+My research examines how AI can be used to make better use of complex datasets from current and future experiments in cosmology, astrophysics, and particle physics across diverse modalities, scales, and physical systems. 
+
+I also use data from physics as a sandbox for methodological developments with broad applicability in the natural sciences, particularly focusing on neural approaches to simulation-based inference, scalable generative modeling, probabilistic/differentiable programming, and symmetry-preserving data processing. 
+
+In my work, I investigate both (1) data-driven approaches that leverage scale, and (2) physics-informed methods that incorporate mechanistic understanding and inductive biases, while also exploring the interplay between these paradigms.
 
 **Papers, Code, and Tutorials:** 
 - Papers can be found on [Google Scholar](https://scholar.google.com/citations?hl=en&user=hJVjhlwAAAAJ&view_op=list_works&sortby=pubdate) or [ADS](https://ui.adsabs.harvard.edu/search/q=author%3A%22Mishra-Sharma%2C%20Siddharth%22&sort=date%20desc%2C%20bibcode%20desc&p_=0).
@@ -35,7 +40,8 @@ A copy of my CV may be found [here](https://github.com/smsharma/CV/blob/master-p
 - A curated list of resources and papers on [neural simulation-based inference](https://github.com/smsharma/awesome-neural-sbi).
 
 **Previously:** 
-Prior to MIT/IAIFI I was a postdoc at NYU's [Center for Cosmology and Particle Physics](https://cosmo.nyu.edu/) from 2018-2021. I obtained my Ph.D. in Physics from Princeton University in 2018, working under the supervision of [Mariangela Lisanti](https://phy.princeton.edu/people/mariangela-lisanti) with my [dissertation](http://arks.princeton.edu/ark:/88435/dsp012v23vx15d) focusing on astrophysical searches for dark matter. Along the way, I've been fortunate to have worked on experimental particle physics [early on in graduate school]({{ site.baseurl }}{% link assets/pdf/experimental_project.pdf %}) and as a Summer Student at CERN. I completed my undergraduate studies at Peterhouse, University of Cambridge in the UK where I read the Natural Sciences (Parts I and II) and Mathematics (Part III) Triposes. I grew up in Moscow, Russia.
+Previously, I was an IAIFI Fellow at the [NSF AI Institute for Artificial Intelligence and Fundamental Interactions (IAIFI)](https://iaifi.org/), affiliated with MIT and Harvard.
+Prior to that I was a postdoc at NYU's [Center for Cosmology and Particle Physics](https://cosmo.nyu.edu/). I obtained my Ph.D. in Physics from Princeton University in 2018, working under the supervision of [Mariangela Lisanti](https://phy.princeton.edu/people/mariangela-lisanti) with my [dissertation](http://arks.princeton.edu/ark:/88435/dsp012v23vx15d) focusing on the phenomenology of and astrophysical searches for dark matter. Along the way, I've been fortunate to have worked on experimental particle physics as a Summer Student at CERN. I completed my undergraduate studies at Peterhouse, University of Cambridge in the UK where I read the Natural Sciences (Parts I and II) and Mathematics (Part III) Triposes. I grew up in Moscow, Russia.
 
 **Misc.:** 
 I enjoy [road cycling]({{ site.baseurl }}{% link assets/img/bike_cold_spring.jpg %}) and [hanging out with my cat,]({{ site.baseurl }}{% link assets/img/toph2.jpg %})  [Toph]({{ site.baseurl }}{% link assets/img/toph3.jpg %}). 
