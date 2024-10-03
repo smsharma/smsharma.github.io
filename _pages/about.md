@@ -14,12 +14,12 @@ social: true  # includes social icons at the bottom of the page
 ---
 
 
-I am a researcher at [Anthropic](https://www.anthropic.com/). In July 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/profile/siddharth-mishra-sharma/).
+I am a researcher at [Anthropic](https://www.anthropic.com/), based in San Francisco. In July 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/profile/siddharth-mishra-sharma/).
 
-My pronouns are he/him.
+<!-- he/him. -->
 
 **Contact:** 
-I can be reached via [email](mailto:siddharthmishra19@gmail.com).
+I'm best reached via [email](mailto:siddharthmishra19@gmail.com).
 
 **CV:**
 A copy of my CV may be found [here](https://github.com/smsharma/CV/blob/master-pdf/cv.pdf).
