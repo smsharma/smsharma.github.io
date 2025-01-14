@@ -14,7 +14,7 @@ social: true  # includes social icons at the bottom of the page
 ---
 
 
-I am a Member of the Technical Staff at [Anthropic](https://www.anthropic.com/), based in San Francisco. In July 2025, I will be starting as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/profile/siddharth-mishra-sharma/).
+I am a Member of the Technical Staff at [Anthropic](https://www.anthropic.com/), based in San Francisco, and incoming as Assistant Professor of Computing & Data Sciences and Physics at [Boston University](https://www.bu.edu/cds-faculty/profile/siddharth-mishra-sharma/).
 
 <!-- he/him. -->
 
