@@ -28,7 +28,7 @@ A copy of my CV may be found [here](https://github.com/smsharma/CV/blob/master-p
 
 My research examines how AI can be used to make better use of complex datasets from current and future experiments in cosmology, astrophysics, and particle physics across diverse modalities, scales, and physical systems. 
 
-I also use data from physics as a sandbox for methodological developments with broad applicability in the natural sciences, particularly focusing on neural approaches to simulation-based inference, scalable generative modeling, probabilistic/differentiable programming, and symmetry-preserving data processing. 
+<!-- I also use data from physics as a sandbox for methodological developments with broad applicability in the natural sciences, particularly focusing on neural approaches to simulation-based inference, scalable generative modeling, probabilistic/differentiable programming, and symmetry-preserving data processing.  -->
 
 In my work, I investigate both (1) data-driven approaches that leverage scale, and (2) physics-informed methods that incorporate mechanistic understanding and inductive biases, while also exploring the interplay between these paradigms.
 
