@@ -1,0 +1,107 @@
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #000;
+    --link-hover: none;
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 40px 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+    --bg-color: #3a3a3a;
+    --text-color: #e8e6e1;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 30px 0 15px 0;
+}
+
+p {
+    margin: 0 0 15px 0;
+}
+
+/* First two paragraphs (intro) stay normal weight */
+.container > p:nth-of-type(1),
+.container > p:nth-of-type(2) {
+    color: var(--text-color);
+}
+
+/* All other paragraphs are lighter and thinner */
+h2 ~ p {
+    color: #444;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    opacity: 0.95;
+}
+
+body.dark-mode h2 ~ p {
+    color: #ccc;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    opacity: 0.95;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+}
+
+a:hover {
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+}
+
+.theme-toggle span {
+    color: var(--text-color);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover span {
+    opacity: 1;
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    .container {
+        max-width: 100%;
+    }
+}
