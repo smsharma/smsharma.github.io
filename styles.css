@@ -15,11 +15,6 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-body.dark-mode {
-    --bg-color: #3a3a3a;
-    --text-color: #e8e6e1;
-}
-
 .container {
     max-width: 850px;
     margin: 0 auto;
@@ -45,10 +40,19 @@ h1 {
     object-fit: cover;
 }
 
+section,
+.intro-section {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    clear: both;
+}
+
 h2 {
     font-size: 16px;
     font-weight: 700;
-    margin: 30px 0 15px 0;
+    margin: 0 0 15px 0;
 }
 
 p {
@@ -78,23 +82,12 @@ a:hover {
     opacity: 0.7;
 }
 
-.theme-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-    font-size: 14px;
-    user-select: none;
+a.anthropic {
+    color: #CC785C;
 }
 
-.theme-toggle span {
-    color: var(--text-color);
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-}
-
-.theme-toggle:hover span {
-    opacity: 1;
+a.bu {
+    color: #CC0000;
 }
 
 .sf-hover {
