@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Combinations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=DM+Sans:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=Spectral:wght@400;500&family=Source+Serif+4:wght@400;500&family=Crimson+Pro:wght@400;500&family=Lora:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,500&family=STIX+Two+Text:wght@400;500&family=EB+Garamond:wght@400;500&family=PT+Serif:wght@400;700&family=IBM+Plex+Serif:wght@400;500&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: #faf8f4;
+            color: #2c2c2c;
+            margin: 0;
+            padding: 40px;
+            font-size: 16px;
+            font-family: system-ui, sans-serif;
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0 0 32px 0;
+            color: #666;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+        .combo {
+            padding: 24px;
+            border: 1px solid #e0ddd8;
+            border-radius: 8px;
+            background: #fff;
+        }
+        .combo-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #8a8a8a;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0ddd8;
+        }
+        .combo-label span {
+            color: #1a5f4a;
+        }
+        .combo h2 {
+            font-size: 28px;
+            font-weight: 500;
+            margin: 0 0 12px 0;
+            letter-spacing: -0.02em;
+        }
+        .combo p {
+            font-size: 18px;
+            line-height: 1.7;
+            margin: 0;
+        }
+        .combo a {
+            color: #c46a4a;
+            text-decoration: none;
+        }
+        .combo a.bu {
+            color: #cc0000;
+        }
+
+        /* Combinations */
+        .c1 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c1 p { font-family: 'Spectral', serif; }
+
+        .c2 h2 { font-family: 'Inter', sans-serif; }
+        .c2 p { font-family: 'Spectral', serif; }
+
+        .c3 h2 { font-family: 'DM Sans', sans-serif; }
+        .c3 p { font-family: 'Spectral', serif; }
+
+        .c4 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c4 p { font-family: 'Source Serif 4', serif; }
+
+        .c5 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c5 p { font-family: 'STIX Two Text', serif; }
+
+        .c6 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c6 p { font-family: 'Crimson Pro', serif; }
+
+        .c7 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c7 p { font-family: 'Lora', serif; }
+
+        .c8 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c8 p { font-family: 'Literata', serif; }
+
+        .c9 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c9 p { font-family: 'EB Garamond', serif; }
+
+        .c10 h2 { font-family: 'Source Sans 3', sans-serif; }
+        .c10 p { font-family: 'Source Serif 4', serif; }
+
+        .c11 h2 { font-family: 'Work Sans', sans-serif; }
+        .c11 p { font-family: 'Spectral', serif; }
+
+        .c12 h2 { font-family: 'Inter', sans-serif; }
+        .c12 p { font-family: 'Literata', serif; }
+
+        .c13 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c13 p { font-family: 'PT Serif', serif; }
+
+        .c14 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c14 p { font-family: 'IBM Plex Serif', serif; }
+
+        .c15 h2 { font-family: 'IBM Plex Sans', sans-serif; }
+        .c15 p { font-family: 'Merriweather', serif; }
+    </style>
+</head>
+<body>
+    <h1>Header + Body Font Combinations</h1>
+    <div class="grid">
+        <div class="combo c1">
+            <div class="combo-label"><span>IBM Plex Sans</span> + Spectral (current)</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c2">
+            <div class="combo-label"><span>Inter</span> + Spectral</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c3">
+            <div class="combo-label"><span>DM Sans</span> + Spectral</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c11">
+            <div class="combo-label"><span>Work Sans</span> + Spectral</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c4">
+            <div class="combo-label"><span>IBM Plex Sans</span> + Source Serif 4</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c5">
+            <div class="combo-label"><span>IBM Plex Sans</span> + STIX Two Text</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c6">
+            <div class="combo-label"><span>IBM Plex Sans</span> + Crimson Pro</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c7">
+            <div class="combo-label"><span>IBM Plex Sans</span> + Lora</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c8">
+            <div class="combo-label"><span>IBM Plex Sans</span> + Literata</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c9">
+            <div class="combo-label"><span>IBM Plex Sans</span> + EB Garamond</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c10">
+            <div class="combo-label"><span>Source Sans 3</span> + Source Serif 4</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c12">
+            <div class="combo-label"><span>Inter</span> + Literata</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c13">
+            <div class="combo-label"><span>IBM Plex Sans</span> + PT Serif (current)</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c14">
+            <div class="combo-label"><span>IBM Plex Sans</span> + IBM Plex Serif</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+
+        <div class="combo c15">
+            <div class="combo-label"><span>IBM Plex Sans</span> + Merriweather</div>
+            <h2>Siddharth Mishra-Sharma</h2>
+            <p>I'm a Member of Technical Staff at <a href="#">Anthropic</a>, where I work on Claude's scientific capabilities. I'm also an Assistant Professor at <a href="#" class="bu">Boston University</a>. I'm currently based in San Francisco.</p>
+        </div>
+    </div>
+</body>
+</html>
