@@ -1,99 +1,232 @@
 :root {
-    --bg-color: #f5f5f5;
-    --text-color: #000;
-    --link-hover: none;
+    --bg-color: #faf8f4;
+    --text-color: #2c2c2c;
+    --text-secondary: #5a5a5a;
+    --text-muted: #8a8a8a;
+    --border-color: #e0ddd8;
+    --link-color: #2c2c2c;
+    --accent-anthropic: #c46a4a;
+    --accent-bu: #cc0000;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 22px;
+    line-height: 1.75;
     color: var(--text-color);
     background-color: var(--bg-color);
     margin: 0;
-    padding: 40px 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 80px 32px;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'ss01' 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 .container {
-    max-width: 850px;
+    max-width: 984px;
     margin: 0 auto;
+}
+
+/* Name */
+h1 {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 46px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 34px 0;
+    color: var(--text-color);
+}
+
+/* Intro section */
+.intro {
+    display: flex;
+    gap: 58px;
+    align-items: flex-start;
+    margin-bottom: 29px;
+}
+
+.intro-text {
+    flex: 1;
+}
+
+.intro-text p {
+    margin: 0 0 18px 0;
+    color: var(--text-color);
+}
+
+.intro-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Profile photo */
+.profile-photo {
+    flex-shrink: 0;
+    width: 168px;
+    height: 168px;
+    border-radius: 19px;
+    object-fit: cover;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: grayscale(5%);
+}
+
+.profile-photo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Sections */
+section {
+    padding: 28px 0;
+}
+
+/* Note/callout box */
+.note {
+    margin: 28px 0 0 0;
+    padding: 20px 24px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 17px;
+}
+
+.note strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.note p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+section:first-of-type {
+    margin-top: 48px;
+    padding-top: 48px;
     position: relative;
 }
 
-h1 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0 0 30px 0;
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
+section:first-of-type::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        var(--border-color) 15%,
+        var(--border-color) 42%,
+        transparent 48%,
+        transparent 52%,
+        var(--border-color) 58%,
+        var(--border-color) 85%,
+        transparent
+    );
 }
 
-.profile-photo {
-    float: right;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: 0 0 15px 25px;
-    object-fit: cover;
-}
-
-section,
-.intro-section {
-    background-color: rgba(0, 0, 0, 0.02);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    clear: both;
+section:first-of-type::after {
+    content: '❧';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: var(--text-muted);
+    background: var(--bg-color);
+    padding: 0 14px;
 }
 
 h2 {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0 0 15px 0;
-}
-
-p {
-    margin: 0 0 15px 0;
-}
-
-/* First two paragraphs (intro) stay normal weight */
-.container > p:nth-of-type(1),
-.container > p:nth-of-type(2) {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
     color: var(--text-color);
+    margin: 0 0 18px 0;
 }
 
-/* All paragraphs same style */
-h2 ~ p {
+section p {
+    margin: 0 0 18px 0;
     color: var(--text-color);
-    font-size: 15px;
+    font-size: 19px;
 }
 
+section p:last-child {
+    margin-bottom: 0;
+}
+
+/* Links */
 a {
-    color: var(--text-color);
-    text-decoration: underline;
-    transition: opacity 0.2s ease;
+    color: var(--link-color);
+    text-decoration: none;
+    background-image: linear-gradient(var(--border-color), var(--border-color));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease, color 0.2s ease;
 }
 
 a:hover {
-    text-decoration: none;
-    opacity: 0.7;
+    background-image: linear-gradient(var(--text-color), var(--text-color));
 }
 
 a.anthropic {
-    color: #CC785C;
+    color: var(--accent-anthropic);
+    background-image: linear-gradient(var(--border-color), var(--border-color));
+}
+
+a.anthropic:hover {
+    background-image: linear-gradient(var(--accent-anthropic), var(--accent-anthropic));
 }
 
 a.bu {
-    color: #CC0000;
+    color: var(--accent-bu);
+    background-image: linear-gradient(var(--border-color), var(--border-color));
 }
 
+a.bu:hover {
+    background-image: linear-gradient(var(--accent-bu), var(--accent-bu));
+}
+
+/* Links list in Research section */
+.links-row {
+    font-size: 20px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.links-row a {
+    color: #2d7a6d;
+}
+
+.links-row a:hover {
+    color: #236358;
+}
+
+/* Hover image effect */
 .sf-hover {
     position: relative;
-    cursor: help;
-    text-decoration: underline;
+    cursor: default;
+    background-image: linear-gradient(var(--border-color), var(--border-color));
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.sf-hover:hover {
+    background-image: linear-gradient(var(--text-color), var(--text-color));
 }
 
 .sf-hover-image {
@@ -102,25 +235,27 @@ a.bu {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 70vw;
-    max-height: 70vh;
+    max-width: 60vw;
+    max-height: 60vh;
     width: auto;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.04),
+        0 30px 100px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     pointer-events: none;
 }
 
 .sf-hover:hover .sf-hover-image {
     display: block;
-    animation: fadeIn 0.3s ease;
+    animation: imageReveal 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes fadeIn {
+@keyframes imageReveal {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.95);
+        transform: translate(-50%, -46%) scale(0.96);
     }
     to {
         opacity: 1;
@@ -128,25 +263,59 @@ a.bu {
     }
 }
 
+/* Subtle page fade in */
+@keyframes pageLoad {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: pageLoad 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Responsive */
 @media (max-width: 640px) {
     body {
-        padding: 20px 15px;
+        padding: 48px 24px;
+        font-size: 17px;
     }
 
-    .container {
-        max-width: 100%;
+    h1 {
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 28px;
+    }
+
+    .intro {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 28px;
+    }
+
+    .profile-photo {
+        width: 110px;
+        height: 110px;
+        border-radius: 14px;
+    }
+
+    section {
+        padding: 20px 0;
+    }
+
+    section:first-of-type {
+        margin-top: 32px;
+        padding-top: 32px;
     }
 
     .sf-hover-image {
         max-width: 90vw;
-        max-height: 60vh;
-    }
-
-    .profile-photo {
-        float: none;
-        display: block;
-        margin: 0 auto 20px auto;
-        width: 100px;
-        height: 100px;
+        max-height: 55vh;
     }
 }
