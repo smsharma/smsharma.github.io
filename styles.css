@@ -31,6 +31,27 @@ body {
     margin: 0 auto;
 }
 
+/* Top navigation */
+.top-nav {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 28px;
+    margin-bottom: -8px;
+}
+
+.top-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    background: none;
+}
+
+.top-nav a:hover {
+    color: var(--text-color);
+    background: none;
+}
+
 /* Name */
 h1 {
     font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;

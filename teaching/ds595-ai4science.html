@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CDS DS 595: AI Methods for Science | Siddharth Mishra-Sharma</title>
+    <meta name="description" content="CDS DS 595: AI Methods for Science - A graduate course at Boston University on machine learning methods for scientific discovery.">
+
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="icon" type="image/png" href="../favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #faf8f4;
+            --text-color: #2c2c2c;
+            --text-secondary: #5a5a5a;
+            --text-muted: #8a8a8a;
+            --border-color: #e0ddd8;
+            --link-color: #2c2c2c;
+            --accent-bu: #cc0000;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Spectral', Georgia, serif;
+            font-size: 18px;
+            line-height: 1.75;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 60px 32px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 984px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            margin-bottom: 48px;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            background: none;
+        }
+
+        .nav a:hover {
+            color: var(--text-color);
+            background: none;
+        }
+
+        /* Course header */
+        .course-code {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent-bu);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 38px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin: 0 0 12px 0;
+            color: var(--text-color);
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        /* Quick links */
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 20px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quick-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .quick-links a:hover {
+            color: var(--accent-bu);
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-color);
+            margin: 0 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-color);
+            margin: 24px 0 12px 0;
+        }
+
+        p {
+            margin: 0 0 16px 0;
+        }
+
+        /* Links */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            background-image: linear-gradient(var(--border-color), var(--border-color));
+            background-size: 100% 1px;
+            background-position: 0 100%;
+            background-repeat: no-repeat;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            background-image: linear-gradient(var(--text-color), var(--text-color));
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 0 0 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* Info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 8px 16px;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .info-grid dt {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .info-grid dd {
+            margin: 0;
+        }
+
+        /* Schedule cards */
+        .schedule-list {
+            margin-top: 16px;
+        }
+
+        .week-card {
+        }
+
+        .week-card:last-child {
+        }
+
+        .week-card-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .week-meta {
+            flex-shrink: 0;
+            width: 90px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 13px;
+        }
+
+        .week-num {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .week-date {
+            color: var(--text-muted);
+        }
+
+        .week-header {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .week-title {
+            font-weight: 500;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .week-lectures {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .week-deliverable {
+            flex-shrink: 0;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 12px;
+            color: var(--accent-bu);
+            text-align: right;
+            margin-left: 16px;
+        }
+
+        .week-readings {
+            flex-shrink: 0;
+            width: 220px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: left;
+            margin-left: 24px;
+            list-style: disc;
+            padding-left: 16px;
+        }
+
+        .week-readings li {
+            margin-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        .week-readings a {
+            color: var(--text-secondary);
+            background: none;
+        }
+
+        .week-readings a:hover {
+            color: var(--accent-bu);
+        }
+
+        .week-readings + .week-deliverable {
+            flex-basis: 100%;
+            margin-top: 8px;
+        }
+
+        .week-header-row {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 24px 0 8px 0;
+            margin-top: 8px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .week-header-row:first-child {
+            padding-top: 0;
+            margin-top: 0;
+            border-top: none;
+        }
+
+        /* Break week styling */
+        .week-break {
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .week-break .week-meta {
+            margin-left: 26px;
+        }
+
+        .week-break .week-title {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* Grading breakdown */
+        .grading-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 16px;
+        }
+
+        .grading-item:last-child {
+            border-bottom: none;
+            font-weight: 500;
+        }
+
+        .grading-percent {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: var(--text-muted);
+        }
+
+        /* Note box */
+        .note {
+            background: rgba(204, 0, 0, 0.04);
+            border-left: 3px solid var(--accent-bu);
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 16px;
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        /* Topic tags */
+        .topic-tag {
+            display: inline-block;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            background: rgba(0,0,0,0.04);
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-right: 6px;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            body {
+                padding: 40px 20px;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+
+            .info-grid dt {
+                margin-top: 12px;
+            }
+
+            .schedule-table {
+                font-size: 14px;
+            }
+
+            .quick-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <nav class="nav">
+            <a href="../index.html">&larr; Siddharth Mishra-Sharma</a>
+        </nav>
+
+        <div class="course-code">CDS DS 595</div>
+        <h1>AI Methods for Science</h1>
+        <p class="subtitle">Boston University &middot; Spring 2026</p>
+
+        <nav class="quick-links">
+            <a href="#about">About</a>
+            <a href="#logistics">Logistics</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#grading">Grading</a>
+            <a href="#policies">Policies</a>
+        </nav>
+
+        <section id="about">
+            <h2>About the Course</h2>
+            <p>AI is increasingly central to how science gets done&mdash;from protein structure prediction to simulation and experimental design. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for molecular and scientific data, simulation-based inference, and interpretability.</p>
+
+            <p>A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities and limitations.</p>
+
+            <p>Applications are drawn from physics, materials science, and biology. The course involves two projects: applying AI methods to a scientific problem, and finetuning an LLM for a scientific capability. Weekly discussion sections provide hands-on implementation practice.</p>
+
+            <h3>Learning Objectives</h3>
+            <p>By the end of this course, students will be able to:</p>
+            <ul>
+                <li>Apply probabilistic inference and sampling methods (e.g., MCMC) to scientific problems</li>
+                <li>Build neural networks that incorporate symmetries and other scientific priors</li>
+                <li>Train generative models (e.g., diffusion models) to emulate scientific data distributions</li>
+                <li>Use simulation-based inference to connect simulators with observations</li>
+                <li>Evaluate the edges and limitations of LLM capabilities for scientific reasoning</li>
+                <li>Develop intuitions for when and how to collaborate effectively with AI systems on scientific tasks</li>
+                <li>Read and critically assess AI-for-science research papers</li>
+            </ul>
+
+<!--
+            <h3>Prerequisites</h3>
+            <ul>
+                <li>Basic multivariable calculus and linear algebra</li>
+                <li>Probability and statistics</li>
+                <li>Familiarity with deep learning</li>
+                <li>Familiarity with PyTorch or JAX</li>
+                <li>Strong Python programming skills</li>
+            </ul>
+            <p>Recommended: Prior AI/ML coursework and exposure to a scientific domain.</p>
+            -->
+        </section>
+
+        <section id="logistics">
+            <h2>Logistics</h2>
+            <dl class="info-grid">
+                <dt>Lecture</dt>
+                <dd>Mon/Wed 12:20&ndash;2:05pm, CAS 218</dd>
+                <dt>Discussion</dt>
+                <dd>Tue 11:15am&ndash;12:05pm, MUG 205</dd>
+                <dt>Instructor</dt>
+                <dd><a href="https://smsharma.github.io">Siddharth Mishra-Sharma</a> (smishras@bu.edu)</dd>
+                <dt>Office Hours</dt>
+                <dd>TBD, or by appointment</dd>
+            </dl>
+
+            <h3>Resources</h3>
+            <ul>
+                <li><strong>Course materials:</strong> Lecture slides and notebooks will be posted on the course website</li>
+                <li><strong>Discussion:</strong> Piazza (link TBD)</li>
+                <li><strong>Assignments:</strong> Gradescope (link TBD)</li>
+                <li><strong>Computing:</strong> GPU access and LLM API/finetuning credits will be provided for project work</li>
+            </ul>
+
+            <p>There is no required textbook. Readings will be drawn from research papers and online resources.</p>
+        </section>
+
+        <section id="schedule">
+            <h2>Schedule</h2>
+            <p>This schedule will change as the course progresses.</p>
+
+            <div class="schedule-list">
+
+                <div class="week-header-row">Week 1</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L1</div>
+                            <div class="week-date">Wed Jan 21</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Science as Computation</div>
+                            <div class="week-lectures">Course intro and logistics; The AI for science landscape; Historical perspectives</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 2</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L2</div>
+                            <div class="week-date">Mon Jan 26</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Scientific Problems as ML Tasks</div>
+                            <div class="week-lectures">Classification, regression, inference, generation, compression, anomaly detection</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/">Bishop, PRML Ch 1</a></li>
+                            <li><a href="https://probml.github.io/pml-book/">Murphy, MLAPA Ch 1</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L3</div>
+                            <div class="week-date">Wed Jan 28</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Reasoning Under Uncertainty</div>
+                            <div class="week-lectures">Bayesian inference; Priors, likelihoods, and posteriors</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://xcelab.net/rm/">McElreath, Statistical Rethinking Ch 1-2</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 3</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L4</div>
+                            <div class="week-date">Mon Feb 2</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Exploring High-Dimensional Spaces</div>
+                            <div class="week-lectures">MCMC; Monte Carlo methods</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://xcelab.net/rm/">McElreath, Statistical Rethinking Ch 3, 9</a></li>
+                            <li><a href="https://arxiv.org/abs/1710.06068">Hogg, Using MCMC</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L5</div>
+                            <div class="week-date">Wed Feb 4</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Learning Distributions Through Optimization</div>
+                            <div class="week-lectures">Variational inference</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://lacerbi.github.io/blog/2024/vi-is-inference-is-optimization/">Acerbi, VI is Optimization</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 4</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L6</div>
+                            <div class="week-date">Mon Feb 9</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Building Blocks of Learned Representations</div>
+                            <div class="week-lectures">How data and models inform NN architectures; CNNs</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://d2l.ai/chapter_convolutional-neural-networks/why-conv.html">d2l.ai, From FC Layers to Convolutions</a></li>
+                            <li><a href="https://karpathy.github.io/2019/04/25/recipe/">Karpathy, Recipe for Training NNs</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L7</div>
+                            <div class="week-date">Wed Feb 11</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Encoding Scientific Structure</div>
+                            <div class="week-lectures">Graphs and locality; GNNs; Sequence and time-series models</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://distill.pub/2021/gnn-intro/">Distill, A Gentle Intro to GNNs</a></li>
+                            <li><a href="https://distill.pub/2021/understanding-gnns/">Distill, Understanding Convolutions on Graphs</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 5</div>
+                <div class="week-break">
+                    <div class="week-meta">
+                        <div class="week-num">&mdash;</div>
+                        <div class="week-date">Mon Feb 16</div>
+                    </div>
+                    <div class="week-header">
+                        <div class="week-title">No class &mdash; Presidents' Day</div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L8</div>
+                            <div class="week-date">Tue Feb 17</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Encoding Symmetries</div>
+                            <div class="week-lectures">Equivariant/symmetry-preserving neural networks</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://arxiv.org/abs/2312.07511">Duval+, Hitchhiker's Guide to Geometric GNNs</a></li>
+                            <li><a href="https://arxiv.org/abs/2410.23179">Brehmer+, Does Equivariance Matter at Scale?</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L9</div>
+                            <div class="week-date">Wed Feb 18</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Learning Distributions from Data I</div>
+                            <div class="week-lectures">Density estimation; Latent variable models; VAEs</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://blog.alexalemi.com/diffusion.html">Alemi, Diffusion is Variational Inference</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 6</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L10</div>
+                            <div class="week-date">Mon Feb 23</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Learning Distributions from Data II</div>
+                            <div class="week-lectures">Diffusion models</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://yang-song.net/blog/2021/score/">Song, Score-Based Generative Models</a></li>
+                            <li><a href="https://arxiv.org/abs/2406.08929">Nakkiran+, Step-by-Step Diffusion</a></li>
+                            <li><a href="https://arxiv.org/abs/2510.21890">Lai+, Principles of Diffusion Models</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L11</div>
+                            <div class="week-date">Wed Feb 25</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Applications</div>
+                            <div class="week-lectures">Molecules, Materials, and Proteins</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 7</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L12</div>
+                            <div class="week-date">Mon Mar 2</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Guest Lecture</div>
+                            <div class="week-lectures">AI + drug discovery</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L13</div>
+                            <div class="week-date">Wed Mar 4</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Differentiating Through Simulators</div>
+                            <div class="week-lectures">Differentiable programming</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://dfm.io/posts/intro-to-numpyro/">Foreman-Mackey, Intro to NumPyro</a></li>
+                        </ul>
+                        <div class="week-deliverable">Midterm proposal due</div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Spring Recess</div>
+                <div class="week-break">
+                    <div class="week-meta">
+                        <div class="week-num">&mdash;</div>
+                        <div class="week-date">Mar 7&ndash;15</div>
+                    </div>
+                    <div class="week-header">
+                        <div class="week-title">Spring Recess &mdash; No classes</div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 8</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L14</div>
+                            <div class="week-date">Mon Mar 16</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Learning Through Exploration</div>
+                            <div class="week-lectures">Reinforcement learning; Search</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://lilianweng.github.io/posts/2018-02-19-rl-overview/">Weng, A Long Peek into RL</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L15</div>
+                            <div class="week-date">Wed Mar 18</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Inverting Simulators I</div>
+                            <div class="week-lectures">Simulation-based inference</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://arxiv.org/abs/1911.01429">Cranmer+, Frontier of SBI</a></li>
+                            <li><a href="https://arxiv.org/abs/2508.12939">Deistler+, SBI Practical Guide</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 9</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L16</div>
+                            <div class="week-date">Mon Mar 23</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Inverting Simulators II</div>
+                            <div class="week-lectures">Simulation-based inference</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://arxiv.org/abs/1911.01429">Cranmer+, Frontier of SBI</a></li>
+                            <li><a href="https://arxiv.org/abs/2508.12939">Deistler+, SBI Practical Guide</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L17</div>
+                            <div class="week-date">Wed Mar 25</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Equation Discovery</div>
+                            <div class="week-lectures">Symbolic regression</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 10</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L18</div>
+                            <div class="week-date">Mon Mar 30</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Applications</div>
+                            <div class="week-lectures">Physics and cosmology</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L19</div>
+                            <div class="week-date">Wed Apr 1</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Guest Lecture</div>
+                            <div class="week-lectures">AI + particle collider physics</div>
+                        </div>
+                        <div class="week-deliverable">Midterm project due</div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 11</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L20</div>
+                            <div class="week-date">Mon Apr 6</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">From Specialized to General Intelligence</div>
+                            <div class="week-lectures">From task-specific, to domain-specific, to general scientific agents</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L21</div>
+                            <div class="week-date">Wed Apr 8</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">LLM Building Blocks</div>
+                            <div class="week-lectures">Attention; Transformers</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 12</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L22</div>
+                            <div class="week-date">Mon Apr 13</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Scientific, Reasoning, and Agentic Capabilities of LLMs</div>
+                            <div class="week-lectures">Reasoning, scientific, and agentic capabilities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L23</div>
+                            <div class="week-date">Wed Apr 15</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Quantifying LLM Scientific Capabilities</div>
+                            <div class="week-lectures">Evaluations</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://zhengdongwang.com/2024/12/29/2024-letter.html">Wang, 2024 Letter</a></li>
+                            <li><a href="https://metr.org/blog/2025-07-14-how-does-time-horizon-vary-across-domains/">METR, Time Horizons</a></li>
+                            <li><a href="https://metr.org/blog/2024-11-22-evaluating-r-d-capabilities-of-llms/">METR, R&D Capabilities</a></li>
+                            <li><a href="https://epoch.ai/blog/what-will-ai-look-like-in-2030">Epoch, AI in 2030</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 13</div>
+                <div class="week-break">
+                    <div class="week-meta">
+                        <div class="week-num">&mdash;</div>
+                        <div class="week-date">Mon Apr 20</div>
+                    </div>
+                    <div class="week-header">
+                        <div class="week-title">No class &mdash; Holiday</div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L24</div>
+                            <div class="week-date">Wed Apr 22</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Foundation Models for Science</div>
+                            <div class="week-lectures">Beyond text</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://arxiv.org/abs/2510.17960">Parker+, AION-1</a></li>
+                            <li><a href="https://arxiv.org/abs/2401.00096">Batatia+, MACE-MP-0</a></li>
+                        </ul>
+                        <div class="week-deliverable">Final proposal due</div>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Week 14</div>
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L25</div>
+                            <div class="week-date">Mon Apr 27</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">Frontiers</div>
+                            <div class="week-lectures">Cutting-edge topic</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week-card">
+                    <div class="week-card-row">
+                        <div class="week-meta">
+                            <div class="week-num">L26</div>
+                            <div class="week-date">Wed Apr 29</div>
+                        </div>
+                        <div class="week-header">
+                            <div class="week-title">What Does It Mean to Be a Human Scientist?</div>
+                            <div class="week-lectures">In an AI-driven scientific landscape</div>
+                        </div>
+                        <ul class="week-readings">
+                            <li><a href="https://arxiv.org/abs/2511.16072">Bubeck+, GPT-5 for Science</a></li>
+                            <li><a href="https://terrytao.wordpress.com/2025/12/08/the-story-of-erdos-problem-126/">Tao, Story of Erdős Problem 126</a></li>
+                            <li><a href="https://distill.pub/2017/aia/">Carter & Nielsen, Using AI to Augment Human Intelligence</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-header-row">Finals</div>
+                <div class="week-break">
+                    <div class="week-meta">
+                        <div class="week-num">&mdash;</div>
+                        <div class="week-date">Mon May 4</div>
+                    </div>
+                    <div class="week-header">
+                        <div class="week-title">Finals &mdash; No exam</div>
+                    </div>
+                    <div class="week-deliverable">Final project due</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="grading">
+            <h2>Grading</h2>
+
+            <div class="grading-item">
+                <span>Paper Presentations &amp; Discussion</span>
+                <span class="grading-percent">15%</span>
+            </div>
+            <div class="grading-item">
+                <span>Class Participation</span>
+                <span class="grading-percent">10%</span>
+            </div>
+            <div class="grading-item">
+                <span>Midterm Project</span>
+                <span class="grading-percent">30%</span>
+            </div>
+            <div class="grading-item">
+                <span>Final Project</span>
+                <span class="grading-percent">45%</span>
+            </div>
+            <div class="grading-item">
+                <span>Total</span>
+                <span class="grading-percent">100%</span>
+            </div>
+
+            <h3>Discussion Sections</h3>
+            <p>Weekly sessions focused on hands-on implementation and applications of methods from lectures. These provide opportunities to work through code, explore scientific datasets, and deepen understanding of course material.</p>
+
+            <h3>Paper Presentations</h3>
+            <p>Students will present 1&ndash;2 research papers throughout the semester and lead class discussions.</p>
+
+            <h3>Midterm Project</h3>
+            <p>Teams of 2&ndash;3 apply methods from the course to a scientific domain problem.</p>
+            <ul>
+                <li><strong>Proposal</strong> (March 16): Brief description of the problem and approach</li>
+                <li><strong>Final report</strong> (April 6): 4&ndash;6 pages + code</li>
+            </ul>
+
+            <h3>Final Project</h3>
+            <p>Teams of 2&ndash;3 identify and thoroughly evaluate a scientific capability that current LLMs struggle with, then finetune a language model (e.g., using reinforcement learning) with domain-specific data to improve that capability.</p>
+            <ul>
+                <li><strong>Proposal</strong> (April 22): 2-page problem description and plan</li>
+                <li><strong>Final report</strong> (May 4): 6&ndash;8 pages, NeurIPS format</li>
+            </ul>
+        </section>
+
+        <section id="policies">
+            <h2>Policies</h2>
+
+            <h3>Attendance</h3>
+            <p>Regular attendance is expected. Please notify the instructor of planned absences.</p>
+
+            <h3>Late Work</h3>
+            <p>Late submissions will be penalized unless prior arrangements are made. Extensions may be granted for documented emergencies.</p>
+
+            <h3>Collaboration</h3>
+            <p>Discussion of concepts and approaches is encouraged. However, all submitted code and written work must be your own. When collaborating, you must acknowledge your collaborators.</p>
+
+            <h3>AI Tools</h3>
+            <p>Use of generative AI must conform to the <a href="https://www.bu.edu/cds-faculty/culture-community/gaia-policy/">CDS GAIA policy</a>. AI tools may be used to help with understanding concepts, outlining, debugging, and revising language&mdash;but not to substantially complete assignments. AI assistance must be disclosed.</p>
+
+            <h3>Academic Conduct</h3>
+            <p>All students are expected to read and abide by the <a href="https://www.bu.edu/academics/policies/academic-conduct-code/">BU Academic Code of Conduct</a>. Plagiarism includes copying or restating work or ideas of another person or AI software without citing the source. In computing coursework, this includes sharing code, reusing code across courses without permission, and uploading assignments to external sites. Please review the <a href="https://www.bu.edu/cs/undergraduate/undergraduate-life/academic-integrity/">examples of plagiarism provided by the BU Computer Science department</a>. All suspected cases of plagiarism will be reported to the Academic Dean.</p>
+
+            <h3>Accommodations</h3>
+            <p>Boston University is committed to providing reasonable accommodations to students with documented disabilities. Students seeking accommodations should contact <a href="https://www.bu.edu/disability/">Disability &amp; Access Services</a> (25 Buick Street, Suite 300; 617-353-3658) as early as possible in the semester. A new Faculty Accommodation Letter (FAL) must be requested each semester; DAS will send this directly to instructors.</p>
+
+            <h3>Religious Observance</h3>
+            <p>Students observing a religious holiday during regularly scheduled class time are entitled to an excused absence. Please notify the instructor in advance to make arrangements for any missed work.</p>
+
+            <h3>Recordings</h3>
+            <p>Recording of lectures requires instructor permission. Students approved for recording as an accommodation must limit use to personal study and may not share recordings.</p>
+        </section>
+
+    </main>
+</body>
+</html>
