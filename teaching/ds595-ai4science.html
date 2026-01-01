@@ -408,21 +408,21 @@
 
         <section id="about">
             <h2>About the Course</h2>
-            <p>AI is increasingly central to how science gets done&mdash;from protein structure prediction to simulation and experimental design. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for molecular and scientific data, simulation-based inference, and interpretability.</p>
+            <p>AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference.</p>
 
-            <p>A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities and limitations.</p>
+            <p>Applications are drawn from domains including physics, materials science, and biology. The course involves two projects: applying AI methods to a scientific problem, and finetuning an LLM to elicit a scientific capability. Weekly discussion sections provide hands-on implementation practice.</p>
 
-            <p>Applications are drawn from physics, materials science, and biology. The course involves two projects: applying AI methods to a scientific problem, and finetuning an LLM for a scientific capability. Weekly discussion sections provide hands-on implementation practice.</p>
+            <p>A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities as well as limitations.</p>
 
             <h3>Learning Objectives</h3>
             <p>By the end of this course, students will be able to:</p>
             <ul>
                 <li>Apply probabilistic inference and sampling methods (e.g., MCMC) to scientific problems</li>
-                <li>Build neural networks that incorporate symmetries and other scientific priors</li>
+                <li>Design neural networks that encode symmetries and domain knowledge</li>
                 <li>Train generative models (e.g., diffusion models) to emulate scientific data distributions</li>
                 <li>Use simulation-based inference to connect simulators with observations</li>
                 <li>Evaluate the edges and limitations of LLM capabilities for scientific reasoning</li>
-                <li>Develop intuitions for when and how to collaborate effectively with AI systems on scientific tasks</li>
+                <li>Develop intuitions for how to collaborate effectively with AI systems on scientific tasks</li>
                 <li>Read and critically assess AI-for-science research papers</li>
             </ul>
 
@@ -455,8 +455,8 @@
             <h3>Resources</h3>
             <ul>
                 <li><strong>Course materials:</strong> Lecture slides and notebooks will be posted on the course website</li>
-                <li><strong>Discussion:</strong> Piazza (link TBD)</li>
-                <li><strong>Assignments:</strong> Gradescope (link TBD)</li>
+                <li><strong>Discussion:</strong> Link TBD</li>
+                <li><strong>Assignments:</strong> Link TBD</li>
                 <li><strong>Computing:</strong> GPU access and LLM API/finetuning credits will be provided for project work</li>
             </ul>
 
@@ -477,7 +477,7 @@
                             <div class="week-date">Wed Jan 21</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Science as Computation</div>
+                            <div class="week-title">Science in the Era of Computation</div>
                             <div class="week-lectures">Course intro and logistics; The AI for science landscape; Historical perspectives</div>
                         </div>
                     </div>
@@ -491,12 +491,11 @@
                             <div class="week-date">Mon Jan 26</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Scientific Problems as ML Tasks</div>
-                            <div class="week-lectures">Classification, regression, inference, generation, compression, anomaly detection</div>
+                            <div class="week-title">Reasoning Under Uncertainty</div>
+                            <div class="week-lectures">Bayesian inference; Priors, likelihoods, and posteriors</div>
                         </div>
                         <ul class="week-readings">
-                            <li><a href="https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/">Bishop, PRML Ch 1</a></li>
-                            <li><a href="https://probml.github.io/pml-book/">Murphy, MLAPA Ch 1</a></li>
+                            <li><a href="https://xcelab.net/rm/">McElreath, Statistical Rethinking Ch 1-2</a></li>
                         </ul>
                     </div>
                 </div>
@@ -508,11 +507,12 @@
                             <div class="week-date">Wed Jan 28</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Reasoning Under Uncertainty</div>
-                            <div class="week-lectures">Bayesian inference; Priors, likelihoods, and posteriors</div>
+                            <div class="week-title">Framing Scientific Problems as ML Tasks</div>
+                            <div class="week-lectures">Classification, regression, inference, generation, compression, anomaly detection, ...</div>
                         </div>
                         <ul class="week-readings">
-                            <li><a href="https://xcelab.net/rm/">McElreath, Statistical Rethinking Ch 1-2</a></li>
+                            <li><a href="https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/">Bishop, PRML Ch 1</a></li>
+                            <li><a href="https://probml.github.io/pml-book/">Murphy, MLAPA Ch 1</a></li>
                         </ul>
                     </div>
                 </div>
@@ -525,7 +525,7 @@
                             <div class="week-date">Mon Feb 2</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Exploring High-Dimensional Spaces</div>
+                            <div class="week-title">Learning by Sampling</div>
                             <div class="week-lectures">MCMC; Monte Carlo methods</div>
                         </div>
                         <ul class="week-readings">
@@ -542,7 +542,7 @@
                             <div class="week-date">Wed Feb 4</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Learning Distributions Through Optimization</div>
+                            <div class="week-title">Learning through Optimization</div>
                             <div class="week-lectures">Variational inference</div>
                         </div>
                         <ul class="week-readings">
@@ -559,8 +559,8 @@
                             <div class="week-date">Mon Feb 9</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Building Blocks of Learned Representations</div>
-                            <div class="week-lectures">How data and models inform NN architectures; CNNs</div>
+                            <div class="week-title">Building Blocks of Learned Representations: Neural Networks Primer</div>
+                            <div class="week-lectures">How data and theory inform NN architectures; CNNs</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://d2l.ai/chapter_convolutional-neural-networks/why-conv.html">d2l.ai, From FC Layers to Convolutions</a></li>
@@ -576,7 +576,7 @@
                             <div class="week-date">Wed Feb 11</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Encoding Scientific Structure</div>
+                            <div class="week-title">Encoding Scientific Structure in Neural Networks I</div>
                             <div class="week-lectures">Graphs and locality; GNNs; Sequence and time-series models</div>
                         </div>
                         <ul class="week-readings">
@@ -604,7 +604,7 @@
                             <div class="week-date">Tue Feb 17</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Encoding Symmetries</div>
+                            <div class="week-title">Encoding Scientific Structure in Neural Networks II</div>
                             <div class="week-lectures">Equivariant/symmetry-preserving neural networks</div>
                         </div>
                         <ul class="week-readings">
@@ -683,7 +683,7 @@
                             <div class="week-date">Wed Mar 4</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Differentiating Through Simulators</div>
+                            <div class="week-title">Differentiating Through Scientific Simulators</div>
                             <div class="week-lectures">Differentiable programming</div>
                         </div>
                         <ul class="week-readings">
@@ -713,7 +713,7 @@
                         </div>
                         <div class="week-header">
                             <div class="week-title">Learning Through Exploration</div>
-                            <div class="week-lectures">Reinforcement learning; Search</div>
+                            <div class="week-lectures">Reinforcement learning and search</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://lilianweng.github.io/posts/2018-02-19-rl-overview/">Weng, A Long Peek into RL</a></li>
@@ -763,7 +763,7 @@
                             <div class="week-date">Wed Mar 25</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Equation Discovery</div>
+                            <div class="week-title">Discovering Equations from Data</div>
                             <div class="week-lectures">Symbolic regression</div>
                         </div>
                     </div>
@@ -818,8 +818,8 @@
                             <div class="week-date">Wed Apr 8</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">LLM Building Blocks</div>
-                            <div class="week-lectures">Attention; Transformers</div>
+                            <div class="week-title">Going Big: LLM Building Blocks</div>
+                            <div class="week-lectures">Attention; Transformers; Compute</div>
                         </div>
                     </div>
                 </div>
@@ -832,9 +832,12 @@
                             <div class="week-date">Mon Apr 13</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Scientific, Reasoning, and Agentic Capabilities of LLMs</div>
-                            <div class="week-lectures">Reasoning, scientific, and agentic capabilities</div>
+                            <div class="week-title">Working with LLM AI Scientists</div>
+                            <div class="week-lectures">Scientific, Reasoning, and Agentic Capabilities of LLMs</div>
                         </div>
+                        <ul class="week-readings">
+                            <li><a href="https://edisonscientific.com/articles/announcing-kosmos">Edison Scientific, Announcing Kosmos</a></li>
+                        </ul>
                     </div>
                 </div>
 
@@ -845,8 +848,8 @@
                             <div class="week-date">Wed Apr 15</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Quantifying LLM Scientific Capabilities</div>
-                            <div class="week-lectures">Evaluations</div>
+                            <div class="week-title">Quantifying and Predicting LLM Scientific Capabilities</div>
+                            <div class="week-lectures">Evaluations and forecasting for scientific R&D tasks</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://zhengdongwang.com/2024/12/29/2024-letter.html">Wang, 2024 Letter</a></li>
@@ -875,8 +878,8 @@
                             <div class="week-date">Wed Apr 22</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Foundation Models for Science</div>
-                            <div class="week-lectures">Beyond text</div>
+                            <div class="week-title">Learning Unified Representations Across Scientific Modalities</div>
+                            <div class="week-lectures">Foundation models for science</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://arxiv.org/abs/2510.17960">Parker+, AION-1</a></li>
@@ -895,7 +898,7 @@
                         </div>
                         <div class="week-header">
                             <div class="week-title">Frontiers</div>
-                            <div class="week-lectures">Cutting-edge topic</div>
+                            <div class="week-lectures">Cutting-edge topic chosen by class</div>
 
                         </div>
                     </div>
@@ -909,7 +912,7 @@
                         </div>
                         <div class="week-header">
                             <div class="week-title">What Does It Mean to Be a Human Scientist?</div>
-                            <div class="week-lectures">In an AI-driven scientific landscape</div>
+                            <div class="week-lectures">Science and research in an AI-driven scientific landscape</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://arxiv.org/abs/2511.16072">Bubeck+, GPT-5 for Science</a></li>
@@ -932,6 +935,9 @@
                 </div>
 
             </div>
+
+            <h3>Topics Not Covered</h3>
+            <p>Due to time constraints, this course does not cover several important areas in AI for science, including neural operators, physics-informed learning, surrogate modeling, causal inference, interpretability methods, experimental design, and active learning.</p>
         </section>
 
         <section id="grading">
@@ -992,7 +998,7 @@
             <p>Discussion of concepts and approaches is encouraged. However, all submitted code and written work must be your own. When collaborating, you must acknowledge your collaborators.</p>
 
             <h3>AI Tools</h3>
-            <p>Use of generative AI must conform to the <a href="https://www.bu.edu/cds-faculty/culture-community/gaia-policy/">CDS GAIA policy</a>. AI tools may be used to help with understanding concepts, outlining, debugging, and revising language&mdash;but not to substantially complete assignments. AI assistance must be disclosed.</p>
+            <p>Learning to work effectively with AI is itself a course objective. Use AI tools freely to explore ideas, debug code, and deepen understanding. Focus on building genuine competence&mdash;understanding <em>why</em> something works, not just <em>that</em> it works. Disclose AI assistance in submissions. See also the <a href="https://www.bu.edu/cds-faculty/culture-community/gaia-policy/">CDS GAIA policy</a>.</p>
 
             <h3>Academic Conduct</h3>
             <p>All students are expected to read and abide by the <a href="https://www.bu.edu/academics/policies/academic-conduct-code/">BU Academic Code of Conduct</a>. Plagiarism includes copying or restating work or ideas of another person or AI software without citing the source. In computing coursework, this includes sharing code, reusing code across courses without permission, and uploading assignments to external sites. Please review the <a href="https://www.bu.edu/cs/undergraduate/undergraduate-life/academic-integrity/">examples of plagiarism provided by the BU Computer Science department</a>. All suspected cases of plagiarism will be reported to the Academic Dean.</p>

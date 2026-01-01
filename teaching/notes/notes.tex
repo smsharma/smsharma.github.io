@@ -1,0 +1,1275 @@
+\documentclass[11pt,a4paper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  AI Methods for Science - Lecture Notes
+%  CDS DS 595, Boston University
+%  Siddharth Mishra-Sharma
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+\usepackage[parfill]{parskip}
+
+% Typography
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{microtype}
+\linespread{1.05}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% Better tables
+\usepackage{booktabs}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% References and PDF metadata
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+\hypersetup{
+    pdftitle={AI Methods for Science - Lecture Notes},
+    pdfauthor={Siddharth Mishra-Sharma},
+    pdfsubject={Machine Learning for Scientific Applications},
+    pdfkeywords={Bayesian inference, machine learning, neural networks, simulation-based inference}
+}
+\usepackage{cleveref}
+
+% Control TOC depth
+\setcounter{tocdepth}{2}
+
+% Section formatting
+\usepackage{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{AI Methods for Science}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Theorem environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}[definition]{Example}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{principle}[definition]{Principle}
+
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+
+% Custom environments for learning objectives and takeaways
+\newenvironment{objectives}{%
+    \vspace{0.5em}
+    \noindent\textbf{Learning Objectives.} After this section, you should be able to:
+    \begin{itemize}
+    \setlength{\itemsep}{2pt}
+}{%
+    \end{itemize}
+    \vspace{0.5em}
+}
+
+\newenvironment{takeaways}{%
+    \vspace{0.5em}
+    \noindent\textbf{Key Takeaways.}
+    \begin{itemize}
+    \setlength{\itemsep}{2pt}
+}{%
+    \end{itemize}
+    \vspace{0.5em}
+}
+
+% Box environments
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtcolorbox{workflowbox}[1][]{
+    colback=blue!5!white,
+    colframe=blue!50!black,
+    fonttitle=\bfseries,
+    title=#1,
+    breakable
+}
+
+% Subtle scientific application box
+\newtcolorbox{sciencebox}[1][]{
+    colback=gray!8!white,
+    colframe=gray!40!black,
+    fonttitle=\bfseries\small,
+    title=#1,
+    boxrule=0.5pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=4pt,
+    breakable
+}
+
+% Custom commands
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\KL}{\mathrm{KL}}
+\newcommand{\ELBO}{\mathrm{ELBO}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dd}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{center}
+{\Large\bfseries AI Methods for Science}\\[0.5em]
+{\large Lecture Notes}\\[1.5em]
+{\normalsize Siddharth Mishra-Sharma}\\[0.3em]
+{\small Boston University $\cdot$ CDS DS 595 $\cdot$ Spring 2026}\\[1em]
+{\small Draft version --- \today}
+\end{center}
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Reasoning Under Uncertainty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Articulate why probability theory is the appropriate framework for scientific inference
+    \item Apply the sum and product rules to manipulate joint distributions
+    \item State and interpret each term in Bayes' theorem
+    \item Distinguish between parameters, latent variables, and observables in a model
+    \item Compute and interpret entropy and KL divergence
+    \item Connect posterior inference to decision-making via expected utility
+\end{objectives}
+
+\subsection{Why probability is the language of science}
+
+Scientific inquiry is fundamentally an exercise in reasoning under uncertainty. Every measurement we make is contaminated by noise---instrumental, environmental, statistical. Every model we construct is necessarily an incomplete description of reality, capturing some aspects of the phenomena while ignoring others. Every prior belief we bring to an analysis reflects our limited knowledge. The question is not whether to deal with uncertainty, but how to do so coherently.
+
+Probability theory provides a mathematically consistent framework for quantifying and manipulating uncertainty. Cox's theorem establishes that any system for reasoning about uncertainty that satisfies basic desiderata of consistency (such as agreeing with common sense in limiting cases and being invariant to how propositions are labeled) must be isomorphic to probability theory.\footnote{This is a strong claim with important caveats. Cox's theorem requires certain technical assumptions, and alternative frameworks (like Dempster-Shafer theory or imprecise probabilities) relax some of these. For most scientific applications, however, probability theory remains the practical standard.} When we adopt the probabilistic framework, we are choosing a mathematically principled approach to uncertain inference that has proven remarkably effective across the sciences.
+
+This perspective has practical implications for scientific practice. The ``error bars'' we report are not merely conventional measures of precision, but quantities that encode our state of knowledge. Model comparison, prediction, and decision-making all reduce to probability calculations. The machinery of probability theory---conditioning, marginalization, Bayes' theorem---becomes our primary toolkit for extracting knowledge from data.
+
+\subsection{The probabilistic framework}
+
+We will use a consistent notation throughout these notes that reflects the structure of scientific inference problems:
+\begin{itemize}
+    \item $\vect{x} \in \mathcal{X}$: \textbf{observed data}. These are the measurements, experimental outcomes, or observations we have collected.
+
+    \item $\vect{\theta} \in \Theta$: \textbf{model parameters}. These are the quantities we wish to learn about---the unknowns that encode the physics, the properties of the system, or the configuration of the world that gave rise to our observations.
+
+    \item $\vect{z} \in \mathcal{Z}$: \textbf{latent variables}. These are unobserved quantities that enter our model but are not the primary quantities of interest. They might represent nuisance parameters we need to marginalize over, hidden states in a dynamical system, or cluster assignments in a mixture model.
+\end{itemize}
+
+\begin{sciencebox}[Application: Gravitational wave parameter estimation]
+When LIGO detects a gravitational wave signal from merging black holes:
+\begin{itemize}
+    \item $\vect{x}$: The strain time series measured by the detector
+    \item $\vect{\theta}$: Source parameters of interest---masses $m_1, m_2$, spin magnitudes, luminosity distance, sky location
+    \item $\vect{z}$: Nuisance parameters---detector calibration uncertainties, noise realizations
+\end{itemize}
+The posterior $p(\vect{\theta} \mid \vect{x})$ tells us what we can infer about the black hole properties from the observed signal.
+\end{sciencebox}
+
+A probabilistic model specifies a joint distribution $p(\vect{x}, \vect{\theta}, \vect{z})$ over all these quantities. This joint distribution is the complete mathematical statement of our assumptions about how the world works: how data arise given parameters and latent structure, what we believe about parameters before seeing data, and how different quantities relate to each other. All subsequent inference reduces to manipulating this joint distribution through the rules of probability.
+
+The power of this framework lies in its ability to separate \emph{modeling}---encoding our scientific knowledge and assumptions---from \emph{inference}---the mechanical application of probability rules to extract conclusions. Once we commit to a joint distribution, the conclusions follow deterministically from the mathematics.
+
+\subsection{The rules of probability}
+
+All of probability theory can be derived from two fundamental rules, which in turn follow from the basic axioms of probability:
+
+\textbf{Sum rule (marginalization).} If we are not interested in some subset of variables, we can ``integrate them out'' to obtain the marginal distribution over the remaining variables:
+\begin{equation}
+p(\vect{x}) = \int p(\vect{x}, \vect{z})\, \mathrm{d}\vect{z}
+\end{equation}
+For discrete variables, the integral is replaced by a sum. This operation is called marginalization, and it expresses a profound idea: if we don't care about $\vect{z}$, we should average over all its possible values weighted by their probabilities.
+
+Marginalization is the key to handling nuisance parameters in scientific inference. We often care about some parameters (e.g., the cosmological matter density $\Omega_m$) but not others (e.g., the precise calibration of our instrument). Rather than fixing nuisances to some estimate, we marginalize over them, properly propagating their uncertainty into our conclusions.
+
+\textbf{Product rule.} The joint distribution over multiple variables can always be factored as a product of a marginal and a conditional:
+\begin{equation}
+p(\vect{x}, \vect{z}) = p(\vect{x} \mid \vect{z})\, p(\vect{z}) = p(\vect{z} \mid \vect{x})\, p(\vect{x})
+\end{equation}
+The conditional distribution $p(\vect{x} \mid \vect{z})$ describes our beliefs about $\vect{x}$ given that we know the value of $\vect{z}$. The product rule is the basis for building complex models from simpler pieces.
+
+From the product rule, we immediately obtain Bayes' theorem:
+\begin{equation}
+\boxed{p(\vect{\theta} \mid \vect{x}) = \frac{p(\vect{x} \mid \vect{\theta})\, p(\vect{\theta})}{p(\vect{x})}}
+\label{eq:bayes}
+\end{equation}
+
+This single equation is the foundation of scientific inference. Let us examine each term:
+
+\begin{itemize}
+    \item $p(\vect{\theta})$ is the \textbf{prior distribution}. It encodes our beliefs about the parameters before observing any data. The prior is where we inject domain knowledge: physical constraints (masses must be positive), previous experimental results, theoretical expectations, or regularizing assumptions (smoothness, sparsity).
+
+    \item $p(\vect{x} \mid \vect{\theta})$ is the \textbf{likelihood function}. Viewed as a function of $\vect{\theta}$ for fixed data $\vect{x}$, it quantifies how well each parameter value explains the observed data.
+
+    \item $p(\vect{\theta} \mid \vect{x})$ is the \textbf{posterior distribution}. It represents our updated beliefs about the parameters after observing the data.
+
+    \item $p(\vect{x}) = \int p(\vect{x} \mid \vect{\theta})\, p(\vect{\theta})\, \mathrm{d}\vect{\theta}$ is the \textbf{evidence} (also called the marginal likelihood). It plays a crucial role in model comparison.
+\end{itemize}
+
+\begin{sciencebox}[Application: Exoplanet detection]
+When searching for exoplanets via the radial velocity method:
+\begin{itemize}
+    \item \textbf{Prior} $p(\vect{\theta})$: Planet masses follow a power law; orbital periods are log-uniform; eccentricities are typically small
+    \item \textbf{Likelihood} $p(\vect{x} \mid \vect{\theta})$: Given orbital parameters, predict the radial velocity curve; compare to observed velocities accounting for measurement noise
+    \item \textbf{Posterior} $p(\vect{\theta} \mid \vect{x})$: Probability distribution over planet mass, period, eccentricity given the observations
+    \item \textbf{Evidence} $p(\vect{x})$: Compare a 1-planet model to a 2-planet model by computing their evidence ratio
+\end{itemize}
+\end{sciencebox}
+
+\begin{remark}
+When the evidence $p(\vect{x})$ is intractable, we often work with the unnormalized posterior $\tilde{p}(\vect{\theta} \mid \vect{x}) = p(\vect{x} \mid \vect{\theta})\, p(\vect{\theta})$. Many inference algorithms (e.g., MCMC) only require evaluating the unnormalized posterior, since the normalization constant cancels in ratios.
+\end{remark}
+
+\subsection{The inference workflow}
+
+Before we dive into specific methods, it is useful to have a high-level view of the inference process. Every inference problem follows a common workflow:
+
+\begin{workflowbox}[The Inference Workflow]
+\begin{enumerate}
+    \item \textbf{Specify the generative model.} Write down the joint distribution $p(\vect{x}, \vect{\theta}, \vect{z})$. This requires choosing the likelihood $p(\vect{x} \mid \vect{\theta}, \vect{z})$, the prior $p(\vect{\theta})$, and any latent variable distributions $p(\vect{z} \mid \vect{\theta})$.
+
+    \item \textbf{Identify the inference target.} What quantity do you need? Common targets include:
+    \begin{itemize}
+        \item Posterior: $p(\vect{\theta} \mid \vect{x})$
+        \item Posterior predictive: $p(\vect{x}_{\text{new}} \mid \vect{x})$
+        \item Evidence: $p(\vect{x})$ (for model comparison)
+        \item Latent variables: $p(\vect{z} \mid \vect{x})$
+    \end{itemize}
+
+    \item \textbf{Choose an inference method.} Based on the structure of your model and computational constraints:
+    \begin{itemize}
+        \item Exact: conjugate models, low-dimensional Gaussians
+        \item MCMC: when you can evaluate the likelihood and need accurate posteriors
+        \item Variational inference: when you need speed and can tolerate approximation
+        \item Simulation-based inference: when the likelihood is intractable
+    \end{itemize}
+
+    \item \textbf{Validate.} Always check:
+    \begin{itemize}
+        \item Convergence diagnostics (for MCMC: $\hat{R}$, ESS; for VI: ELBO convergence)
+        \item Posterior predictive checks: does the model generate data like your observations?
+        \item Calibration: do 90\% credible intervals contain the truth 90\% of the time?
+        \item Sensitivity analysis: how do conclusions change with prior choices?
+    \end{itemize}
+\end{enumerate}
+\end{workflowbox}
+
+We will refer back to this workflow throughout these notes, showing how each method fits into this structure.
+
+\subsection{From posterior to decisions}
+
+Inference gives us the posterior $p(\vect{\theta} \mid \vect{x})$, but scientific practice often requires \emph{decisions}: Should we approve this drug? Is there evidence for new physics? Where should we drill for oil?
+
+Decision theory provides the bridge from posterior to action. Given:
+\begin{itemize}
+    \item A set of possible actions $a \in \mathcal{A}$
+    \item A utility function $U(a, \vect{\theta})$ quantifying the value of action $a$ when the true parameter is $\vect{\theta}$
+\end{itemize}
+
+The \textbf{Bayes-optimal action} maximizes expected utility under the posterior:
+\begin{equation}
+a^* = \argmax_{a \in \mathcal{A}} \E_{p(\vect{\theta} \mid \vect{x})}[U(a, \vect{\theta})] = \argmax_{a \in \mathcal{A}} \int U(a, \vect{\theta})\, p(\vect{\theta} \mid \vect{x})\, \mathrm{d}\vect{\theta}
+\end{equation}
+
+Equivalently, we can minimize the \textbf{Bayes risk} (expected loss) where $L(a, \vect{\theta}) = -U(a, \vect{\theta})$.
+
+This framework clarifies several things:
+\begin{itemize}
+    \item Point estimates are optimal actions for specific loss functions. The posterior mean minimizes squared error; the posterior median minimizes absolute error; the posterior mode minimizes 0-1 loss.
+    \item Uncertainty matters for decisions. Two posteriors with the same mean but different variances lead to different optimal actions when the utility is nonlinear.
+    \item The ``right'' summary of the posterior depends on the decision problem, not just on the inference.
+\end{itemize}
+
+\subsection{Information-theoretic quantities}
+
+Information theory provides a natural language for quantifying uncertainty and the relationships between distributions. These quantities arise repeatedly in machine learning.
+
+The \textbf{entropy} of a distribution $p$ measures the expected ``surprise'' or uncertainty:
+\begin{equation}
+H[p] = -\E_{p(\vect{x})}[\log p(\vect{x})] = -\int p(\vect{x}) \log p(\vect{x})\, \mathrm{d}\vect{x}
+\end{equation}
+
+The \textbf{cross-entropy} from $p$ to $q$ is:
+\begin{equation}
+H[p, q] = -\E_{p(\vect{x})}[\log q(\vect{x})] = -\int p(\vect{x}) \log q(\vect{x})\, \mathrm{d}\vect{x}
+\end{equation}
+
+Cross-entropy measures the average number of bits needed to encode samples from $p$ using a code optimized for $q$. Minimizing cross-entropy is equivalent to maximum likelihood estimation: if $p$ is the empirical data distribution and $q_{\vect{\theta}}$ is a parametric model, then
+\begin{equation}
+\argmin_{\vect{\theta}} H[\hat{p}_{\text{data}}, q_{\vect{\theta}}] = \argmax_{\vect{\theta}} \sum_{i=1}^N \log q_{\vect{\theta}}(\vect{x}_i)
+\end{equation}
+This connection between cross-entropy and MLE will recur throughout these notes.
+
+The \textbf{Kullback--Leibler (KL) divergence} measures the ``distance'' from distribution $p$ to distribution $q$:
+\begin{equation}
+\KL(q \| p) = \E_{q(\vect{x})}\left[\log \frac{q(\vect{x})}{p(\vect{x})}\right] = H[q, p] - H[q]
+\end{equation}
+
+The KL divergence is non-negative (with equality iff $q = p$) but asymmetric. When $q$ is an approximation to $p$:
+\begin{itemize}
+    \item Minimizing $\KL(q \| p)$ (``forward KL'') produces ``mode-seeking'' approximations
+    \item Minimizing $\KL(p \| q)$ (``reverse KL'') produces ``mean-seeking'' approximations
+\end{itemize}
+
+\begin{takeaways}
+    \item Probability theory provides a consistent framework for reasoning under uncertainty.
+    \item The sum and product rules, combined with Bayes' theorem, are the complete toolkit for probabilistic inference.
+    \item The posterior is the complete answer to inference; decisions require specifying a utility function.
+    \item Cross-entropy minimization is equivalent to maximum likelihood estimation.
+    \item The KL divergence is asymmetric; forward and reverse KL lead to different approximation behaviors.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Scientific Problems as Machine Learning Tasks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Classify a scientific problem into the appropriate ML task type
+    \item Distinguish forward problems (simulation) from inverse problems (inference)
+    \item Recognize when a problem requires causal reasoning vs.\ prediction
+    \item Formulate maximum likelihood and Bayesian learning objectives
+    \item Explain the bias-variance tradeoff and its implications for model selection
+\end{objectives}
+
+\subsection{A taxonomy of tasks}
+
+Machine learning provides a unified language for formulating and solving a wide variety of scientific problems. Developing a taxonomy of common tasks helps clarify what kind of problem you are facing and suggests principled approaches.
+
+\subsubsection{Forward problems vs.\ inverse problems}
+
+A fundamental distinction in scientific computing:
+
+\textbf{Forward problem (simulation):} Given parameters $\vect{\theta}$, predict observations $\vect{x}$. This is what simulators do. Forward problems are typically well-posed---they have a unique solution that depends continuously on the inputs.
+
+\textbf{Inverse problem (inference):} Given observations $\vect{x}$, infer parameters $\vect{\theta}$. This is Bayesian inference. Inverse problems are often ill-posed: multiple parameter values may produce similar observations (non-uniqueness), or small changes in observations may lead to large changes in inferred parameters (instability). The posterior distribution quantifies this uncertainty.
+
+\begin{sciencebox}[Application: Seismic imaging]
+In geophysics, we want to image Earth's interior:
+\begin{itemize}
+    \item \textbf{Forward problem:} Given a model of subsurface velocities and densities, simulate the seismic waveforms that would be recorded at surface stations after an earthquake
+    \item \textbf{Inverse problem:} Given recorded seismograms, infer the subsurface structure
+\end{itemize}
+The inverse problem is severely ill-posed---many velocity models produce similar seismograms. Regularization (via priors) is essential.
+\end{sciencebox}
+
+Much of scientific machine learning can be understood as developing better tools for inverse problems, especially when the forward model is expensive or the likelihood is intractable.
+
+\subsubsection{Parameter inference}
+
+Given data $\vect{x}$ generated according to a model with parameters $\vect{\theta}$, we seek the posterior distribution $p(\vect{\theta} \mid \vect{x})$.
+
+The key insight is that parameter inference is not about finding a single ``best'' value, but about characterizing the full posterior distribution. The posterior tells us not just the most likely parameter values, but also their uncertainties and correlations.
+
+\textbf{Workflow mapping:} Parameter inference is the core inference problem. The target is the posterior $p(\vect{\theta} \mid \vect{x})$. Method choice depends on whether the likelihood is tractable (MCMC, VI) or implicit (SBI).
+
+\subsubsection{Prediction}
+
+Given training data $\mathcal{D} = \{(\vect{x}_i, y_i)\}_{i=1}^N$, prediction asks: what output $y_*$ do we expect for a new input $\vect{x}_*$? The fully Bayesian answer is the posterior predictive distribution:
+\begin{equation}
+p(y_* \mid \vect{x}_*, \mathcal{D}) = \int p(y_* \mid \vect{x}_*, \vect{\theta})\, p(\vect{\theta} \mid \mathcal{D})\, \mathrm{d}\vect{\theta}
+\end{equation}
+
+This integral marginalizes over parameter uncertainty, accounting for both \emph{aleatoric uncertainty} (inherent noise) and \emph{epistemic uncertainty} (our ignorance about the true parameters).
+
+\begin{sciencebox}[Application: Predicting protein stability]
+Given a protein sequence, predict how stable the folded structure will be:
+\begin{itemize}
+    \item $\vect{x}$: Amino acid sequence (or structural features)
+    \item $y$: Melting temperature or free energy of folding
+    \item $\mathcal{D}$: Database of proteins with measured stabilities
+\end{itemize}
+Uncertainty quantification is critical: a prediction of ``stable'' with high uncertainty should be treated differently than one with high confidence.
+\end{sciencebox}
+
+\begin{principle}[Uncertainty propagation]
+Never report a prediction without uncertainty. The distinction between ``we are confident this is the answer'' and ``this could be anything'' is scientifically critical.
+\end{principle}
+
+\subsubsection{Prediction vs.\ causal inference}
+
+A critical distinction: \textbf{prediction is not causation}.
+
+\textbf{Prediction} asks: given that I observe $\vect{x}$, what do I expect for $y$? This is about statistical association.
+
+\textbf{Causal inference} asks: if I \emph{intervene} to set $\vect{x}$ to a particular value, what happens to $y$? This is about the effect of actions.
+
+These can differ dramatically. Observing that a patient has high blood pressure predicts higher mortality. But \emph{causing} high blood pressure (e.g., via salt infusion) is different from \emph{observing} high blood pressure (which may indicate underlying disease).
+
+\begin{principle}[Prediction vs.\ intervention]
+Before using a model to guide decisions, ask: am I predicting an outcome I will passively observe, or am I predicting the effect of an intervention I will take? If the latter, you need causal reasoning, not just prediction.
+\end{principle}
+
+\subsubsection{Density estimation and generation}
+
+Given samples $\{\vect{x}_i\}_{i=1}^N$ from an unknown distribution $p_{\text{data}}(\vect{x})$, density estimation seeks to learn an approximation $p_{\vect{\theta}}(\vect{x})$. Once learned, the density model enables generation, likelihood evaluation, and conditional generation.
+
+\begin{sciencebox}[Application: Molecular generation for drug discovery]
+Learning the distribution of drug-like molecules:
+\begin{itemize}
+    \item $\vect{x}$: Molecular structure (graph, SMILES string, or 3D coordinates)
+    \item $p_{\text{data}}$: Distribution of known bioactive molecules
+    \item $p_{\vect{\theta}}$: Learned generative model (VAE, diffusion model, etc.)
+\end{itemize}
+Sampling from $p_{\vect{\theta}}$ produces novel molecular candidates. Conditional generation can target specific properties (binding affinity, solubility).
+\end{sciencebox}
+
+\subsubsection{Representation learning}
+
+Many scientific datasets are high-dimensional but possess underlying low-dimensional structure. Representation learning seeks to discover this structure by learning a mapping $\vect{z} = f_{\vect{\theta}}(\vect{x})$ from high-dimensional data to a lower-dimensional latent space.
+
+\subsubsection{Anomaly detection}
+
+Given samples from a ``normal'' distribution, anomaly detection identifies observations that are unlikely under this distribution. This is central to scientific discovery: new physics, rare diseases, and novel materials all manifest as deviations from expectation.
+
+\begin{sciencebox}[Application: New physics searches at the LHC]
+Searching for physics beyond the Standard Model:
+\begin{itemize}
+    \item Learn the distribution of Standard Model collision events (from simulation)
+    \item Identify observed events that are unlikely under this distribution
+    \item These anomalies are candidates for new physics
+\end{itemize}
+This approach is powerful because it does not require specifying in advance what the new physics looks like.
+\end{sciencebox}
+
+\subsection{The learning problem}
+
+Having framed the task, we must specify how to learn model parameters from data.
+
+\subsubsection{Maximum likelihood estimation}
+
+Find parameters that maximize the probability of the observed data:
+\begin{equation}
+\vect{\theta}_{\text{MLE}} = \argmax_{\vect{\theta}} \sum_{i=1}^N \log p_{\vect{\theta}}(\vect{x}_i)
+\end{equation}
+
+MLE is equivalent to minimizing cross-entropy from the empirical distribution to the model. It has desirable asymptotic properties (consistency, efficiency) but says nothing about uncertainty in $\vect{\theta}$.
+
+\subsubsection{Bayesian learning}
+
+The Bayesian approach maintains a full posterior distribution over parameters:
+\begin{itemize}
+    \item \textbf{Uncertainty quantification:} The posterior encodes what we know and don't know
+    \item \textbf{Regularization through priors:} Prior knowledge prevents overfitting
+    \item \textbf{Coherent model comparison:} The evidence provides a principled basis for comparing models
+\end{itemize}
+
+\subsection{Generalization: the central challenge}
+
+The goal of learning is not merely to fit the training data but to perform well on new, unseen data. \textbf{Overfitting} occurs when the model memorizes the training data rather than learning the underlying pattern. The bias-variance tradeoff formalizes this: simple models have high bias but low variance; complex models have low bias but high variance.
+
+\begin{principle}[Occam's razor in practice]
+Prefer the simplest model that adequately explains your data. Complexity should be earned, not assumed.
+\end{principle}
+
+\begin{takeaways}
+    \item Scientific problems divide into forward problems (simulation) and inverse problems (inference).
+    \item Prediction is not causation---be careful when using models to guide interventions.
+    \item Maximum likelihood is equivalent to cross-entropy minimization.
+    \item Bayesian learning provides uncertainty but at higher computational cost.
+    \item Generalization is the central challenge; prefer simpler models that earn their complexity.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Inference by Sampling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Explain why Monte Carlo methods are necessary for high-dimensional inference
+    \item Describe the concept of the typical set and why it makes sampling hard
+    \item Implement and analyze the Metropolis--Hastings algorithm
+    \item Explain how Hamiltonian Monte Carlo uses gradients to improve sampling
+    \item Diagnose convergence using standard diagnostics
+\end{objectives}
+
+\subsection{Why sampling?}
+
+Bayesian inference requires computing the posterior distribution $p(\vect{\theta} \mid \vect{x})$. Except in simple cases, this distribution cannot be computed analytically. Monte Carlo methods address this by generating samples $\{\vect{\theta}_1, \ldots, \vect{\theta}_N\}$ from the posterior. Given samples, we can approximate any expectation:
+\begin{equation}
+\E_{p(\vect{\theta} \mid \vect{x})}[f(\vect{\theta})] \approx \frac{1}{N} \sum_{i=1}^N f(\vect{\theta}_i)
+\end{equation}
+
+The error decreases as $1/\sqrt{N}$, independent of dimension. This is the key advantage of Monte Carlo methods.
+
+\textbf{Workflow mapping:} MCMC is step 3 of the inference workflow. It requires evaluating the likelihood (step 1) and produces samples for computing any posterior quantity (step 2).
+
+\subsection{The geometry of high-dimensional probability}
+
+In high dimensions, most of the probability mass is far from the mode. For a $d$-dimensional Gaussian, most mass lies in a thin shell at radius $\sqrt{d}$---the \textbf{typical set}. Effective sampling methods must navigate to this typical set and explore it efficiently.
+
+\subsection{Markov chain Monte Carlo}
+
+MCMC methods construct a Markov chain whose stationary distribution is the target posterior. By running the chain long enough, subsequent states provide samples from the posterior.
+
+\subsubsection{The Metropolis--Hastings algorithm}
+
+Given current state $\vect{\theta}$:
+\begin{enumerate}
+    \item \textbf{Propose:} Sample candidate $\vect{\theta}' \sim q(\vect{\theta}' \mid \vect{\theta})$
+    \item \textbf{Accept/reject:} Accept with probability
+    $\alpha = \min\left(1, \frac{p(\vect{\theta}' \mid \vect{x})\, q(\vect{\theta} \mid \vect{\theta}')}{p(\vect{\theta} \mid \vect{x})\, q(\vect{\theta}' \mid \vect{\theta})}\right)$
+\end{enumerate}
+
+Only the ratio of posteriors appears, so the normalizing constant cancels. Random walk Metropolis becomes increasingly inefficient in high dimensions.
+
+\subsection{Hamiltonian Monte Carlo}
+
+HMC exploits gradient information to make large, directed moves through parameter space. It treats sampling as simulating a physical system: a particle sliding on a surface whose height is $-\log p(\vect{\theta} \mid \vect{x})$.
+
+We augment parameters with momentum $\vect{p}$ and define the Hamiltonian:
+\begin{equation}
+H(\vect{\theta}, \vect{p}) = -\log p(\vect{\theta} \mid \vect{x}) + \frac{1}{2}\vect{p}^\top \mat{M}^{-1} \vect{p}
+\end{equation}
+
+Hamilton's equations guide the dynamics:
+\begin{align}
+\dd{\vect{\theta}}{t} &= \mat{M}^{-1} \vect{p}, \quad
+\dd{\vect{p}}{t} = \nabla \log p(\vect{\theta} \mid \vect{x})
+\end{align}
+
+The momentum is pushed by the gradient, steering toward high-probability regions. HMC can be orders of magnitude more efficient than random walk Metropolis.
+
+\begin{sciencebox}[Application: Cosmological parameter estimation]
+Inferring cosmological parameters from CMB data:
+\begin{itemize}
+    \item Parameter space is $\sim$6--20 dimensional (matter density, Hubble constant, etc.)
+    \item Each likelihood evaluation requires running a Boltzmann code (seconds to minutes)
+    \item HMC efficiently explores the posterior, producing chains used by Planck collaboration
+\end{itemize}
+Diagnostics like $\hat{R}$ and effective sample size are essential for validating convergence.
+\end{sciencebox}
+
+\subsection{Diagnostics}
+
+Standard diagnostics for MCMC convergence:
+\begin{itemize}
+    \item $\hat{R}$ (Gelman-Rubin): Compare within-chain to between-chain variance. Should be $< 1.01$.
+    \item Effective sample size (ESS): Number of effectively independent samples. Should be $> 400$ for reliable estimates.
+    \item Trace plots: Visual inspection of chain mixing.
+    \item Divergences (HMC): Indicate numerical issues with the geometry.
+\end{itemize}
+
+\begin{principle}[When to use MCMC]
+MCMC is appropriate when you need accurate posterior distributions, can evaluate the posterior density, and have computational time available. Modern probabilistic programming languages (NumPyro, Stan, PyMC) provide robust HMC implementations.
+\end{principle}
+
+\begin{takeaways}
+    \item Monte Carlo methods estimate expectations from samples, with error $O(1/\sqrt{N})$ independent of dimension.
+    \item The typical set is far from the mode in high dimensions.
+    \item Metropolis--Hastings is foundational but scales poorly to high dimensions.
+    \item HMC uses gradients for efficient exploration and is the method of choice for continuous parameters.
+    \item Always check diagnostics: $\hat{R}$, effective sample size, divergences.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Variational Inference}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Derive the Evidence Lower Bound (ELBO) and explain its two terms
+    \item Implement the reparameterization trick for gradient estimation
+    \item Choose an appropriate variational family for a given problem
+    \item Assess calibration of variational approximations
+    \item Distinguish amortized from per-dataset variational inference
+\end{objectives}
+
+\subsection{Inference as optimization}
+
+Variational inference (VI) transforms inference into optimization. We posit a family of tractable distributions $\mathcal{Q}$ and find the member that best approximates the posterior:
+\begin{equation}
+q^* = \argmin_{q \in \mathcal{Q}} \KL(q(\vect{\theta}) \| p(\vect{\theta} \mid \vect{x}))
+\end{equation}
+
+This is often faster than MCMC but introduces approximation error.
+
+\textbf{Workflow mapping:} VI is an alternative to MCMC for step 3 of the inference workflow. It produces a distributional approximation rather than samples.
+
+\subsection{The Evidence Lower Bound (ELBO)}
+
+The central identity:
+\begin{equation}
+\log p(\vect{x}) = \ELBO(q) + \KL(q(\vect{\theta}) \| p(\vect{\theta} \mid \vect{x}))
+\end{equation}
+
+Maximizing the ELBO is equivalent to minimizing the KL divergence to the posterior:
+\begin{equation}
+\boxed{\ELBO(q) = \E_{q(\vect{\theta})}[\log p(\vect{x} \mid \vect{\theta})] - \KL(q(\vect{\theta}) \| p(\vect{\theta}))}
+\end{equation}
+
+The first term pushes $q$ toward high likelihood; the second keeps $q$ close to the prior.
+
+\subsection{Choosing the variational family}
+
+\textbf{Mean-field Gaussian:} $q(\vect{\theta}) = \prod_j \N(\theta_j; \mu_j, \sigma_j^2)$. Simple but ignores correlations.
+
+\textbf{Full-covariance Gaussian:} $q(\vect{\theta}) = \N(\vect{\theta}; \vect{\mu}, \mat{\Sigma})$. Captures correlations but requires $O(d^2)$ parameters.
+
+\textbf{Normalizing flows:} Can approximate complex, multimodal posteriors.
+
+\subsection{The reparameterization trick}
+
+For gradient-based optimization, write samples as a deterministic function of noise:
+\begin{equation}
+\vect{\theta} = \vect{\mu} + \vect{\sigma} \odot \vect{\epsilon}, \quad \vect{\epsilon} \sim \N(\vect{0}, \mat{I})
+\end{equation}
+
+This enables gradient estimation by sampling $\vect{\epsilon}$ and differentiating through the transformation.
+
+\subsection{Calibration}
+
+Because VI minimizes $\KL(q \| p)$ (forward KL), approximations tend to underestimate posterior variance. Credible intervals may be too narrow, leading to overconfident conclusions.
+
+To assess calibration, compute \textbf{coverage}: if you report 90\% credible intervals, the true parameter should fall inside them 90\% of the time (across many datasets). If coverage is less than nominal, uncertainty estimates are too tight.
+
+\begin{sciencebox}[Application: Variational inference for neural network weights]
+Bayesian neural networks maintain distributions over weights:
+\begin{itemize}
+    \item Mean-field VI approximates $p(\mat{W} \mid \mathcal{D})$ with independent Gaussians per weight
+    \item Enables uncertainty quantification in predictions
+    \item But VI typically underestimates weight uncertainty, leading to overconfident predictions
+\end{itemize}
+Careful calibration checks are needed before trusting uncertainty estimates.
+\end{sciencebox}
+
+\subsection{Amortized inference}
+
+\textbf{Amortized VI} trains a single inference network $q_{\vect{\phi}}(\vect{\theta} \mid \vect{x})$ that works for any observation, rather than optimizing $q$ separately for each dataset. This is fast at test time but introduces an \textbf{amortization gap}---the amortized posterior may be worse than dataset-specific optimization.
+
+\subsection{Comparing MCMC and variational inference}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+& \textbf{MCMC} & \textbf{Variational Inference} \\
+\midrule
+Output & Samples from posterior & Approximate distribution \\
+Accuracy & Exact in the limit & Biased by family $\mathcal{Q}$ \\
+Speed & Often slow & Fast optimization \\
+Uncertainty quality & Generally accurate & Often underestimates \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{takeaways}
+    \item VI turns inference into optimization by maximizing the ELBO.
+    \item The ELBO trades off likelihood fit against staying close to the prior.
+    \item The reparameterization trick enables gradient-based optimization.
+    \item VI often underestimates uncertainty; check calibration via coverage.
+    \item Amortized VI is fast but introduces an amortization gap.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Building Blocks of Learned Representations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Explain what neural networks learn and why nonlinearity is essential
+    \item Match architectures to data structure (dense, convolutional, etc.)
+    \item Describe how CNNs encode locality and translation equivariance
+    \item Articulate the importance of representation for downstream tasks
+\end{objectives}
+
+\subsection{Neural networks as function approximators}
+
+Neural networks learn representations through hierarchical composition:
+\begin{align}
+\vect{h}_0 &= \vect{x} \\
+\vect{h}_\ell &= \sigma(\mat{W}_\ell \vect{h}_{\ell-1} + \vect{b}_\ell), \quad \ell = 1, \ldots, L-1 \\
+\vect{y} &= \mat{W}_L \vect{h}_{L-1} + \vect{b}_L
+\end{align}
+
+The nonlinearity $\sigma$ (ReLU, GELU, etc.) is essential: without it, the composition collapses to a single linear map.
+
+\subsection{The architecture encodes assumptions}
+
+\textbf{Fully connected networks} assume no particular structure. Every input can interact with every other.
+
+\textbf{Convolutional networks} assume translation equivariance and locality.
+
+\textbf{Graph neural networks} assume graph structure: entities and relationships.
+
+\textbf{Transformers} assume sequential structure with potential long-range dependencies.
+
+\begin{principle}[Architecture selection]
+Choose the architecture that matches the structure of your data. Encode known invariances directly; don't make the network learn them from data.
+\end{principle}
+
+\subsection{Convolutional networks for spatial data}
+
+The convolutional layer:
+\begin{equation}
+h_{ij} = \sum_{a,b,c} W_{abc}\, x_{i+a, j+b, c}
+\end{equation}
+
+Same weights at every location (translation equivariance), local interactions (locality). Parameters independent of input size.
+
+\begin{sciencebox}[Application: Galaxy morphology classification]
+Classifying galaxy images by morphology:
+\begin{itemize}
+    \item CNNs learn to recognize spiral arms, bars, elliptical shapes
+    \item Translation equivariance: a spiral galaxy is a spiral regardless of position in image
+    \item Locality: morphological features are built from local patterns
+\end{itemize}
+Achieving rotation invariance requires either data augmentation or equivariant architectures.
+\end{sciencebox}
+
+\subsection{The importance of representation}
+
+The choice of representation is more important than the choice of algorithm. A linear classifier on raw pixels fails; the same classifier on learned features succeeds.
+
+For scientific applications, representations should:
+\begin{itemize}
+    \item \textbf{Respect symmetries:} If the physics is rotation-invariant, the representation should be too
+    \item \textbf{Support uncertainty:} Enable uncertainty quantification, not just point predictions
+    \item \textbf{Be interpretable:} Reveal structure, not hide it
+\end{itemize}
+
+\textbf{Self-supervised pretraining} has become the default for scientific representation learning. Methods like contrastive learning and masked modeling leverage large unlabeled datasets to learn general-purpose representations.
+
+\begin{takeaways}
+    \item Neural networks are universal function approximators; nonlinearity is essential.
+    \item Architecture encodes assumptions about data structure; match architecture to data.
+    \item CNNs encode locality and translation equivariance.
+    \item Representation matters more than algorithm.
+    \item Self-supervised pretraining is the default for large datasets.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Encoding Scientific Structure in Neural Networks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Explain the message-passing framework for graph neural networks
+    \item Apply GNNs to molecular and relational data
+    \item Describe how attention enables capturing long-range dependencies
+    \item Choose between GNNs, RNNs, and Transformers for different data types
+\end{objectives}
+
+\subsection{Graph neural networks}
+
+Many scientific systems are naturally graphs. The key operation is \textbf{message passing}:
+\begin{equation}
+\vect{h}_v^{(\ell+1)} = \phi\left( \vect{h}_v^{(\ell)}, \bigoplus_{u \in \mathcal{N}(v)} \psi(\vect{h}_v^{(\ell)}, \vect{h}_u^{(\ell)}, \vect{e}_{uv}) \right)
+\end{equation}
+
+The message function $\psi$ computes information to send; the aggregation $\bigoplus$ (sum, mean, max) combines messages; the update $\phi$ integrates messages with the node's representation.
+
+\begin{sciencebox}[Application: Molecular property prediction]
+Predicting properties of molecules:
+\begin{itemize}
+    \item Nodes: atoms, with features (element type, charge, hybridization)
+    \item Edges: bonds, with features (bond order, aromaticity)
+    \item Task: predict solubility, toxicity, binding affinity
+\end{itemize}
+After message passing, aggregate node representations to get a molecular fingerprint, then predict properties.
+\end{sciencebox}
+
+\begin{principle}[When to use GNNs]
+Use GNNs when your data has explicit relational structure, the labeling of entities is arbitrary, and local interactions are important.
+\end{principle}
+
+\subsection{Sequence models and Transformers}
+
+The Transformer addresses long-range dependencies through \textbf{self-attention}:
+\begin{equation}
+\text{Attention}(\mat{Q}, \mat{K}, \mat{V}) = \text{softmax}\left(\frac{\mat{Q}\mat{K}^\top}{\sqrt{d_k}}\right) \mat{V}
+\end{equation}
+
+Each position can attend to every other position, with learned attention weights.
+
+\begin{sciencebox}[Application: Protein language models]
+Modeling protein sequences:
+\begin{itemize}
+    \item Treat amino acid sequence as ``text''
+    \item Train Transformer on millions of protein sequences (self-supervised)
+    \item Learned representations capture evolutionary and structural information
+    \item Fine-tune for property prediction, structure prediction, function annotation
+\end{itemize}
+ESM, ProtTrans, and similar models have become foundational tools in computational biology.
+\end{sciencebox}
+
+\begin{takeaways}
+    \item GNNs use message passing to propagate information through graph structure.
+    \item Permutation-invariant aggregation is essential for graphs.
+    \item Transformers use attention for long-range dependencies in sequences.
+    \item Match architecture to data structure: graphs $\to$ GNNs, sequences $\to$ Transformers.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Equivariant Neural Networks}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Define invariance and equivariance mathematically
+    \item Identify the relevant symmetry group for a given physical system
+    \item Build permutation-, translation-, and rotation-equivariant layers
+    \item Apply a concrete recipe for equivariant molecular property prediction
+\end{objectives}
+
+\subsection{The role of symmetry in science}
+
+Physical systems obey symmetries. For machine learning, symmetries represent prior knowledge that should not be learned from data. Encoding symmetries directly in the architecture makes models more data-efficient, better-generalizing, and physically consistent.
+
+\subsection{Invariance and equivariance}
+
+\begin{definition}
+A function $f$ is \textbf{invariant} under group $G$ if: $f(g \cdot x) = f(x)$ for all $g \in G$.
+\end{definition}
+
+\begin{definition}
+A function $f$ is \textbf{equivariant} under group $G$ if: $f(g \cdot x) = g \cdot f(x)$ for all $g \in G$.
+\end{definition}
+
+\begin{sciencebox}[Application: Molecular energies and forces]
+For a molecule with atom positions $\{\vect{r}_i\}$:
+\begin{itemize}
+    \item \textbf{Energy} is rotation-invariant: $E(\mat{R}\vect{r}_1, \ldots) = E(\vect{r}_1, \ldots)$
+    \item \textbf{Forces} are rotation-equivariant: $\vect{F}_i(\mat{R}\vect{r}_1, \ldots) = \mat{R}\vect{F}_i(\vect{r}_1, \ldots)$
+\end{itemize}
+An equivariant network predicting energy gives forces ``for free'' via $\vect{F}_i = -\nabla_{\vect{r}_i} E$, with automatic equivariance.
+\end{sciencebox}
+
+\subsection{Building equivariant architectures}
+
+\textbf{Permutation equivariance:} Use symmetric operations and permutation-invariant aggregation.
+
+\textbf{Translation equivariance:} Use only relative positions $\vect{r}_i - \vect{r}_j$.
+
+\textbf{Rotation equivariance:} Use scalar invariants (distances), or equivariant operations with proper transformation rules.
+
+\subsection{A concrete recipe: molecular property prediction}
+
+\begin{workflowbox}[Recipe: Equivariant Molecular Neural Network]
+\textbf{Inputs:} Atom types $\{z_i\}$ and positions $\{\vect{r}_i \in \R^3\}$
+
+\textbf{Goal:} Predict energy $E$ (invariant) and forces $\{\vect{F}_i\}$ (equivariant)
+
+\textbf{Architecture:}
+\begin{enumerate}
+    \item Initialize node features from atom types: $\vect{h}_i^{(0)} = \text{embed}(z_i)$
+    \item Compute edges: connect atoms within cutoff $r_{\text{cut}}$
+    \item Message passing using distances $r_{ij} = \|\vect{r}_i - \vect{r}_j\|$ (invariant)
+    \item Predict energy by summing: $E = \sum_i \rho(\vect{h}_i^{(L)})$
+    \item Obtain forces by differentiating: $\vect{F}_i = -\nabla_{\vect{r}_i} E$
+\end{enumerate}
+
+\textbf{What goes wrong if violated:}
+\begin{itemize}
+    \item Using absolute positions $\Rightarrow$ predictions change under translation
+    \item Using Cartesian coordinates directly $\Rightarrow$ predictions change under rotation
+\end{itemize}
+\end{workflowbox}
+
+\begin{principle}[Designing for symmetry]
+\begin{enumerate}
+    \item Identify the symmetries of your system
+    \item Determine transformation properties of outputs (scalars, vectors, tensors)
+    \item Build constraints into the architecture
+\end{enumerate}
+\end{principle}
+
+\begin{takeaways}
+    \item Physical symmetries should be built into architectures, not learned from data.
+    \item Invariant vs.\ equivariant outputs require different treatments.
+    \item Use relative positions for translation equivariance, distances for rotation invariance.
+    \item Forces from differentiating invariant energy are automatically equivariant.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Learning Distributions: Variational Autoencoders}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Derive the VAE objective from the ELBO
+    \item Explain the role of the encoder, decoder, and reparameterization
+    \item Describe the properties of a well-structured latent space
+    \item Compare VAEs to other generative models on key tradeoffs
+\end{objectives}
+
+\subsection{Latent variable models for generation}
+
+The VAE approaches generative modeling through latent variables:
+\begin{align}
+\vect{z} &\sim p(\vect{z}) = \N(\vect{0}, \mat{I}) \\
+\vect{x} &\sim p_{\vect{\theta}}(\vect{x} \mid \vect{z})
+\end{align}
+
+The prior is simple; the decoder transforms latent codes into data. The likelihood $p_{\vect{\theta}}(\vect{x})$ is intractable.
+
+\textbf{Workflow mapping:} Training a VAE is amortized variational inference on the latent variable model.
+
+\subsection{The VAE objective}
+
+Introduce encoder $q_{\vect{\phi}}(\vect{z} \mid \vect{x})$ and maximize the ELBO:
+\begin{equation}
+\boxed{\ELBO(\vect{\theta}, \vect{\phi}; \vect{x}) = \E_{q_{\vect{\phi}}(\vect{z} \mid \vect{x})}[\log p_{\vect{\theta}}(\vect{x} \mid \vect{z})] - \KL(q_{\vect{\phi}}(\vect{z} \mid \vect{x}) \| p(\vect{z}))}
+\end{equation}
+
+Reconstruction loss plus regularization keeping encoded distributions close to the prior.
+
+\begin{sciencebox}[Application: Molecular latent spaces]
+VAEs for molecular generation:
+\begin{itemize}
+    \item Encode molecules to a continuous latent space
+    \item Decode latent vectors back to molecules
+    \item Latent space enables: interpolation between molecules, optimization of properties, sampling novel structures
+\end{itemize}
+The latent space provides a ``chemical compass'' for navigating molecular space.
+\end{sciencebox}
+
+\subsection{VAE vs.\ diffusion tradeoffs}
+
+\begin{center}
+\begin{tabular}{@{}L{3cm}L{5.5cm}L{5.5cm}@{}}
+\toprule
+\textbf{Aspect} & \textbf{VAE} & \textbf{Diffusion Model} \\
+\midrule
+Sample quality & Good but often blurry & State-of-the-art sharpness \\
+Sampling speed & Fast (single forward pass) & Slow (many denoising steps) \\
+Latent space & Explicit, interpretable & Implicit (no direct latent) \\
+Downstream use & Easy (use encoder) & Harder (no encoder) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{principle}[When to use VAEs]
+VAEs are appropriate when you want an interpretable latent representation, need fast sampling, or need an encoder for downstream tasks. For pure sample quality, diffusion models typically win.
+\end{principle}
+
+\begin{takeaways}
+    \item VAEs combine latent variable models with amortized variational inference.
+    \item The ELBO balances reconstruction against staying close to the prior.
+    \item VAEs provide interpretable latent spaces and fast sampling.
+    \item Diffusion models achieve better sample quality but lack explicit latent representations.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Diffusion Models}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Describe the forward (noising) and reverse (denoising) processes
+    \item Derive the training objective and explain why it works
+    \item Connect the noise predictor to the score function
+    \item Apply classifier-free guidance for conditional generation
+\end{objectives}
+
+\subsection{The diffusion framework}
+
+Diffusion models define a process that gradually destroys data by adding noise, then learn to reverse it.
+
+\textbf{Forward process:} Starting from data $\vect{x}_0 \sim p_{\text{data}}$:
+\begin{equation}
+\vect{x}_t = \sqrt{\bar{\alpha}_t}\, \vect{x}_0 + \sqrt{1-\bar{\alpha}_t}\, \vect{\epsilon}, \quad \vect{\epsilon} \sim \N(\vect{0}, \mat{I})
+\end{equation}
+At $t=0$: original data. At $t=T$: pure noise.
+
+\textbf{Reverse process:} A neural network $\vect{\epsilon}_{\vect{\theta}}(\vect{x}_t, t)$ learns to predict the noise. Starting from noise, iteratively denoise to generate samples.
+
+\subsection{Training}
+\begin{equation}
+\mathcal{L} = \E_{t, \vect{x}_0, \vect{\epsilon}}\left[ \| \vect{\epsilon} - \vect{\epsilon}_{\vect{\theta}}(\vect{x}_t, t) \|^2 \right]
+\end{equation}
+
+\subsection{The score function connection}
+
+The noise predictor relates to the score function:
+\begin{equation}
+\boxed{\vect{\epsilon}_{\vect{\theta}}(\vect{x}_t, t) \approx -\sqrt{1-\bar{\alpha}_t} \cdot \nabla_{\vect{x}_t} \log p_t(\vect{x}_t)}
+\end{equation}
+
+The reverse process is essentially Langevin dynamics following the score toward high-density regions.
+
+\begin{sciencebox}[Application: Protein structure generation]
+Diffusion models for protein design:
+\begin{itemize}
+    \item Represent protein backbone as sequence of frames (positions + orientations)
+    \item Train diffusion model on known protein structures
+    \item Sample to generate novel protein backbones
+    \item Condition on desired properties (binding site, fold topology)
+\end{itemize}
+RFDiffusion and related models have enabled design of novel proteins with specified functions.
+\end{sciencebox}
+
+\subsection{Conditional generation}
+
+Classifier-free guidance modifies the noise prediction:
+\begin{equation}
+\tilde{\vect{\epsilon}}(\vect{x}_t, t, \vect{y}) = \vect{\epsilon}(\vect{x}_t, t) + w \cdot (\vect{\epsilon}(\vect{x}_t, t, \vect{y}) - \vect{\epsilon}(\vect{x}_t, t))
+\end{equation}
+
+The guidance scale $w$ controls conditioning strength.
+
+\begin{principle}[Diffusion models for science]
+Diffusion models excel when sample quality is paramount and conditioning on properties is needed. For fast sampling or explicit latent spaces, consider VAEs.
+\end{principle}
+
+\begin{takeaways}
+    \item Diffusion models learn to reverse a gradual noising process.
+    \item The noise predictor is proportional to the score function.
+    \item Classifier-free guidance enables controllable generation.
+    \item Diffusion models achieve state-of-the-art sample quality.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Differentiable Programming}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Explain why differentiability enables powerful optimization
+    \item Write simple probabilistic programs and apply automatic inference
+    \item Differentiate through iterative solvers using implicit differentiation
+    \item Identify when differentiable programming is applicable vs.\ when to use RL
+\end{objectives}
+
+\subsection{The power of gradients}
+
+If you can compute gradients of a loss with respect to parameters, you can optimize those parameters. This extends beyond neural networks to:
+\begin{itemize}
+    \item Physical simulators (molecular dynamics, fluid dynamics)
+    \item Numerical solvers (ODEs, PDEs, optimization)
+    \item Probabilistic programs (sampling, inference)
+\end{itemize}
+
+\subsection{Probabilistic programming}
+
+Probabilistic programming languages express generative models as programs:
+
+\begin{example}[A Bayesian model in NumPyro]
+\begin{verbatim}
+def model(x_obs):
+    mu = numpyro.sample("mu", dist.Normal(0, 1))
+    sigma = numpyro.sample("sigma", dist.Exponential(1))
+    with numpyro.plate("data", len(x_obs)):
+        numpyro.sample("obs", dist.Normal(mu, sigma), obs=x_obs)
+\end{verbatim}
+\end{example}
+
+This defines the joint distribution; inference algorithms can be applied automatically.
+
+\begin{sciencebox}[Application: Hierarchical models in ecology]
+Modeling species abundance across sites:
+\begin{itemize}
+    \item Site-level parameters: local environmental conditions
+    \item Species-level parameters: ecological preferences
+    \item Hierarchical structure: species parameters drawn from population distribution
+\end{itemize}
+Probabilistic programming makes it easy to specify complex hierarchical structure; HMC handles the inference.
+\end{sciencebox}
+
+\subsection{Differentiating through simulators}
+
+\textbf{Direct differentiation:} Implement in JAX/PyTorch. Challenges: control flow, random sampling, memory.
+
+\textbf{Implicit differentiation:} For simulators solving $F(\vect{x}, \vect{\theta}) = 0$:
+\begin{equation}
+\dd{\vect{x}}{\vect{\theta}} = -\left(\pd{F}{\vect{x}}\right)^{-1} \pd{F}{\vect{\theta}}
+\end{equation}
+
+\begin{principle}[When to use differentiable programming]
+Differentiable programming is powerful when you have a complex forward model and want to optimize its parameters. It converts optimization from black-box to gradient-based.
+\end{principle}
+
+\begin{takeaways}
+    \item Automatic differentiation enables gradient-based optimization of complex programs.
+    \item Probabilistic programming separates model specification from inference.
+    \item Implicit differentiation enables gradients through iterative solvers.
+    \item Use differentiable programming when gradients are available; use RL otherwise.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Learning Through Exploration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Derive the policy gradient theorem and REINFORCE algorithm
+    \item Explain why baseline subtraction reduces variance
+    \item Choose between RL and differentiable programming based on problem structure
+\end{objectives}
+
+\subsection{Beyond gradients}
+
+What if the objective involves a black-box simulator, discrete decisions, or an environment that cannot be differentiated through? Reinforcement learning constructs gradient \emph{estimators} from samples.
+
+\subsection{The policy gradient theorem}
+
+\begin{equation}
+\nabla_{\vect{\theta}} J(\vect{\theta}) = \E_{\pi_{\vect{\theta}}}\left[\nabla_{\vect{\theta}} \log \pi_{\vect{\theta}}(a) \cdot R(a)\right]
+\end{equation}
+
+We never differentiate through the reward $R$---only evaluate it.
+
+\begin{sciencebox}[Application: Optimizing experimental design]
+Deciding which experiments to run next:
+\begin{itemize}
+    \item Action: choose experimental conditions (temperature, concentration, etc.)
+    \item Reward: information gained about parameters of interest
+    \item Policy: learned mapping from current knowledge to next experiment
+\end{itemize}
+RL enables adaptive experimental design that efficiently explores parameter space.
+\end{sciencebox}
+
+\subsection{Variance reduction}
+
+\textbf{Baseline subtraction:} Replace $R(a)$ with $R(a) - b$. Doesn't change expected gradient but reduces variance.
+
+\textbf{Advantage functions:} $A(s, a) = Q(s, a) - V(s)$ measures how much better action $a$ is than average.
+
+\begin{principle}[The gradient hierarchy]
+In order of preference:
+\begin{enumerate}
+    \item Direct gradients (if differentiable)
+    \item Reparameterization (for stochastic objectives)
+    \item Policy gradients (when you can only evaluate)
+    \item Derivative-free methods (when policy gradients fail)
+\end{enumerate}
+\end{principle}
+
+\begin{takeaways}
+    \item Policy gradients estimate gradients from reward evaluations.
+    \item Variance reduction is essential for practical policy gradients.
+    \item Use the most direct gradient method available.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Inverting Simulators}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{objectives}
+    \item Explain why likelihood-free inference is necessary for complex simulators
+    \item Implement Neural Posterior Estimation (NPE) and Neural Ratio Estimation (NRE)
+    \item Apply sequential methods to reduce simulation cost
+    \item Validate SBI results using simulation-based calibration
+\end{objectives}
+
+\subsection{The simulation-based inference problem}
+
+Scientific simulators encode domain knowledge but define the likelihood implicitly: we can \emph{sample} from $p(\vect{x} \mid \vect{\theta})$ but not \emph{evaluate} the density. This rules out standard MCMC and VI.
+
+\textbf{Workflow mapping:} SBI addresses the case where step 1 gives an implicit likelihood. The method (step 3) must be simulation-based.
+
+\begin{sciencebox}[Application: Particle physics inference]
+Inferring physics parameters from LHC data:
+\begin{itemize}
+    \item Simulator: Full detector simulation (Geant4) + event generation (Pythia)
+    \item Produces realistic collision events given Standard Model parameters
+    \item Likelihood is intractable: no closed form for $p(\text{detector hits} \mid \text{physics parameters})$
+    \item SBI enables rigorous inference despite implicit likelihood
+\end{itemize}
+\end{sciencebox}
+
+\subsection{Why simulators are special}
+
+Simulators represent decades of validated domain knowledge. The goal of SBI is to perform rigorous Bayesian inference while respecting the simulator as ground truth.
+
+Key insight: we can generate arbitrarily many training examples $(\vect{\theta}, \vect{x})$ by sampling from the prior and running the simulator.
+
+\subsection{Neural Posterior Estimation (NPE)}
+
+Train a conditional density estimator $q_{\vect{\phi}}(\vect{\theta} \mid \vect{x})$ on simulated pairs. At test time, the posterior for any observation is immediately available.
+
+\subsection{Neural Ratio Estimation (NRE)}
+
+Estimate the likelihood-to-evidence ratio via binary classification: distinguish joint samples from marginal samples. Use MCMC with the learned ratio.
+
+\subsection{Sequential methods}
+
+When simulations are expensive, sequential methods focus computation on relevant parameter regions:
+\begin{enumerate}
+    \item Train initial posterior estimate from prior samples
+    \item Use current estimate to propose $\vect{\theta}$ values near the observation
+    \item Simulate and refine the posterior estimate
+\end{enumerate}
+
+\subsection{Calibration}
+
+SBI methods require careful validation because errors can be subtle:
+
+\textbf{Simulation-based calibration (SBC):} For many $(\vect{\theta}_{\text{true}}, \vect{x})$ pairs from the prior predictive, check that posterior rank statistics are uniform.
+
+\textbf{Coverage tests:} Check that $\alpha$-credible regions contain the true parameter with frequency $\alpha$.
+
+\textbf{Posterior predictive checks:} Samples from the posterior should generate data similar to the observation.
+
+\begin{principle}[Choosing an SBI method]
+\begin{itemize}
+    \item \textbf{NPE:} Best for amortized inference (train once, query many observations)
+    \item \textbf{NRE:} Best when posterior is complex and you can afford MCMC at inference
+    \item \textbf{Sequential methods:} Best when simulations are very expensive
+\end{itemize}
+All methods require validation via calibration checks.
+\end{principle}
+
+\begin{takeaways}
+    \item SBI enables Bayesian inference when the likelihood is implicit.
+    \item NPE learns the posterior directly; NRE learns the likelihood ratio.
+    \item Amortization is powerful but introduces a gap that may need correction.
+    \item Simulation-based calibration and coverage checks are essential.
+    \item Sequential methods reduce simulation cost by focusing on relevant regions.
+\end{takeaways}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\section*{Notation Reference}
+\addcontentsline{toc}{section}{Notation Reference}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$\vect{x}$ & Observed data \\
+$\vect{\theta}$ & Model parameters \\
+$\vect{z}$ & Latent variables \\
+$p(\cdot)$ & Probability distribution or density \\
+$q(\cdot)$ & Approximate/variational distribution \\
+$\E[\cdot]$ & Expectation \\
+$\Var[\cdot]$ & Variance \\
+$\KL(\cdot \| \cdot)$ & Kullback--Leibler divergence \\
+$H[\cdot]$ & Entropy \\
+$H[\cdot, \cdot]$ & Cross-entropy \\
+$\N(\vect{\mu}, \mat{\Sigma})$ & Gaussian distribution \\
+$\nabla$ & Gradient operator \\
+$\mat{W}, \mat{M}$ & Weight matrix, general matrix \\
+$\sigma(\cdot)$ & Nonlinear activation function \\
+$\mathcal{G} = (\mathcal{V}, \mathcal{E})$ & Graph with vertices and edges \\
+$\mathcal{N}(v)$ & Neighbors of node $v$ \\
+$\pi_{\vect{\theta}}$ & Policy (in RL context) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
