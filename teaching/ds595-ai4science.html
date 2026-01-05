@@ -385,6 +385,49 @@
                 flex-direction: column;
                 gap: 8px;
             }
+
+            /* Schedule mobile layout */
+            .week-card-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .week-meta {
+                width: auto;
+                display: flex;
+                gap: 8px;
+                align-items: baseline;
+            }
+
+            .week-header {
+                width: 100%;
+            }
+
+            .week-readings {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .week-readings li {
+                white-space: normal;
+            }
+
+            .week-deliverable {
+                margin-left: 0;
+                margin-top: 8px;
+                text-align: left;
+            }
+
+            .week-break {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .week-break .week-meta {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
@@ -408,7 +451,7 @@
 
         <section id="about">
             <h2>About the Course</h2>
-            <p>AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference.</p>
+            <p>AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference. While framed in terms of scientific applications, the methods discussed extend well beyond scientific research, with broad applicability across industry and general AI R&D.</p>
 
             <p>Applications are drawn from domains including physics, materials science, and biology. The course involves two projects: applying AI methods to a scientific problem, and finetuning an LLM to elicit a scientific capability. Weekly discussion sections provide hands-on implementation practice.</p>
 
@@ -492,7 +535,7 @@
                         </div>
                         <div class="week-header">
                             <div class="week-title">Reasoning Under Uncertainty</div>
-                            <div class="week-lectures">Bayesian inference; Priors, likelihoods, and posteriors</div>
+                            <div class="week-lectures">Bayesian inference; Priors, likelihoods, and posteriors; Model selection</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://xcelab.net/rm/">McElreath, Statistical Rethinking Ch 1-2</a></li>
@@ -609,6 +652,7 @@
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://arxiv.org/abs/2312.07511">Duval+, Hitchhiker's Guide to Geometric GNNs</a></li>
+                            <li><a href="https://arxiv.org/abs/2512.13927">Tang, Guide to Spherical Equivariant Transformers</a></li>
                             <li><a href="https://arxiv.org/abs/2410.23179">Brehmer+, Does Equivariance Matter at Scale?</a></li>
                         </ul>
                     </div>
@@ -818,7 +862,7 @@
                             <div class="week-date">Wed Apr 8</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Going Big: LLM Building Blocks</div>
+                            <div class="week-title">LLM Building Blocks</div>
                             <div class="week-lectures">Attention; Transformers; Compute</div>
                         </div>
                     </div>
@@ -832,12 +876,9 @@
                             <div class="week-date">Mon Apr 13</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">Working with LLM AI Scientists</div>
+                            <div class="week-title">Teaching LLMs to Science</div>
                             <div class="week-lectures">Scientific, Reasoning, and Agentic Capabilities of LLMs</div>
                         </div>
-                        <ul class="week-readings">
-                            <li><a href="https://edisonscientific.com/articles/announcing-kosmos">Edison Scientific, Announcing Kosmos</a></li>
-                        </ul>
                     </div>
                 </div>
 
@@ -911,8 +952,8 @@
                             <div class="week-date">Wed Apr 29</div>
                         </div>
                         <div class="week-header">
-                            <div class="week-title">What Does It Mean to Be a Human Scientist?</div>
-                            <div class="week-lectures">Science and research in an AI-driven scientific landscape</div>
+                            <div class="week-title">Being a Human Scientist</div>
+                            <div class="week-lectures">Research in an AI-driven scientific landscape</div>
                         </div>
                         <ul class="week-readings">
                             <li><a href="https://arxiv.org/abs/2511.16072">Bubeck+, GPT-5 for Science</a></li>
