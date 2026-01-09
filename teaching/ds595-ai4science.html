@@ -329,6 +329,40 @@
             color: var(--text-muted);
         }
 
+        /* Timeline table */
+        .timeline-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .timeline-table th,
+        .timeline-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .timeline-table th {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .timeline-table td:first-child {
+            font-weight: 500;
+        }
+
+        .timeline-table td:not(:first-child) {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
         /* Note box */
         .note {
             background: rgba(204, 0, 0, 0.04);
@@ -453,7 +487,7 @@
             <h2>About the Course</h2>
             <p>AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference. While framed in terms of scientific applications, the methods discussed extend well beyond scientific research, with broad applicability across industry and general AI R&D.</p>
 
-            <p>Applications are drawn from domains including physics, materials science, and biology. The course involves two projects: applying AI methods to a scientific problem, and finetuning an LLM to elicit a scientific capability. There is a significant applied aspect, and weekly discussion sections provide hands-on implementation practice.</p>
+            <p>Applications are drawn from domains including physics, materials science, and biology. The course involves two assignments emphasizing method design and critical analysis, plus two projects: a midterm applying AI methods to a scientific problem, and a final project finetuning an LLM to elicit a scientific capability. Weekly discussion sections provide hands-on implementation practice through mini-labs.</p>
 
             <p>A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities as well as limitations.</p>
 
@@ -593,6 +627,7 @@
                         <ul class="week-readings">
                             <li><a href="https://lacerbi.github.io/blog/2024/vi-is-inference-is-optimization/">Acerbi, VI is Optimization</a></li>
                         </ul>
+                        <div class="week-deliverable">Assignment 1 out</div>
                     </div>
                 </div>
 
@@ -673,6 +708,7 @@
                         <ul class="week-readings">
                             <li><a href="https://blog.alexalemi.com/diffusion.html">Alemi, Diffusion is Variational Inference</a></li>
                         </ul>
+                        <div class="week-deliverable">Assignment 2 out</div>
                     </div>
                 </div>
 
@@ -705,6 +741,7 @@
                             <div class="week-title">Applications</div>
                             <div class="week-lectures">Molecules, Materials, and Proteins</div>
                         </div>
+                        <div class="week-deliverable">Assignment 1 due</div>
                     </div>
                 </div>
 
@@ -719,6 +756,7 @@
                             <div class="week-title">Guest Lecture</div>
                             <div class="week-lectures">AI + drug discovery</div>
                         </div>
+                        <div class="week-deliverable">Midterm project out</div>
                     </div>
                 </div>
 
@@ -735,7 +773,6 @@
                         <ul class="week-readings">
                             <li><a href="https://dfm.io/posts/intro-to-numpyro/">Foreman-Mackey, Intro to NumPyro</a></li>
                         </ul>
-                        <div class="week-deliverable">Midterm proposal due</div>
                     </div>
                 </div>
 
@@ -781,6 +818,7 @@
                             <li><a href="https://arxiv.org/abs/1911.01429">Cranmer+, Frontier of SBI</a></li>
                             <li><a href="https://arxiv.org/abs/2508.12939">Deistler+, SBI Practical Guide</a></li>
                         </ul>
+                        <div class="week-deliverable">Assignment 2 due</div>
                     </div>
                 </div>
 
@@ -839,7 +877,7 @@
                             <div class="week-title">Guest Lecture</div>
                             <div class="week-lectures">AI + particle collider physics</div>
                         </div>
-                        <div class="week-deliverable">Midterm project due</div>
+                        <div class="week-deliverable">Midterm project due; Final project out</div>
                     </div>
                 </div>
 
@@ -900,6 +938,7 @@
                             <li><a href="https://metr.org/blog/2024-11-22-evaluating-r-d-capabilities-of-llms/">METR, R&D Capabilities</a></li>
                             <li><a href="https://epoch.ai/blog/what-will-ai-look-like-in-2030">Epoch, AI in 2030</a></li>
                         </ul>
+                        <div class="week-deliverable">Final proposal due Fri Apr 18</div>
                     </div>
                 </div>
 
@@ -928,7 +967,6 @@
                             <li><a href="https://arxiv.org/abs/2510.17960">Parker+, AION-1</a></li>
                             <li><a href="https://arxiv.org/abs/2401.00096">Batatia+, MACE-MP-0</a></li>
                         </ul>
-                        <div class="week-deliverable">Final proposal due</div>
                     </div>
                 </div>
 
@@ -987,45 +1025,82 @@
             <h2>Grading</h2>
 
             <div class="grading-item">
-                <span>Paper Presentations &amp; Discussion</span>
+                <span>Assignment 1: Inference</span>
                 <span class="grading-percent">15%</span>
             </div>
             <div class="grading-item">
-                <span>Class Participation</span>
+                <span>Assignment 2: Architectures</span>
+                <span class="grading-percent">15%</span>
+            </div>
+            <div class="grading-item">
+                <span>Discussion Participation</span>
                 <span class="grading-percent">10%</span>
             </div>
             <div class="grading-item">
                 <span>Midterm Project</span>
-                <span class="grading-percent">30%</span>
+                <span class="grading-percent">25%</span>
             </div>
             <div class="grading-item">
                 <span>Final Project</span>
-                <span class="grading-percent">45%</span>
+                <span class="grading-percent">35%</span>
             </div>
             <div class="grading-item">
                 <span>Total</span>
                 <span class="grading-percent">100%</span>
             </div>
 
+            <h3>Assignments</h3>
+            <p>Two assignments ask students to <em>propose</em> a novel method (or modification to an existing method) and then <em>critique</em> it through theoretical analysis and empirical evaluation. AI tools may be used freely, but the analysis and interpretation require genuine understanding.</p>
+            <ul>
+                <li><strong>Assignment 1</strong>: Design and critique a sampling or variational inference method</li>
+                <li><strong>Assignment 2</strong>: Design and critique a neural network architecture or inductive bias</li>
+            </ul>
+
             <h3>Discussion Sections</h3>
             <p>Weekly sessions focused on hands-on implementation and applications of methods from lectures. These provide opportunities to work through code, explore scientific datasets, and deepen understanding of course material.</p>
 
-            <h3>Paper Presentations</h3>
-            <p>Students will present 1&ndash;2 research papers throughout the semester and lead class discussions.</p>
-
             <h3>Midterm Project</h3>
-            <p>Teams of 2&ndash;3 apply methods from the course to a scientific domain problem.</p>
-            <ul>
-                <li><strong>Proposal</strong> (March 16): Brief description of the problem and approach</li>
-                <li><strong>Final report</strong> (April 6): 4&ndash;6 pages + code</li>
-            </ul>
+            <p>Teams of 2&ndash;3 conduct a mini research project applying methods from the first half of the course (inference, architectures, generative models) to a scientific problem. Choose from a suggested list or propose your own. Deliverable is a 4&ndash;6 page workshop-style paper + code.</p>
 
             <h3>Final Project</h3>
-            <p>Teams of 2&ndash;3 identify and thoroughly evaluate a scientific capability that current LLMs struggle with, then finetune a language model (e.g., using reinforcement learning) with domain-specific data to improve that capability.</p>
+            <p>Teams of 2&ndash;3 identify a scientific capability that current LLMs struggle with, then finetune a language model to improve that capability. This is a two-stage project:</p>
             <ul>
-                <li><strong>Proposal</strong> (April 22): 2-page problem description and plan</li>
-                <li><strong>Final report</strong> (May 4): 6&ndash;8 pages, NeurIPS format</li>
+                <li><strong>Proposal</strong>: Demonstrate that LLMs struggle at a specific scientific capability</li>
+                <li><strong>Final report</strong>: Fine-tuned model + evaluation showing improvement (6&ndash;8 pages, NeurIPS format)</li>
             </ul>
+
+            <h3>Timeline</h3>
+            <table class="timeline-table">
+                <thead>
+                    <tr>
+                        <th>Deliverable</th>
+                        <th>Out</th>
+                        <th>Due</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Assignment 1</td>
+                        <td>Wed Feb 4</td>
+                        <td>Wed Feb 25</td>
+                    </tr>
+                    <tr>
+                        <td>Assignment 2</td>
+                        <td>Wed Feb 18</td>
+                        <td>Wed Mar 18</td>
+                    </tr>
+                    <tr>
+                        <td>Midterm Project</td>
+                        <td>Mon Mar 2</td>
+                        <td>Wed Apr 1</td>
+                    </tr>
+                    <tr>
+                        <td>Final Project</td>
+                        <td>Wed Apr 1</td>
+                        <td>Proposal: Fri Apr 18<br>Report: Mon May 4</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
         <section id="policies">
