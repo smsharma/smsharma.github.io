@@ -363,6 +363,12 @@
             color: var(--text-secondary);
         }
 
+        .timeline-table tr.break-row td {
+            color: var(--text-muted);
+            font-style: italic;
+            font-weight: 400;
+        }
+
         /* Note box */
         .note {
             background: rgba(204, 0, 0, 0.04);
@@ -487,7 +493,7 @@
             <h2>About the Course</h2>
             <p>AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference. While framed in terms of scientific applications, the methods discussed extend well beyond scientific research, with broad applicability across industry and general AI R&D.</p>
 
-            <p>Applications are drawn from domains including physics, materials science, and biology. The course involves two assignments emphasizing method design and critical analysis, plus two projects: a midterm applying AI methods to a scientific problem, and a final project finetuning an LLM to elicit a scientific capability. Weekly discussion sections provide hands-on implementation practice through mini-labs.</p>
+            <p>Applications are drawn from domains including physics, materials science, and biology. The course involves two assignments emphasizing method design and critical analysis, plus two projects: a midterm applying AI methods to a scientific problem, and a final project finetuning an LLM to elicit a scientific capability.</p>
 
             <p>A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities as well as limitations.</p>
 
@@ -528,14 +534,13 @@
                 <dt>TF</dt>
                 <dd><a href="https://www.bu.edu/cds-faculty/profile/wanli-cheng/">Wanli Cheng</a></dd>
                 <dt>Office Hours</dt>
-                <dd>TBD, or by appointment</dd>
+                <dd>Tue 3&ndash;5pm, CDS 1528 (or by appointment)</dd>
             </dl>
 
             <h3>Resources</h3>
             <ul>
                 <li><strong>Course materials:</strong> Lecture slides and notebooks will be posted on the course website</li>
-                <li><strong>Discussion:</strong> Link TBD</li>
-                <li><strong>Assignments:</strong> Link TBD</li>
+                <li><strong>Discussion:</strong> <a href="https://piazza.com/bu/spring2026/ds595">Piazza</a></li>
                 <li><strong>Computing:</strong> GPU access and LLM API/finetuning credits will be provided for project work</li>
             </ul>
 
@@ -949,7 +954,7 @@
                         <div class="week-date">Mon Apr 20</div>
                     </div>
                     <div class="week-header">
-                        <div class="week-title">No class &mdash; Holiday</div>
+                        <div class="week-title">No class &mdash; Patriots' Day</div>
                     </div>
                 </div>
 
@@ -1017,6 +1022,112 @@
 
             </div>
 
+            <h3>Discussion Sections</h3>
+            <p>Tuesdays 11:15am&ndash;12:05pm in MUG 205.</p>
+
+            <table class="timeline-table">
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Date</th>
+                        <th>Topic</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="break-row">
+                        <td>&mdash;</td>
+                        <td>Tue Jan 20</td>
+                        <td>No discussion</td>
+                        <td>First day of classes</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Tue Jan 27</td>
+                        <td>SCC setup</td>
+                        <td>Account setup, login, file transfer</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Tue Feb 3</td>
+                        <td>Environment setup</td>
+                        <td>Conda, PyTorch/JAX, GPU jobs</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Tue Feb 10</td>
+                        <td>Assignment 1 help</td>
+                        <td></td>
+                    </tr>
+                    <tr class="break-row">
+                        <td>&mdash;</td>
+                        <td>Tue Feb 17</td>
+                        <td>No discussion</td>
+                        <td>Substitute Monday schedule</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Tue Feb 24</td>
+                        <td>Office hours</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Tue Mar 3</td>
+                        <td>Assignment 2 help</td>
+                        <td></td>
+                    </tr>
+                    <tr class="break-row">
+                        <td>&mdash;</td>
+                        <td>Mar 7&ndash;15</td>
+                        <td>No discussion</td>
+                        <td>Spring Recess</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Tue Mar 17</td>
+                        <td>Midterm project help</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Tue Mar 24</td>
+                        <td>Midterm project work</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Tue Mar 31</td>
+                        <td>Office hours</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Tue Apr 7</td>
+                        <td>Final project help</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Tue Apr 14</td>
+                        <td>Proposal feedback</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Tue Apr 21</td>
+                        <td>Office hours</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Tue Apr 28</td>
+                        <td>Final project work</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
             <h3>Topics Not Covered</h3>
             <p>Due to time constraints, this course does not cover several important areas in AI for science, including neural operators, physics-informed learning, surrogate modeling, causal inference, interpretability methods, experimental design, and active learning.</p>
         </section>
@@ -1033,7 +1144,7 @@
                 <span class="grading-percent">15%</span>
             </div>
             <div class="grading-item">
-                <span>Discussion Participation</span>
+                <span>Discussion/Lecture Participation</span>
                 <span class="grading-percent">10%</span>
             </div>
             <div class="grading-item">
@@ -1052,12 +1163,9 @@
             <h3>Assignments</h3>
             <p>Two assignments ask students to <em>propose</em> a novel method (or modification to an existing method) and then <em>critique</em> it through theoretical analysis and empirical evaluation. AI tools may be used freely, but the analysis and interpretation require genuine understanding.</p>
             <ul>
-                <li><strong>Assignment 1</strong>: Design and critique a sampling or variational inference method</li>
-                <li><strong>Assignment 2</strong>: Design and critique a neural network architecture or inductive bias</li>
+                <li><strong>Assignment 1</strong>: Design and critique a novel sampling or variational inference method</li>
+                <li><strong>Assignment 2</strong>: Design and critique a novel neural network architecture or inductive bias</li>
             </ul>
-
-            <h3>Discussion Sections</h3>
-            <p>Weekly sessions focused on hands-on implementation and applications of methods from lectures. These provide opportunities to work through code, explore scientific datasets, and deepen understanding of course material.</p>
 
             <h3>Midterm Project</h3>
             <p>Teams of 2&ndash;3 conduct a mini research project applying methods from the first half of the course (inference, architectures, generative models) to a scientific problem. Choose from a suggested list or propose your own. Deliverable is a 4&ndash;6 page workshop-style paper + code.</p>
@@ -1110,7 +1218,7 @@
             <p>Regular attendance is expected. Please notify the instructor of planned absences.</p>
 
             <h3>Late Work</h3>
-            <p>Late submissions will be penalized unless prior arrangements are made. Extensions may be granted for documented emergencies.</p>
+            <p>Late submissions are not accepted without prior arrangement. Extensions may be granted for documented emergencies.</p>
 
             <h3>Collaboration</h3>
             <p>Discussion of concepts and approaches is encouraged. However, all submitted code and written work must be your own. When collaborating, you must acknowledge your collaborators.</p>
