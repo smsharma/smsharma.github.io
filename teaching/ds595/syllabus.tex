@@ -9,11 +9,15 @@
 \usepackage[colorlinks,pdfusetitle,urlcolor=royalred,citecolor=royalred,linkcolor=royalred,bookmarksnumbered,plainpages=false]{hyperref}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{multirow}
+\usepackage{makecell}
 \usepackage{array}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 % Section heading style
-\newcommand{\syllabussection}[1]{\vskip.15in\noindent{\textsc{#1}}\vskip.05in\hrule\vskip.1in}
+\newcommand{\syllabussection}[1]{\vskip.25in\noindent{\Large\textsc{#1}}\vskip.1in}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -23,7 +27,7 @@
 \fancypagestyle{plain}{\pagestyle{fancy}} % Show header on first page too
 
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.5em}
+\setlength{\parskip}{0.4em}
 
 \begin{document}
 
@@ -33,26 +37,25 @@
 \end{center}
 
 \begin{center}
-\rule{6.5in}{0.4pt}
-\begin{minipage}[t]{.9\textwidth}
-\begin{tabular}{llcll}
-\textbf{Instructor:} & \href{https://smsharma.io}{Siddharth Mishra-Sharma} & \hspace{0.3in} & \textbf{Lecture:} & Mon/Wed 12:20--1:35pm \\
-\textbf{Email:} & \href{mailto:smishras@bu.edu}{\texttt{smishras@bu.edu}} & & \textbf{Location:} & CAS 218 \\
-\textbf{TF:} & \href{https://www.bu.edu/cds-faculty/profile/wanli-cheng/}{Wanli Cheng} (\href{mailto:cwl1997@bu.edu}{\texttt{cwl1997@bu.edu}}) & & \textbf{Credits:} & 4 \\
+\rule{\textwidth}{0.8pt}
+\vskip.015in
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}ll@{\hspace{0.6in}}ll@{}}
+\textbf{Instructor:} & \href{https://smsharma.io}{Siddharth Mishra-Sharma} & \textbf{Lecture:} & Mon/Wed 12:20--1:35pm \\
+\textbf{Email:} & \href{mailto:smishras@bu.edu}{\texttt{smishras@bu.edu}} & \textbf{Location:} & CAS 218 \\
+\textbf{TF:} & \href{https://www.bu.edu/cds-faculty/profile/wanli-cheng/}{Wanli Cheng} (\href{mailto:cwl1997@bu.edu}{\texttt{cwl1997@bu.edu}}) & \textbf{Credits:} & 4 \\
 \end{tabular}
-\end{minipage}
-\rule{6.5in}{0.4pt}
+\renewcommand{\arraystretch}{1.0}
+\vskip.015in
+\rule{\textwidth}{0.8pt}
 \\[0.3em]
 {\small\textit{Last updated: \today}}
 \end{center}
 
-\vskip.15in
 \noindent\textbf{Discussion Section:} Tuesdays 11:15am--12:05pm, MUG 205
 
-\vskip.15in
 \noindent\textbf{Office Hours:} Tue 3--4pm or by appointment, CDS 1528
 
-\vskip.15in
 \noindent\textbf{Resources:}
 \begin{itemize}
 \item Course website: \url{https://smsharma.io/teaching/ds595-ai4science.html}
@@ -63,16 +66,14 @@
 
 There is no required textbook. Many readings reference \href{https://udlbook.github.io/udlbook/}{\emph{Understanding Deep Learning}} by Simon J.D. Prince (MIT Press, 2023); the PDF is available on the website. Other readings are drawn from research papers and online resources.
 
-\vskip.15in
-\noindent\textbf{Course Description:}
-AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference. \emph{While framed in terms of scientific applications, the methods discussed extend well beyond scientific research, with broad applicability across industry and general AI R\&D.}
-
-Applications are drawn from domains including physics, materials science, and biology. The course involves two assignments emphasizing method design and critical analysis in collaboration with AI tools, plus two projects: a midterm applying AI methods to a scientific problem, and a final project finetuning an LLM to elicit a scientific capability.
+\syllabussection{About the Course}
+AI methods are increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference. \emph{While framed in terms of scientific applications, the methods discussed extend well beyond scientific research, with broad applicability across industry and general AI R\&D.}
 
 A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities as well as limitations.
 
-\vskip.15in
-\noindent\textbf{Learning Objectives:} By the end of this course, students will be able to:
+Applications are drawn from domains including physics, materials science, and biology. The course involves two assignments emphasizing method design and critical analysis in collaboration with AI tools, plus two projects: a midterm applying AI methods to a scientific problem, and a final project finetuning an LLM to elicit a scientific capability.
+
+\noindent\textbf{Learning Objectives.} By the end of this course, students will be able to:
 \begin{itemize}
 \item Apply probabilistic inference and sampling methods (e.g., MCMC) to scientific problems
 \item Design neural networks that encode scientific domain knowledge
@@ -83,14 +84,15 @@ A major focus of the course is on large language models and their emerging role 
 \item Read and understand AI-for-science research papers
 \end{itemize}
 
-\noindent\textbf{Course Schedule:}
+\syllabussection{Schedule}
 
 \noindent\textit{This schedule is tentative and subject to change as the course progresses.}
 
 \vskip.1in
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{longtable}{@{}l L{2.3cm} L{8cm} L{4cm}@{}}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}l l L{7.5cm} l@{}}
 \toprule
 & \textbf{Date} & \textbf{Topic} & \textbf{Notes} \\
 \midrule
@@ -181,12 +183,13 @@ L26 & Wed, Apr 29 & Being a Human Scientist & \\
 \end{longtable}
 \normalsize
 
-\noindent\textbf{Discussion Sections:}
+\noindent\textbf{Discussion Sections.} Tuesdays 11:15am--12:05pm in MUG 205.
 
-\noindent Tuesdays 11:15am--12:05pm in MUG 205.
-
-\vskip.1in
-\begin{tabular}{llll}
+\begin{table}[ht]
+\centering
+\setlength{\tabcolsep}{10pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{0.92\linewidth}{@{}l l X l@{}}
 \toprule
 \textbf{Week} & \textbf{Date} & \textbf{Topic} & \textbf{Notes} \\
 \midrule
@@ -201,78 +204,74 @@ L26 & Wed, Apr 29 & Being a Human Scientist & \\
 8 & Tue Mar 17 & Lab: Differentiable Programming & \\
 9 & Tue Mar 24 & Midterm project work & Midterm due Apr 1 \\
 10 & Tue Mar 31 & Lab: Simulation-Based Inference & \\
-11--14 & Apr & Final project work & Proposal due Apr 18, Report due May 4 \\
+11--14 & Apr & Final project work & \makecell[l]{Proposal due Apr 18\\Report due May 4} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
+\end{table}
 
 \newpage
 
-\vskip.15in
-\noindent\textbf{Assessment:}
-\begin{center}
-\begin{minipage}{4in}
-\begin{flushleft}
-Assignment 1: Inference \dotfill 15\% \\
-Assignment 2: Architectures \dotfill 15\% \\
-Discussion Labs \dotfill 10\% \\
-Midterm Project \dotfill 25\% \\
-Final Project \dotfill 35\% \\
-\end{flushleft}
-\end{minipage}
-\end{center}
+\syllabussection{Assessment}
 
-\vskip.15in
-\noindent\textbf{Assignments \& Components:}
+\begin{table}[ht]
+\centering
+\setlength{\tabcolsep}{10pt}          % horizontal padding
+\renewcommand{\arraystretch}{1.25}    % vertical padding
+%\rowcolors{2}{gray!6}{white}          % subtle zebra striping (optional)
+
+\begin{tabularx}{0.92\linewidth}{@{}X r l l@{}}
+\toprule
+\textbf{Deliverable} & \textbf{\%} & \textbf{Out} & \textbf{Due} \\
+\midrule
+Discussion Labs & 10\% & Tue (select weeks) & Wed (select weeks) \\
+Assignment 1: Inference & 15\% & Wed Feb 4 & Wed Feb 18 \\
+Assignment 2: Architectures & 15\% & Wed Feb 18 & Wed Mar 4 \\
+Midterm Project & 25\% & Mon Mar 2 & Wed Apr 1 \\
+Final Project & 35\% & Wed Apr 1 & \makecell[l]{Proposal: Fri Apr 18\\Report: Mon May 4} \\
+\bottomrule
+\end{tabularx}
+
+\end{table}
+
 \begin{itemize}
 \item \textbf{Discussion Labs.} Weekly in-class labs reinforce lecture material through hands-on programming. Students work through a notebook during discussion, exploring implementations and comparing results. Graded on participation and completion. Labs are due end of day Wednesday.
-\item \textbf{Assignments.} Two assignments ask students to propose a novel method (or modification to an existing method) and then understand/critique it through theoretical analysis and empirical evaluation. AI tools may be used freely, but the analysis and interpretation require critically engaging with what was produced.
+\item \textbf{Assignments.} Two assignments ask students to propose a novel method (or modification to an existing method) and then understand/critique it through theoretical analysis and empirical evaluation. AI tools may be used freely, but the analysis and interpretation require critically engaging with what was produced. The discussion labs build foundational skills for these assignments.
 \begin{itemize}
     \item Assignment 1: Design and stress-test a novel sampling or variational inference method
     \item Assignment 2: Design and stress-test a novel neural network architecture or inductive bias
 \end{itemize}
 \item \textbf{Midterm Project.} Teams of 2--3 conduct a mini research project applying methods from the first half of the course (inference, architectures, generative models) to a scientific problem. Choose from a suggested list or propose your own. Deliverable is a $\sim$4 page workshop-style paper + code.
-\item \textbf{Final Project.} Teams of 2--3 identify a scientific capability that current LLMs struggle with, then finetune a language model to improve that capability. This is a two-stage project:
+\item \textbf{Final Project.} Teams of 2--3 identify a scientific capability that current large language models struggle with, then finetune a language model to improve that capability. This is a two-stage project:
 \begin{itemize}
     \item Proposal: Demonstrate that LLMs struggle at a specific scientific capability by curating a dataset or benchmark
     \item Final report ($\sim$6 pages, NeurIPS format): Fine-tuned model and evaluation showing improvement, including artifacts used for fine-tuning (datasets, code, reinforcement learning environments)
 \end{itemize}
 \end{itemize}
 
-\vskip.15in
-\noindent\textbf{Timeline:}
-\begin{center}
-\begin{tabular}{lll}
-\toprule
-\textbf{Deliverable} & \textbf{Out} & \textbf{Due} \\
-\midrule
-Assignment 1 & Wed Feb 4 & Wed Feb 18 \\
-Assignment 2 & Wed Feb 18 & Wed Mar 4 \\
-Midterm Project & Mon Mar 2 & Wed Apr 1 \\
-Final Project & Wed Apr 1 & Proposal: Fri Apr 18; Report: Mon May 4 \\
-\bottomrule
-\end{tabular}
-\end{center}
+\syllabussection{Policies}
 
-\vskip.25in
-\noindent\textbf{Course Policies:}
-\begin{itemize}
-\item \textbf{Attendance.} Regular attendance in lectures is expected. Please notify the instructor of planned absences.
-\item \textbf{Late Work.} Late submissions are not accepted without prior arrangement. Extensions may be granted for documented emergencies.
-\item \textbf{Collaboration.} Discussion of concepts and approaches is encouraged. However, all submitted code and written work must be your own. When collaborating, you must acknowledge your collaborators.
-\item \textbf{AI Tools.} Learning to work effectively with AI is itself a course objective. Use AI tools freely to explore ideas, debug code, and deepen understanding. Focus on building genuine competence---understanding \emph{why} something works, not just \emph{that} it works. Disclose AI assistance in submissions, including its form and extent. See also the \href{https://www.bu.edu/cds-faculty/culture-community/gaia-policy/}{CDS GAIA policy}.
-\item \textbf{Recordings.} Recording of lectures requires instructor permission. Students approved for recording as an accommodation must limit use to personal study and may not share recordings.
-\end{itemize}
+\noindent\textbf{Attendance.}
+Regular attendance in lectures is expected. Please notify the instructor of planned absences.
 
-\vskip.15in
-\noindent\textbf{Academic Conduct:}
+\noindent\textbf{Late Work.}
+Late submissions are not accepted without prior arrangement. Extensions may be granted for documented emergencies.
+
+\noindent\textbf{Collaboration.}
+Discussion of concepts and approaches is encouraged. However, all submitted code and written work must be your own. When collaborating, you must acknowledge your collaborators.
+
+\noindent\textbf{AI Tools.}
+Learning to work effectively with AI is itself a course objective. Use AI tools freely to explore ideas, debug code, and deepen understanding. Focus on building genuine competence---understanding \emph{why} something works, not just \emph{that} it works. Disclose AI assistance in submissions, including its form and extent. See also the \href{https://www.bu.edu/cds-faculty/culture-community/gaia-policy/}{CDS GAIA policy}.
+
+\noindent\textbf{Academic Conduct.}
 All students are expected to read and abide by the \href{https://www.bu.edu/academics/policies/academic-conduct-code/}{BU Academic Code of Conduct}. Plagiarism includes copying or restating work or ideas of another person or AI software without citing the source. In computing coursework, this includes sharing code, reusing code across courses without permission, and uploading assignments to external sites. Please review the \href{https://www.bu.edu/cs/undergraduate/undergraduate-life/academic-integrity/}{examples of plagiarism provided by the BU Computer Science department}. All suspected cases of plagiarism will be reported to the Academic Dean.
 
-\vskip.15in
-\noindent\textbf{Religious Observance:}
+\noindent\textbf{Accommodations.}
+Boston University is committed to providing reasonable accommodations to students with documented disabilities. Students seeking accommodations should contact \href{https://www.bu.edu/disability/}{Disability \& Access Services} (25 Buick Street, Suite 300; 617-353-3658) as early as possible in the semester. A new Faculty Accommodation Letter (FAL) must be requested each semester; DAS will send this directly to instructors.
+
+\noindent\textbf{Religious Observance.}
 Students observing a religious holiday during regularly scheduled class time are entitled to an excused absence. Please notify the instructor in advance to make arrangements for any missed work.
 
-\vskip.15in
-\noindent\textbf{Accommodations:}
-Boston University is committed to providing reasonable accommodations to students with documented disabilities. Students seeking accommodations should contact \href{https://www.bu.edu/disability/}{Disability \& Access Services} (25 Buick Street, Suite 300; 617-353-3658) as early as possible in the semester. A new Faculty Accommodation Letter (FAL) must be requested each semester; DAS will send this directly to instructors.
+\noindent\textbf{Recordings.}
+Recording of lectures requires instructor permission. Students approved for recording as an accommodation must limit use to personal study and may not share recordings.
 
 \end{document}
