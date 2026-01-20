@@ -1,0 +1,280 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr, lastpage}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{darkblue}{rgb}{0,0,.6}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{royalred}{rgb}{0.64,0.08,0.18}
+\usepackage[colorlinks,pdfusetitle,urlcolor=royalred,citecolor=royalred,linkcolor=royalred,bookmarksnumbered,plainpages=false]{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% Section heading style
+\newcommand{\syllabussection}[1]{\vskip.15in\noindent{\textsc{#1}}\vskip.05in\hrule\vskip.1in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CDS DS 595: AI Methods for Science}
+\rhead{Spring 2026}
+\fancyfoot[C]{page \thepage\ of \pageref{LastPage}}
+\fancypagestyle{plain}{\pagestyle{fancy}} % Show header on first page too
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+\begin{center}
+{\Large \textsc{AI Methods for Science}}\\[0.2em]
+{\small CDS DS 595 $\cdot$ Spring 2026 $\cdot$ Boston University}
+\end{center}
+
+\begin{center}
+\rule{6.5in}{0.4pt}
+\begin{minipage}[t]{.9\textwidth}
+\begin{tabular}{llcll}
+\textbf{Instructor:} & \href{https://smsharma.io}{Siddharth Mishra-Sharma} & \hspace{0.3in} & \textbf{Lecture:} & Mon/Wed 12:20--1:35pm \\
+\textbf{Email:} & \href{mailto:smishras@bu.edu}{\texttt{smishras@bu.edu}} & & \textbf{Location:} & CAS 218 \\
+\textbf{TF:} & \href{https://www.bu.edu/cds-faculty/profile/wanli-cheng/}{Wanli Cheng} (\href{mailto:cwl1997@bu.edu}{\texttt{cwl1997@bu.edu}}) & & \textbf{Credits:} & 4 \\
+\end{tabular}
+\end{minipage}
+\rule{6.5in}{0.4pt}
+\\[0.3em]
+{\small\textit{Last updated: \today}}
+\end{center}
+
+\vskip.15in
+\noindent\textbf{Discussion Section:} Tuesdays 11:15am--12:05pm, MUG 205
+
+\vskip.15in
+\noindent\textbf{Office Hours:} Tue 3--4pm, CDS 1528
+
+\vskip.15in
+\noindent\textbf{Resources:}
+\begin{itemize}
+\item Course website: \url{https://smsharma.io/teaching/ds595-ai4science.html}
+\item Discussion: \url{https://piazza.com/bu/spring2026/ds595}
+\item Assignment/lab submission: GitHub Classroom
+\item Computing: GPU access through the \href{https://www.bu.edu/tech/support/research/computing-resources/scc/}{Shared Computing Cluster (SCC)} and LLM API/finetuning credits will be provided for project work
+\end{itemize}
+
+There is no required textbook. Optional readings will be drawn from research papers and online resources.
+
+\vskip.15in
+\noindent\textbf{Course Description:}
+AI is increasingly central to how science gets done, spanning simulation, experiment, theory, and observation. This course aims to equip students with the methods to understand and carry out research at the intersection of AI and the natural sciences. Topics include probabilistic inference, neural networks that encode physical symmetries and domain knowledge, generative models for scientific data, and simulation-based inference. \emph{While framed in terms of scientific applications, the methods discussed extend well beyond scientific research, with broad applicability across industry and general AI R\&D.}
+
+Applications are drawn from domains including physics, materials science, and biology. The course involves two assignments emphasizing method design and critical analysis in collaboration with AI tools, plus two projects: a midterm applying AI methods to a scientific problem, and a final project finetuning an LLM to elicit a scientific capability.
+
+A major focus of the course is on large language models and their emerging role in science. As LLMs become more capable of scientific reasoning and operating autonomously, understanding how to evaluate, adapt, and collaborate with these systems is becoming essential. We explore what it means to work alongside AI scientists, and how to critically assess their capabilities as well as limitations.
+
+\vskip.15in
+\noindent\textbf{Learning Objectives:} By the end of this course, students will be able to:
+\begin{itemize}
+\item Apply probabilistic inference and sampling methods (e.g., MCMC) to scientific problems
+\item Design neural networks that encode scientific domain knowledge
+\item Train generative models (e.g., diffusion models) to emulate scientific data distributions
+\item Use simulation-based inference to connect simulators with observations
+\item Evaluate the edges and limitations of LLM capabilities for scientific reasoning
+\item Develop intuitions for how to collaborate effectively with AI systems on research tasks
+\item Read and understand AI-for-science research papers
+\end{itemize}
+
+\vskip.15in
+\noindent\textbf{Assessment:}
+\begin{center}
+\begin{minipage}{4in}
+\begin{flushleft}
+Assignment 1: Inference \dotfill 15\% \\
+Assignment 2: Architectures \dotfill 15\% \\
+Discussion Labs \dotfill 10\% \\
+Midterm Project \dotfill 25\% \\
+Final Project \dotfill 35\% \\
+\end{flushleft}
+\end{minipage}
+\end{center}
+
+\vskip.15in
+\noindent\textbf{Assignments \& Components:}
+\begin{itemize}
+\item \textbf{Discussion Labs.} Weekly in-class labs reinforce lecture material through hands-on programming. Students work through a notebook during discussion, exploring implementations and comparing results. Graded on participation and completion.
+\item \textbf{Assignments.} Two assignments ask students to propose a novel method (or modification to an existing method) and then understand/critique it through theoretical analysis and empirical evaluation. AI tools may be used freely, but the analysis and interpretation require critically engaging with what was produced.
+\begin{itemize}
+    \item Assignment 1: Design and stress-test a novel sampling or variational inference method
+    \item Assignment 2: Design and stress-test a novel neural network architecture or inductive bias
+\end{itemize}
+\item \textbf{Midterm Project.} Teams of 2--3 conduct a mini research project applying methods from the first half of the course (inference, architectures, generative models) to a scientific problem. Choose from a suggested list or propose your own. Deliverable is a $\sim$4 page workshop-style paper + code.
+\item \textbf{Final Project.} Teams of 2--3 identify a scientific capability that current LLMs struggle with, then finetune a language model to improve that capability. This is a two-stage project:
+\begin{itemize}
+    \item Proposal: Demonstrate that LLMs struggle at a specific scientific capability by curating a dataset or benchmark
+    \item Final report ($\sim$6 pages, NeurIPS format): Fine-tuned model and evaluation showing improvement, including artifacts used for fine-tuning (datasets, code, reinforcement learning environments)
+\end{itemize}
+\end{itemize}
+
+\vskip.15in
+\noindent\textbf{Timeline:}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+\textbf{Deliverable} & \textbf{Out} & \textbf{Due} \\
+\midrule
+Assignment 1 & Wed Feb 4 & Wed Feb 18 \\
+Assignment 2 & Wed Feb 18 & Wed Mar 4 \\
+Midterm Project & Mon Mar 2 & Wed Apr 1 \\
+Final Project & Wed Apr 1 & Proposal: Fri Apr 18; Report: Mon May 4 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\newpage
+
+\noindent\textbf{Course Schedule:}
+
+\noindent\textit{This schedule is tentative and subject to change as the course progresses.}
+
+\vskip.1in
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}l L{2.3cm} L{8cm} L{4cm}@{}}
+\toprule
+& \textbf{Date} & \textbf{Topic} & \textbf{Notes} \\
+\midrule
+\endfirsthead
+\toprule
+& \textbf{Date} & \textbf{Topic} & \textbf{Notes} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+\multicolumn{4}{@{}l}{\textit{Week 1}} \\
+L1 & Wed, Jan 21 & Science in the Era of Computation & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 2}} \\
+L2 & Mon, Jan 26 & Reasoning Under Uncertainty & \\
+L3 & Wed, Jan 28 & Framing Scientific Problems as ML Tasks & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 3}} \\
+L4 & Mon, Feb 2 & Learning by Sampling and Optimization & \\
+L5 & Wed, Feb 4 & Building Blocks of Learned Representations & A1 out \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 4}} \\
+L6 & Mon, Feb 9 & Encoding Scientific Structure in Neural Networks I & \\
+L7 & Wed, Feb 11 & Encoding Scientific Structure in Neural Networks II & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 5}} \\
+--- & Mon, Feb 16 & \emph{No class} & Presidents' Day \\
+L8 & Tue, Feb 17 & Encoding Scientific Structure in Neural Networks III & Substitute Monday \\
+L9 & Wed, Feb 18 & Learning Distributions from Data I & A1 due; A2 out \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 6}} \\
+L10 & Mon, Feb 23 & Learning Distributions from Data II & \\
+L11 & Wed, Feb 25 & Learning Distributions from Data III & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 7}} \\
+L12 & Mon, Mar 2 & Guest Lecture (AI + bio) & Midterm out \\
+L13 & Wed, Mar 4 & Differentiating Through Scientific Simulators & A2 due \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Spring Recess: March 7--15}} \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 8}} \\
+L14 & Mon, Mar 16 & Learning Through Exploration & \\
+L15 & Wed, Mar 18 & Inverting Simulators I & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 9}} \\
+L16 & Mon, Mar 23 & Inverting Simulators II & \\
+L17 & Wed, Mar 25 & Discovering Equations from Data & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 10}} \\
+L18 & Mon, Mar 30 & Guest Lecture (AI + astro) & \\
+L19 & Wed, Apr 1 & Guest Lecture (AI + particle collider physics) & Midterm due; Final out \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 11}} \\
+L20 & Mon, Apr 6 & From Specialized to General Intelligence; Scaling & \\
+L21 & Wed, Apr 8 & Quantifying and Predicting LLM Scientific Capabilities & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 12}} \\
+L22 & Mon, Apr 13 & LLM Building Blocks & \\
+L23 & Wed, Apr 15 & Teaching LLMs to Science & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 13}} \\
+--- & Mon, Apr 20 & \emph{No class} & Patriots' Day \\
+L24 & Wed, Apr 22 & Learning Unified Representations Across Scientific Modalities & Proposal due Fri Apr 18 \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Week 14}} \\
+L25 & Mon, Apr 27 & Frontiers & \\
+L26 & Wed, Apr 29 & Being a Human Scientist & \\
+\addlinespace[3pt]
+
+\multicolumn{4}{@{}l}{\textit{Finals}} \\
+--- & Mon, May 4 & \textbf{Final Project Due} & \\
+
+\end{longtable}
+\normalsize
+
+%\newpage
+
+\noindent\textbf{Discussion Sections:}
+
+\noindent Tuesdays 11:15am--12:05pm in MUG 205.
+
+\vskip.1in
+\begin{tabular}{llll}
+\toprule
+\textbf{Week} & \textbf{Date} & \textbf{Topic} & \textbf{Notes} \\
+\midrule
+--- & Tue Jan 20 & No discussion & First day of classes \\
+2 & Tue Jan 27 & Lab: JAX, Autodiff, GitHub & \\
+3 & Tue Feb 3 & Lab: Hamiltonian Monte Carlo & \\
+4 & Tue Feb 10 & Lab: Training Neural Networks & \\
+--- & Tue Feb 17 & No discussion & Substitute Monday schedule \\
+6 & Tue Feb 24 & Lab: Diffusion Models & \\
+7 & Tue Mar 3 & Midterm project intro + SCC setup & \\
+--- & Mar 7--15 & No discussion & Spring Recess \\
+8 & Tue Mar 17 & Lab: Differentiable Programming & \\
+9 & Tue Mar 24 & Midterm project work & Midterm due Apr 1 \\
+10 & Tue Mar 31 & Lab: Simulation-Based Inference & \\
+11--14 & Apr & Final project work & Proposal due Apr 18, Report due May 4 \\
+\bottomrule
+\end{tabular}
+
+\vskip.25in
+\noindent\textbf{Course Policies:}
+\begin{itemize}
+\item \textbf{Attendance.} Regular attendance in lectures is expected. Please notify the instructor of planned absences.
+\item \textbf{Late Work.} Late submissions are not accepted without prior arrangement. Extensions may be granted for documented emergencies.
+\item \textbf{Collaboration.} Discussion of concepts and approaches is encouraged. However, all submitted code and written work must be your own. When collaborating, you must acknowledge your collaborators.
+\item \textbf{AI Tools.} Learning to work effectively with AI is itself a course objective. Use AI tools freely to explore ideas, debug code, and deepen understanding. Focus on building genuine competence---understanding \emph{why} something works, not just \emph{that} it works. Disclose AI assistance in submissions, including its form and extent. See also the \href{https://www.bu.edu/cds-faculty/culture-community/gaia-policy/}{CDS GAIA policy}.
+\item \textbf{Recordings.} Recording of lectures requires instructor permission. Students approved for recording as an accommodation must limit use to personal study and may not share recordings.
+\end{itemize}
+
+\vskip.15in
+\noindent\textbf{Academic Conduct:}
+All students are expected to read and abide by the \href{https://www.bu.edu/academics/policies/academic-conduct-code/}{BU Academic Code of Conduct}. Plagiarism includes copying or restating work or ideas of another person or AI software without citing the source. In computing coursework, this includes sharing code, reusing code across courses without permission, and uploading assignments to external sites. Please review the \href{https://www.bu.edu/cs/undergraduate/undergraduate-life/academic-integrity/}{examples of plagiarism provided by the BU Computer Science department}. All suspected cases of plagiarism will be reported to the Academic Dean.
+
+\vskip.15in
+\noindent\textbf{Religious Observance:}
+Students observing a religious holiday during regularly scheduled class time are entitled to an excused absence. Please notify the instructor in advance to make arrangements for any missed work.
+
+\vskip.15in
+\noindent\textbf{Accommodations:}
+Boston University is committed to providing reasonable accommodations to students with documented disabilities. Students seeking accommodations should contact \href{https://www.bu.edu/disability/}{Disability \& Access Services} (25 Buick Street, Suite 300; 617-353-3658) as early as possible in the semester. A new Faculty Accommodation Letter (FAL) must be requested each semester; DAS will send this directly to instructors.
+
+\end{document}
