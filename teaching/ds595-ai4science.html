@@ -270,6 +270,26 @@
             color: var(--accent-bu);
         }
 
+        .week-readings .material-tag {
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 1px 5px;
+            border-radius: 3px;
+            margin-right: 4px;
+        }
+
+        .week-readings .tag-slides {
+            background: var(--accent-bu);
+            color: white;
+        }
+
+        .week-readings .tag-notes {
+            background: #2c5282;
+            color: white;
+        }
+
         .week-readings + .week-deliverable {
             flex-basis: 100%;
             margin-top: 8px;
@@ -566,7 +586,7 @@
                             <div class="week-lectures">Course intro and logistics; Historical and philosophical perspectives</div>
                         </div>
                         <ul class="week-readings">
-                            <li><a href="https://bu-ds595.github.io/course-materials-spring26/slides/00-intro.html">Slides</a></li>
+                            <li><a href="https://bu-ds595.github.io/course-materials-spring26/slides/00-intro.html"><span class="material-tag tag-slides">Slides</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -583,8 +603,7 @@
                             <div class="week-lectures">Bayesian inference; Fitting a model to data; Model selection</div>
                         </div>
                         <ul class="week-readings">
-                            <li><a href="https://bu-ds595.github.io/course-materials-spring26/notes/01-probabilistic-reasoning.pdf">Notes: Probabilistic Reasoning</a></li>
-                            <li><a href="https://arxiv.org/abs/1008.4686">Hogg+, Fitting a Model to Data Sec 1-2, 4</a></li>
+                            <li><span class="material-tag tag-notes">Notes</span><a href="https://bu-ds595.github.io/course-materials-spring26/notes/01-probabilistic-reasoning.pdf">Probabilistic Reasoning</a></li>
                             <li><a href="https://emcee.readthedocs.io/en/stable/tutorials/line/">emcee, Fitting a Model to Data</a></li>
                         </ul>
                     </div>
@@ -601,7 +620,7 @@
                             <div class="week-lectures">Classification, regression, inference, generation, compression, anomaly detection, ...</div>
                         </div>
                         <ul class="week-readings">
-                            <li><a href="https://bu-ds595.github.io/course-materials-spring26/notes/01-probabilistic-reasoning.pdf">Notes: Probabilistic Reasoning</a></li>
+                            <li><span class="material-tag tag-notes">Notes</span><a href="https://bu-ds595.github.io/course-materials-spring26/notes/01-probabilistic-reasoning.pdf">Probabilistic Reasoning</a></li>
                             <li><a href="https://udlbook.github.io/udlbook/">Prince, UDL Ch 1</a></li>
                         </ul>
                     </div>
