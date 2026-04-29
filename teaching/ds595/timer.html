@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presentation Timer</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --fg: #f5f5f5;
+    --muted: #8a8f98;
+    --accent: #4ca8ff;
+    --green: #2ecc71;
+    --yellow: #f1c40f;
+    --red: #e74c3c;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+  body.green { background: #123a1f; }
+  body.yellow { background: #3d3613; }
+  body.red { background: #3d1313; }
+  body.done { background: #000; }
+
+  .wrap {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  .phase {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  .time {
+    font-size: clamp(8rem, 28vw, 22rem);
+    font-weight: 200;
+    font-variant-numeric: tabular-nums;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    font-feature-settings: "tnum";
+  }
+  .hint {
+    color: var(--muted);
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+    margin-top: 1.5rem;
+  }
+  .controls {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  button {
+    background: rgba(255,255,255,0.08);
+    color: var(--fg);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 0.7rem 1.3rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease;
+  }
+  button:hover { background: rgba(255,255,255,0.14); }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+  button.primary:hover { background: #66b6ff; }
+  kbd {
+    background: rgba(255,255,255,0.1);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="phase" id="phase">Talk</div>
+  <div class="time" id="time">8:00</div>
+  <div class="hint" id="hint">Press <kbd>space</kbd> to start/pause · <kbd>R</kbd> to reset · <kbd>N</kbd> for next phase</div>
+  <div class="controls">
+    <button class="primary" id="startBtn">Start</button>
+    <button id="resetBtn">Reset</button>
+    <button id="skipBtn">Skip to Q&amp;A</button>
+  </div>
+</div>
+
+<script>
+  const TALK_SECONDS = 8 * 60;
+  const QA_SECONDS = 2 * 60;
+
+  const phaseEl = document.getElementById('phase');
+  const timeEl = document.getElementById('time');
+  const startBtn = document.getElementById('startBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const skipBtn = document.getElementById('skipBtn');
+
+  let phase = 'talk';
+  let remaining = TALK_SECONDS;
+  let running = false;
+  let tickId = null;
+
+  function fmt(s) {
+    const sign = s < 0 ? '-' : '';
+    const a = Math.abs(s);
+    const m = Math.floor(a / 60);
+    const r = a % 60;
+    return sign + m + ':' + String(r).padStart(2, '0');
+  }
+
+  function beep(freq = 880, dur = 0.2) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + dur);
+    } catch (e) {}
+  }
+
+  function render() {
+    timeEl.textContent = fmt(remaining);
+    phaseEl.textContent = phase === 'talk' ? 'Talk' : 'Q & A';
+
+    document.body.classList.remove('green', 'yellow', 'red', 'done');
+    if (phase === 'talk') {
+      if (remaining > 60) document.body.classList.add('green');
+      else if (remaining > 0) document.body.classList.add('yellow');
+      else document.body.classList.add('red');
+    } else {
+      if (remaining > 30) document.body.classList.add('green');
+      else if (remaining > 0) document.body.classList.add('yellow');
+      else document.body.classList.add('red');
+    }
+    startBtn.textContent = running ? 'Pause' : (remaining === 0 ? 'Done' : 'Start');
+  }
+
+  function tick() {
+    remaining -= 1;
+    if (phase === 'talk' && remaining === 60) beep(660, 0.2);
+    if (phase === 'talk' && remaining === 0) {
+      beep(440, 0.4);
+      setTimeout(() => beep(440, 0.4), 450);
+      phase = 'qa';
+      remaining = QA_SECONDS;
+    } else if (phase === 'qa' && remaining === 30) {
+      beep(660, 0.2);
+    } else if (phase === 'qa' && remaining === 0) {
+      beep(330, 0.6);
+      running = false;
+      clearInterval(tickId);
+    }
+    render();
+  }
+
+  function start() {
+    if (running) {
+      running = false;
+      clearInterval(tickId);
+    } else {
+      if (remaining <= 0) return;
+      running = true;
+      tickId = setInterval(tick, 1000);
+    }
+    render();
+  }
+
+  function reset() {
+    running = false;
+    clearInterval(tickId);
+    phase = 'talk';
+    remaining = TALK_SECONDS;
+    render();
+  }
+
+  function skip() {
+    if (phase === 'talk') {
+      phase = 'qa';
+      remaining = QA_SECONDS;
+      beep(660, 0.2);
+      render();
+    }
+  }
+
+  startBtn.addEventListener('click', start);
+  resetBtn.addEventListener('click', reset);
+  skipBtn.addEventListener('click', skip);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.code === 'Space') { e.preventDefault(); start(); }
+    else if (e.key === 'r' || e.key === 'R') { reset(); }
+    else if (e.key === 'n' || e.key === 'N') { skip(); }
+  });
+
+  render();
+</script>
+</body>
+</html>
