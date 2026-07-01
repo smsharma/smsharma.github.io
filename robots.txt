@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://smsharma.github.io/sitemap.xml
+Sitemap: https://smsharma.io/sitemap.xml
