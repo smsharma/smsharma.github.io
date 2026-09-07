@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawk Hill fog</title>
+    <meta name="description" content="Probability that the marine layer sits below the Hawk Hill summit, hour by hour for the next week and each day at sunrise.">
+    <meta name="author" content="Siddharth Mishra-Sharma">
+    <link rel="canonical" href="https://smsharma.io/fog/">
+    <link rel="shortcut icon" href="../favicon.png">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f9f6ef;
+            --text-color: #2c2c2c;
+            --text-secondary: #5a5a5a;
+            --text-muted: #8a8a8a;
+            --border-color: #e0ddd8;
+            --accent-bu: #cc0000;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Spectral', Georgia, serif;
+            font-size: 22px;
+            line-height: 1.75;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 80px 32px;
+            font-feature-settings: 'kern' 1, 'liga' 1, 'ss01' 1;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+        .container { max-width: 984px; margin: 0 auto; }
+        h1 {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 46px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin: 0 0 34px 0;
+        }
+        h2 {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 20px;
+            font-weight: 500;
+            margin: 56px 0 18px 0;
+        }
+        p { margin: 0 0 18px 0; font-size: 19px; }
+        p.small { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin: 18px 0 0 0; }
+        .nav { font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin-bottom: 48px; }
+        .nav a { color: var(--text-muted); text-decoration: none; background: none; }
+        .nav a:hover { color: var(--text-color); background: none; }
+        .plot { position: relative; margin-top: 28px; width: 100%; }
+        .plot svg { display: block; width: 100%; height: auto; }
+        .plot text { font-family: 'IBM Plex Sans', -apple-system, sans-serif; font-size: 13px; fill: var(--text-muted); }
+        .tip {
+            position: absolute; pointer-events: none; display: none;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif; font-size: 14px; line-height: 1.5;
+            color: var(--text-color); background: var(--bg-color); border: 1.5px solid var(--border-color); border-radius: 8px; padding: 8px 12px; white-space: nowrap;
+        }
+        .key { font-family: 'IBM Plex Sans', -apple-system, sans-serif; font-size: 14px; color: var(--text-muted); margin: 10px 0 0 44px; display: flex; flex-wrap: wrap; gap: 6px 22px; }
+        .key span { display: inline-flex; align-items: center; gap: 8px; }
+        .key i.avg { display: inline-block; width: 22px; height: 0; border-top: 1.25px dashed var(--text-muted); }
+        .tip b { font-weight: 500; }
+        .tip span { color: var(--text-muted); }
+        @media (max-width: 600px) { body { padding: 48px 20px; font-size: 19px; } h1 { font-size: 34px; } p { font-size: 17px; } }
+    </style>
+</head>
+<body>
+<main class="container">
+    <nav class="nav">
+        <a href="../index.html">&larr; Siddharth Mishra-Sharma</a>
+    </nav>
+    <h1>Hawk Hill fog</h1>
+    <p>The chance that the marine layer sits below the summit of Hawk Hill, so the Golden Gate is seen from above a sea of fog. The shaded band is where the day-of forecast is likely to end up; it narrows as each hour approaches. The dashed line is how often it happened on that date and hour over 2010 to 2026.</p>
+    <div class="plot" id="hourly"></div>
+    <p class="key"><span><i class="avg"></i>Historical average, 2010 to 2026</span></p>
+    <h2>Each day at sunrise</h2>
+    <div class="plot" id="sunrise"></div>
+    <p class="key"><span><i class="avg"></i>Historical average</span></p>
+    <p class="small" id="note">Loading the forecast…</p>
+</main>
+<script src="model_data.js"></script>
+<script src="predictor.js"></script>
+<script>
+(function () {
+    const P = window.HHPredictor, TZ = 'America/Los_Angeles', LAT = 37.8256, LON = -122.4997;
+    const fmtDay = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'short', month: 'short', day: 'numeric' });
+    const fmtShort = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'short', day: 'numeric' });
+    const fmtLong = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric' });
+    const fmtClock = new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', minute: '2-digit' });
+    const fmtIssued = new Intl.DateTimeFormat('en-US', { timeZone: TZ, weekday: 'short', hour: 'numeric', minute: '2-digit' });
+    const hourLA = d => +new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', hourCycle: 'h23' }).format(d);
+    const pct = p => Math.round(p * 100) + '%';
+    let fc = null, byTime = new Map();
+
+    // Sunrise (UTC Date) for the local civil day beginning at dayStartUTC (local midnight), NOAA solar equations
+    function sunrise(dayStartUTC) {
+        const noon = new Date(dayStartUTC.getTime() + 12 * 3600000);
+        const jd = noon.getTime() / 86400000 + 2440587.5;
+        const n = Math.round(jd - 2451545.0 + 0.0008);
+        const Jstar = n - LON / 360;
+        const M = ((357.5291 + 0.98560028 * Jstar) % 360) * Math.PI / 180;
+        const C = 1.9148 * Math.sin(M) + 0.02 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M);
+        const lam = ((M * 180 / Math.PI + C + 180 + 102.9372) % 360) * Math.PI / 180;
+        const Jt = 2451545.0 + Jstar + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * lam);
+        const dec = Math.asin(Math.sin(lam) * Math.sin(23.4397 * Math.PI / 180)), phi = LAT * Math.PI / 180;
+        const w = Math.acos((Math.sin(-0.833 * Math.PI / 180) - Math.sin(phi) * Math.sin(dec)) / (Math.cos(phi) * Math.cos(dec)));
+        return new Date((Jt - w / (2 * Math.PI) - 2440587.5) * 86400000);
+    }
+    // local midnight (UTC Date) of the civil day containing d
+    function localMidnight(d) {
+        const p = new Intl.DateTimeFormat('en-US', { timeZone: TZ, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', hourCycle: 'h23' }).formatToParts(d).reduce((o, q) => (o[q.type] = +q.value, o), {});
+        const guess = Date.UTC(p.year, p.month - 1, p.day, 12), off = guess - Math.floor(d.getTime() / 3600000) * 3600000 - (12 - p.hour) * 3600000; // offset = local - utc
+        return new Date(Date.UTC(p.year, p.month - 1, p.day) - off);
+    }
+
+    async function load() {
+        const vars = 'temperature_2m,dew_point_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m,pressure_msl,cloud_cover';
+        const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT},38.55&longitude=${LON},-121.5&hourly=${vars}&models=gfs_global&forecast_days=8&past_days=1&timezone=UTC`);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const j = await r.json(), a = j[0].hourly, b = j[1].hourly;
+        const times = a.time.map(t => new Date(t + 'Z'));
+        fc = { issued: new Date(),
+            hh: times.map((_, i) => ({ t2m: a.temperature_2m[i], td: a.dew_point_2m[i], rh: a.relative_humidity_2m[i], ws: a.wind_speed_10m[i], wd: a.wind_direction_10m[i], msl: a.pressure_msl[i], cc: a.cloud_cover[i] })),
+            sac: times.map((_, i) => ({ t2m: b.temperature_2m[i], msl: b.pressure_msl[i], td: b.dew_point_2m[i] })) };
+        times.forEach((t, i) => byTime.set(t.getTime(), i));
+    }
+    const predictAt = d => { const i = byTime.get(d.getTime()), lead = (d - Date.now()) / 86400000; return fc && i != null ? P.predict(d, fc.hh[i], fc.sac[i], lead) : P.predict(d, null, null, lead); };
+    const el = (tag, attrs) => { const e = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+    function yAxis(svg, ymax, y, ml, W, mr) {
+        for (let g = 0; g <= ymax + 1e-9; g += ymax <= 0.4 ? 0.1 : 0.2) {
+            svg.appendChild(el('line', { x1: ml, x2: W - mr, y1: y(g), y2: y(g), stroke: 'var(--border-color)', 'stroke-width': 1 }));
+            const t = el('text', { x: ml - 10, y: y(g) + 4, 'text-anchor': 'end' }); t.textContent = Math.round(g * 100) + '%'; svg.appendChild(t);
+        }
+    }
+    function tipFor(host) { const tip = document.createElement('div'); tip.className = 'tip'; host.appendChild(tip); return tip; }
+    function placeTip(tip, host, W, H, px, py) { tip.style.display = 'block'; const hr = host.getBoundingClientRect(), left = px / W * hr.width; tip.style.left = Math.min(left + 14, hr.width - tip.offsetWidth - 4) + 'px'; tip.style.top = (py / H * hr.height - 46) + 'px'; }
+
+    function drawHourly() {
+        const host = document.getElementById('hourly'); host.innerHTML = '';
+        const W = 984, H = 380, ml = 44, mr = 6, mt = 14, mb = 34;
+        const now = Date.now(), start = now - 6 * 3600000, end = now + 7 * 86400000;
+        const pts = []; for (let t = Math.floor(start / 3600000) * 3600000; t <= end; t += 3600000) { const d = new Date(t); pts.push({ d, ...predictAt(d) }); }
+        const ymax = Math.min(1, Math.ceil(Math.max(0.3, ...pts.map(p => p.hi)) * 10) / 10);
+        const x = t => ml + (t - start) / (end - start) * (W - ml - mr), y = p => mt + (1 - p / ymax) * (H - mt - mb);
+        const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Hourly probability of fog below the Hawk Hill summit for the next week' });
+        yAxis(svg, ymax, y, ml, W, mr);
+        for (const p of pts) {
+            if (hourLA(p.d) !== 0) continue;
+            const t = p.d.getTime();
+            svg.appendChild(el('line', { x1: x(t), x2: x(t), y1: mt, y2: H - mb, stroke: 'var(--border-color)', 'stroke-width': 1 }));
+            const tx = el('text', { x: x(t + 43200000), y: H - 10, 'text-anchor': 'middle' }); tx.textContent = fmtShort.format(new Date(t + 43200000)); svg.appendChild(tx);
+        }
+        const path = f => pts.map((p, i) => `${i ? 'L' : 'M'}${x(p.d.getTime()).toFixed(1)},${y(f(p)).toFixed(1)}`).join(' ');
+        svg.appendChild(el('path', { d: path(p => p.hi) + ' ' + pts.slice().reverse().map(p => `L${x(p.d.getTime()).toFixed(1)},${y(p.lo).toFixed(1)}`).join(' ') + ' Z', fill: 'rgba(44,44,44,0.12)' }));
+        svg.appendChild(el('path', { d: path(p => p.clim), fill: 'none', stroke: 'var(--text-muted)', 'stroke-width': 1.25, 'stroke-dasharray': '3 5' }));
+        svg.appendChild(el('path', { d: path(p => p.p), fill: 'none', stroke: 'var(--accent-bu)', 'stroke-width': 1.75, 'stroke-linejoin': 'round' }));
+        svg.appendChild(el('line', { x1: x(now), x2: x(now), y1: mt, y2: H - mb, stroke: 'var(--text-muted)', 'stroke-width': 1, 'stroke-dasharray': '2 4' }));
+        const nowT = el('text', { x: x(now) + 6, y: mt + 10 }); nowT.textContent = 'now'; svg.appendChild(nowT);
+        const cross = el('line', { x1: 0, x2: 0, y1: mt, y2: H - mb, stroke: 'var(--text-secondary)', 'stroke-width': 1, opacity: 0 }); svg.appendChild(cross);
+        const dot = el('circle', { r: 4, fill: 'var(--accent-bu)', opacity: 0 }); svg.appendChild(dot);
+        const hit = el('rect', { x: ml, y: mt, width: W - ml - mr, height: H - mt - mb, fill: 'transparent' }); svg.appendChild(hit);
+        host.appendChild(svg); const tip = tipFor(host);
+        hit.addEventListener('mousemove', ev => {
+            const rect = svg.getBoundingClientRect(), sx = (ev.clientX - rect.left) / rect.width * W;
+            const t = start + (sx - ml) / (W - ml - mr) * (end - start), i = Math.max(0, Math.min(pts.length - 1, Math.round((t - pts[0].d.getTime()) / 3600000))), p = pts[i], px = x(p.d.getTime());
+            cross.setAttribute('x1', px); cross.setAttribute('x2', px); cross.setAttribute('opacity', 1);
+            dot.setAttribute('cx', px); dot.setAttribute('cy', y(p.p)); dot.setAttribute('opacity', 1);
+            tip.innerHTML = `<b>${fmtLong.format(p.d)}</b><br>${pct(p.p)} &nbsp;<span>${pct(p.lo)}–${pct(p.hi)} likely, ${pct(p.clim)} usual</span>`;
+            placeTip(tip, host, W, H, px, y(p.p));
+        });
+        hit.addEventListener('mouseleave', () => { cross.setAttribute('opacity', 0); dot.setAttribute('opacity', 0); tip.style.display = 'none'; });
+    }
+
+    function drawSunrise() {
+        const host = document.getElementById('sunrise'); host.innerHTML = '';
+        const W = 984, H = 300, ml = 44, mr = 6, mt = 14, mb = 34;
+        const now = Date.now();
+        // local midnight of today
+        const days = [];
+        for (let n = 0; n < 8; n++) {
+            const ds = localMidnight(new Date(now + n * 86400000)), sr = sunrise(ds);
+            const d = new Date(Math.round(sr.getTime() / 3600000) * 3600000); // model is hourly: nearest hour
+            if (d.getTime() < now - 1800000) continue;
+            days.push({ d, sr, ...predictAt(d) });
+        }
+        const ymax = Math.min(1, Math.ceil(Math.max(0.3, ...days.map(p => p.hi)) * 10) / 10);
+        const bw = (W - ml - mr) / days.length, x = i => ml + i * bw + bw / 2, y = p => mt + (1 - p / ymax) * (H - mt - mb);
+        const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Probability of fog below the summit at sunrise for each day of the next week' });
+        yAxis(svg, ymax, y, ml, W, mr);
+        const tip = tipFor(host);
+        days.forEach((p, i) => {
+            svg.appendChild(el('line', { x1: x(i), x2: x(i), y1: y(p.hi), y2: y(p.lo), stroke: 'var(--text-secondary)', 'stroke-width': 1.25 }));
+            svg.appendChild(el('line', { x1: x(i) - 5, x2: x(i) + 5, y1: y(p.hi), y2: y(p.hi), stroke: 'var(--text-secondary)', 'stroke-width': 1.25 }));
+            svg.appendChild(el('line', { x1: x(i) - 5, x2: x(i) + 5, y1: y(p.lo), y2: y(p.lo), stroke: 'var(--text-secondary)', 'stroke-width': 1.25 }));
+            svg.appendChild(el('line', { x1: x(i) - 7, x2: x(i) + 7, y1: y(p.clim), y2: y(p.clim), stroke: 'var(--text-muted)', 'stroke-width': 1.25, 'stroke-dasharray': '2 2' }));
+            svg.appendChild(el('circle', { cx: x(i), cy: y(p.p), r: 5.5, fill: 'var(--bg-color)', stroke: 'var(--accent-bu)', 'stroke-width': 1.75 }));
+            const tx = el('text', { x: x(i), y: H - 10, 'text-anchor': 'middle' }); tx.textContent = fmtShort.format(p.d); svg.appendChild(tx);
+            const hit = el('rect', { x: ml + i * bw, y: mt, width: bw, height: H - mt - mb, fill: 'transparent' });
+            hit.addEventListener('mousemove', () => { tip.innerHTML = `<b>${fmtDay.format(p.d)}, sunrise ${fmtClock.format(p.sr)}</b><br>${pct(p.p)} &nbsp;<span>${pct(p.lo)}–${pct(p.hi)} likely, ${pct(p.clim)} usual</span>`; placeTip(tip, host, W, H, x(i), y(p.p)); });
+            hit.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+            svg.appendChild(hit);
+        });
+        host.insertBefore(svg, tip);
+    }
+
+    const draw = () => { drawHourly(); drawSunrise(); };
+    draw();
+    const note = document.getElementById('note');
+    load().then(() => { draw(); note.innerHTML = `GFS forecast via Open-Meteo, fetched ${fmtIssued.format(fc.issued)}. Fog below the summit means the Oakland sounding puts the marine-layer top under 280 m while Half Moon Bay reports fog or a ceiling at or below 700 ft. Model trained on 2010–2026 reanalysis and recalibrated by lead time on archived forecasts; sunrise values use the nearest forecast hour. Probabilities, not promises; check a webcam before driving up.`; })
+        .catch(e => { note.textContent = `The live forecast did not load (${e.message}); showing the historical average. Reload to try again.`; draw(); });
+})();
+</script>
+</body>
+</html>
