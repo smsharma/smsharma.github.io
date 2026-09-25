@@ -1,0 +1,26 @@
+{
+ "L": 9,
+ "w": 5,
+ "W": 13,
+ "dim_sewn_dihedral": 60,
+ "dim_after_collinear": 44,
+ "consistent_collinear": true,
+ "ope_log_powers_available": [
+  8,
+  7,
+  6
+ ],
+ "dim_after_ope_T2_ln8": 1,
+ "consistent_ope_T2_ln8": true,
+ "dim_after_ope_T2_ln7": 0,
+ "consistent_ope_T2_ln7": true,
+ "ope_params": {
+  "8": 1,
+  "7": 0
+ },
+ "ope_checks": {
+  "6": 0
+ },
+ "remaining_parameters": 0,
+ "collinear_full_check": true
+}

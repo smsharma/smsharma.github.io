@@ -1,0 +1,5 @@
+mod 2147483629: 20630 comparable, 20630 agree, 0 differ
+both primes: 20630 agree, 0 differ (of 20630)
+the coefficient from the quintuple representation is zero for 230 of the words; the sample file's is zero for 230
+SUMMARY: 20630 words, 20630 agree at every comparable prime, 0 differ
+PASS

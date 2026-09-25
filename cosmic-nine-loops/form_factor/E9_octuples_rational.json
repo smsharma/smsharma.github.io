@@ -1,0 +1,40 @@
+{
+ "primes": [
+  2147483647,
+  2147483629,
+  2147483587
+ ],
+ "M": "9.904e+27",
+ "D_log2": 16,
+ "total_terms": 295186924,
+ "max_abs_D_c": "8706006083174400",
+ "max_abs_D_c_over_half_M": "1.76e-12",
+ "max_log2_denominator": 14,
+ "flagged_entries_with_|Dc|_>=_p1p2/2": 0,
+ "expected_spurious_if_residues_random": "5.2e-04",
+ "verified_mod_primes_mismatches": {
+  "2147483647": 0,
+  "2147483629": 0,
+  "2147483587": 0
+ },
+ "max_abs_numerator": 132843110400,
+ "log2_denominator_histogram": [
+  15951225,
+  9243114,
+  13598216,
+  19113594,
+  25558113,
+  31750118,
+  36362990,
+  37667404,
+  35095981,
+  28891444,
+  20530548,
+  12468670,
+  6321411,
+  2254216,
+  379880,
+  0,
+  0
+ ]
+}

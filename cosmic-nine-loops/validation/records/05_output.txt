@@ -1,0 +1,8 @@
+=== 05
+entries 450468 ; all certified: True
+distinct denominators: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384] ; all powers of two: True ; max |numerator|: 132843110400
+prime 2147483647: rational matrix mod p vs per-prime solution: 0 mismatches of 450468 (355144 nonzero)
+prime 2147483629: rational matrix mod p vs per-prime solution: 0 mismatches of 450468 (355144 nonzero)
+prime 2147483587: rational matrix mod p vs per-prime solution: 0 mismatches of 450468 (355144 nonzero)
+octuples 279, terms 295186924 (min 478389, max 1253533), max log2 denominator 14
+PASS

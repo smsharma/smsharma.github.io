@@ -1,0 +1,2 @@
+words: 2000  nonzero (septuple file): 1002  agree at both primes: 2000  mismatches: 0
+PASS

@@ -1,0 +1,9 @@
+sample words: 500 nonzero of 500
+first letter moved outside {ah,bh,ch}                500 / 500 zero
+last letter set to ah/bh/ch (final-entry condition)  500 / 500 zero
+extended-Steinmann pair inserted                     500 / 500 zero
+one non-y letter replaced by a y letter (odd parity) 500 / 500 zero
+cyclic image                                         500 / 500 equal
+flip image                                           500 / 500 equal
+parity image (identity on even-y words)              500 / 500 equal
+PASS

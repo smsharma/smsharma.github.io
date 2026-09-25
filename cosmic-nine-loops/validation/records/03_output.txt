@@ -1,0 +1,13 @@
+p = 2147483647: nonzero coordinates 1018297; nonzero quintuples 424 of 424; rank of the quintuple final entries 400
+   k = 1: 6 tails present, rank 6
+   k = 2: 48 tails present, rank 21
+   k = 3: 360 tails present, rank 62
+   k = 4: 2736 tails present, rank 162
+p = 2147483629: nonzero coordinates 1018297; nonzero quintuples 424 of 424; rank of the quintuple final entries 400
+   k = 1: 6 tails present, rank 6
+   k = 2: 48 tails present, rank 21
+   k = 3: 360 tails present, rank 62
+   k = 4: 2736 tails present, rank 162
+zero patterns identical at the two primes: True
+lift directions: rank 5 of 5; with (complete - lift particular solution) appended: rank 5 -> in span: True
+PASS

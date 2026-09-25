@@ -1,0 +1,4 @@
+published file: 384 independent quintuple labels
+nonzero words collected: 1000 (from 12360 candidates)
+words compared: 1000  nonzero in the published symbol: 1000  agree mod p1: 1000  mismatches: 0
+PASS

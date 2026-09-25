@@ -1,0 +1,24 @@
+{
+ "L": 9,
+ "prime": 2147483647,
+ "octuple_terms_total": 295186924,
+ "amplitude_triple_final_entries_Delta0_terms": {
+  "chchdh": 370248149,
+  "bhdhdh": 370242639,
+  "dhchdh": 599066605,
+  "ehchdh": 599066605,
+  "dhfhdh": 598959997,
+  "fhfhdh": 598959997,
+  "dhdhdh": 598879864,
+  "ehfhdh": 598866214,
+  "ehdhdh": 598959483,
+  "bhfhdh": 370243718
+ },
+ "derived_counts": {
+  "n_{ch,dh}": 1568381359,
+  "n_{fh,dh}": 2167029926,
+  "n_{dh,dh}": 2537284108,
+  "n_{dh}": 10008106678,
+  "total": 30024320034
+ }
+}
